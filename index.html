@@ -410,6 +410,141 @@ body{font-size:14px}
 .note h4{font-size:15px}
 .note p{font-size:13px;margin-bottom:8px}
 .note blockquote{font-size:13px;padding:8px 10px;margin-bottom:8px}
+
+/* follow-up questions (actions page) */
+.qs{display:flex;flex-direction:column;gap:8px}
+.q{display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;align-items:center;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
+.q-mark{display:grid;place-items:center;align-self:stretch;min-height:44px;border-right:var(--line);background:var(--mustard);font-weight:900;font-stretch:125%;font-size:22px}
+.q-text{width:100%;min-width:0;height:44px;padding:0 14px;border:0;background:transparent;font-weight:800;font-stretch:105%;font-size:16px}
+.q-text:focus{outline:0;box-shadow:inset 0 -3px 0 var(--cobalt)}
+.each{height:28px;margin-right:8px;padding:0 9px;border:var(--line);border-radius:4px;background:var(--paper);font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
+.each[aria-pressed=true]{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(2px,2px)}
+.q .x{margin-right:10px}
+.q.add{grid-template-columns:44px minmax(0,1fr) auto;border-style:dashed;background:transparent;box-shadow:none}
+.q.add .q-mark{background:transparent;border-right-style:dashed}
+.q.add .q-text{font-weight:700}
+.q.add .btn{margin-right:8px}
+.chips span.qchip{background:var(--ground);font-weight:700}
+.tick .tk svg{width:16px;height:16px;vertical-align:-3px}
+
+/* results: metric icons */
+.pill.ico{display:inline-flex;align-items:center;justify-content:center;gap:3px;min-width:40px;padding:0 9px}
+.pill.ico svg{width:17px;height:17px;flex:none}
+.pill.ico .star{margin:0}
+.mname{align-self:center;margin-left:6px;font-weight:800;font-size:13px}
+.row{grid-template-columns:24px minmax(0,1fr) 40px}
+.row .ri{display:grid;place-items:center}
+.row .ri svg{width:16px;height:16px}
+.note footer .nf{display:inline-flex;align-items:center;gap:4px}
+.note footer .nf svg{width:15px;height:15px}
+
+/* results: leaderboard */
+.lb-wrap{margin-bottom:18px}
+.lb-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.lb-head .lbl{margin:0}
+.lb-by{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px}
+.lb-by svg{width:16px;height:16px}
+.lb{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.lb-row{display:grid;grid-template-columns:46px 46px minmax(0,1fr) auto 64px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
+.lb-rank,.lb-letter{display:grid;place-items:center;border-right:var(--line);font-weight:900;font-stretch:125%;font-size:24px;font-variant-numeric:tabular-nums}
+.lb-rank{background:var(--ground)}
+.lb-row.first .lb-rank{background:var(--mustard)}
+.lb-body{display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;padding:9px 12px}
+.lb-name{display:flex;align-items:center;gap:8px;min-width:0}
+.lb-name strong{font-weight:900;font-stretch:110%;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{display:flex;align-items:center;gap:10px}
+.lb-bar{position:relative;flex:1;height:22px;border:var(--line);border-radius:3px;background:var(--ground);overflow:hidden}
+.lb-bar u,.rsn u{position:absolute;left:0;top:0;bottom:0;display:block;text-decoration:none}
+.lb-bar u{border-right:var(--line)}
+.lb-score b{min-width:64px;text-align:right;font-weight:900;font-stretch:125%;font-size:24px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.lb-score b small,.kpi small{font-size:.55em;margin-left:1px}
+.lb-why{display:flex;flex-wrap:wrap;gap:5px}
+.rz{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px 0 6px;border:1.5px solid var(--ink);border-radius:4px;background:var(--ground);font-weight:800;font-size:12px;white-space:nowrap;transition:transform 110ms var(--out)}
+.rz svg{width:13px;height:13px;flex:none}
+.rz:hover{background:var(--mustard)}
+.rz:active{transform:scale(.97)}
+.lb-kpis{display:flex;flex-wrap:wrap;align-content:center;gap:5px;max-width:340px;padding:8px 10px;border-left:var(--line)}
+.kpi{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 7px 0 6px;border:var(--line);border-radius:4px;background:var(--paper);font-weight:900;font-size:12px;font-variant-numeric:tabular-nums;box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
+.kpi svg{width:15px;height:15px;flex:none}
+.kpi:active{transform:translate(2px,2px);box-shadow:none}
+.kpi.on{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(2px,2px)}
+.lb-delta{display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:var(--line);font-weight:900;font-stretch:115%;font-size:17px;font-variant-numeric:tabular-nums}
+.lb-delta small{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* results: why tags */
+.rs{display:flex;flex-direction:column;gap:5px;padding:10px 12px;border:var(--line);border-top-width:6px;border-radius:var(--r);background:var(--paper)}
+.rs-head{display:flex;align-items:center;gap:7px;margin-bottom:2px;font-weight:900;font-stretch:108%;font-size:14px;line-height:1.2}
+.rs-head svg{width:16px;height:16px;flex:none}
+.rs-head .badge{width:22px;height:22px;font-size:12px}
+.rsn{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 8px;width:100%;padding:6px 9px;border:1.5px solid var(--ink);border-radius:4px;background:var(--paper);font-weight:800;font-size:13px;text-align:left;transition:transform 110ms var(--out)}
+.rsn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rsn b{font-variant-numeric:tabular-nums}
+.rsn i{position:relative;grid-column:1/-1;height:7px;border:1.5px solid var(--ink);border-radius:2px;background:var(--ground);overflow:hidden}
+.rsn:hover{background:var(--ground)}
+.rsn:active{transform:scale(.99)}
+.rsn[aria-expanded=true]{background:var(--ink);color:var(--paper)}
+.rsn[aria-expanded=true] i{border-color:var(--paper)}
+/* results: who gave a reason */
+.rq{display:flex;flex-direction:column;gap:8px;margin:2px 0 6px;padding:10px;border:1.5px solid var(--ink);border-radius:4px;background:var(--ground);animation:rise 200ms var(--out) both}
+.who-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.who-h>b{font-weight:900;font-stretch:115%;font-size:15px}
+.lift{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border:1.5px solid var(--ink);border-radius:4px;background:var(--mustard);font-weight:800;font-size:12px;white-space:nowrap}
+.lift svg{width:14px;height:14px;flex:none}
+.lift em{font-style:normal;font-weight:700;opacity:.7}
+.pict{display:flex;flex-wrap:wrap;gap:3px}
+.pict i{display:grid;place-items:center;width:20px;height:20px;border:1.5px solid var(--ink);border-radius:3px}
+.pict svg{width:13px;height:13px}
+.c-paper{background:var(--paper);color:var(--ink)}
+.wv{display:grid;grid-template-columns:22px minmax(0,1fr);align-items:center;gap:3px 8px}
+.wv-ic{display:grid;place-items:center}
+.wv-ic svg{width:18px;height:18px}
+.wv-bar{display:flex;height:26px;border:var(--line);border-radius:3px;background:var(--paper);overflow:hidden}
+.wv-bar span{display:flex;align-items:center;justify-content:center;gap:3px;min-width:0;overflow:hidden;font-weight:900;font-size:11px;font-variant-numeric:tabular-nums}
+.wv-bar span+span{border-left:1.5px solid var(--ink)}
+.wv-bar svg{width:14px;height:14px;flex:none}
+.wv-leg{grid-column:2;display:flex;flex-wrap:wrap;gap:2px 9px;font-size:11px;font-weight:700;color:var(--muted)}
+.wv-leg span{display:inline-flex;align-items:center;gap:3px}
+.wv-leg i{width:9px;height:9px;border:1.5px solid var(--ink);border-radius:2px}
+.wv-leg svg{width:11px;height:11px}
+.forms{margin:0;font-size:11px;font-weight:700;color:var(--muted)}
+.rq blockquote{margin:0;padding:8px 10px;background:var(--paper);border-left:4px solid var(--ink);font-size:13px;font-weight:700;line-height:1.4}
+.rq cite{display:block;margin-top:5px;font-style:normal;font-size:11px;font-weight:600;color:var(--muted)}
+.rs-none{margin:0;font-size:12px;font-weight:700;color:var(--muted)}
+.rs-head .q-mark{width:22px;min-height:22px;border:var(--line);border-radius:4px;font-size:13px}
+
+/* results: leaderboard rows open a version; one version at a time below */
+.lb-row{cursor:pointer;transition:transform 110ms var(--out)}
+.lb-row[aria-current=true]{box-shadow:none;transform:translate(3px,3px)}
+.lb-row[aria-current=true] .lb-rank{background:var(--ink);color:var(--paper)}
+.lb-row.first[aria-current=true] .lb-rank{background:var(--mustard);color:var(--ink)}
+.lb-letter{padding:0;border:0;border-right:var(--line);border-radius:0;cursor:pointer}
+.vsw{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:26px 0 12px}
+.vsw .lbl{margin:0 4px 0 0}
+.vsw .sp{flex:1}
+.vpick{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 5px;border:var(--line);border-radius:var(--r);background:var(--paper);font-weight:800;font-size:14px;white-space:nowrap;box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
+.vpick:active{transform:translate(2px,2px);box-shadow:none}
+.vpick[aria-pressed=true]{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(2px,2px)}
+.vpick[aria-pressed=true] .badge{border-color:var(--paper)}
+.vd-head{display:grid;grid-template-columns:72px minmax(0,1fr) 84px;margin-bottom:16px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
+.vd-letter{display:grid;place-items:center;border-right:var(--line);font-weight:900;font-stretch:125%;font-size:42px}
+.vd-title{min-width:0;padding:12px 16px}
+.vd-title h2{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-weight:900;font-stretch:112%;font-size:24px;line-height:1.1}
+.vd-title p{margin:0;max-width:90ch;font-size:14px;color:#3b372f}
+.vd-rank{display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:var(--line);background:var(--ground)}
+.vd-rank b{font-weight:900;font-stretch:125%;font-size:34px;line-height:1}
+.vd-rank small{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.vd-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:20px;align-items:start}
+.vd .track{height:230px}
+.vd .num{font-size:56px}
+.vd .row{height:34px;font-size:13px}
+.vd .row .ri svg{width:18px;height:18px}
+.vd .why{margin-top:0}
+@media (max-width:900px){.vd-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){
+  .lb-row{grid-template-columns:40px 40px minmax(0,1fr) 56px}
+  .lb-delta{order:4}
+  .lb-kpis{order:5;grid-column:1/-1;max-width:none;border-left:0;border-top:var(--line)}
+}
 </style>
 </head>
 <body>
@@ -437,8 +572,37 @@ const ICON = {
   youtube: '<rect x="3" y="6" width="18" height="12" rx="3"/><path d="M10.5 9.500l4 2.500-4 2.500z"/>',
   ad: '<path d="M4 10v4h3l8 4V6l-8 4z"/><path d="M18 9.500a4 4 0 0 1 0 5"/>',
   product: '<path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v8"/>',
-  blank: '<rect x="5" y="4" width="14" height="16" stroke-dasharray="3 3"/>'
+  blank: '<rect x="5" y="4" width="14" height="16" stroke-dasharray="3 3"/>',
+  cart: '<path d="M3 4h2.500l2 10.500h10.500L20 7.500H6.300"/><circle cx="9.500" cy="19" r="1.400"/><circle cx="16.500" cy="19" r="1.400"/>',
+  link: '<path d="M10 14a4 4 0 0 0 5.700 0l3-3a4 4 0 0 0-5.700-5.700l-1 1"/><path d="M14 10a4 4 0 0 0-5.700 0l-3 3a4 4 0 0 0 5.700 5.700l1-1"/>',
+  flag: '<path d="M5 21V4h12l-2.500 4.500L17 13H5"/>',
+  download: '<path d="M12 4v11M7 10.500l5 4.500 5-4.500M5 20h14"/>',
+  quote: '<path d="M5 18c2.500-1 4-3 4-6V7H4v5h4M15 18c2.500-1 4-3 4-6V7h-5v5h4"/>',
+  /* participant profile icons */
+  female: '<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>',
+  male: '<circle cx="10" cy="14" r="5"/><path d="M13.600 10.400L20 4M15 4h5v5"/>',
+  nonbinary: '<circle cx="12" cy="15" r="5"/><path d="M12 10V2M9 4l6 4M15 4L9 8"/>',
+  person: '<circle cx="12" cy="7" r="3.500"/><path d="M5 21v-1.500A5.500 5.500 0 0 1 10.500 14h3a5.500 5.500 0 0 1 5.500 5.500V21"/>',
+  teen: '<circle cx="12" cy="9" r="3"/><path d="M7.500 21v-1a4.500 4.500 0 0 1 9 0v1"/>',
+  senior: '<circle cx="10" cy="6" r="3"/><path d="M4.500 21v-2.500a5.500 5.500 0 0 1 9-4.200M17 21v-8.500a2 2 0 0 1 4 0"/>',
+  people: '<circle cx="8.500" cy="8" r="3"/><circle cx="16.500" cy="9" r="2.500"/><path d="M3 20v-1a5.500 5.500 0 0 1 11 0v1M14.500 14.200a4.500 4.500 0 0 1 6.500 4V20"/>',
+  hourglass: '<path d="M6 3h12M6 21h12M7.500 3v3.500L12 12l4.500-5.500V3M7.500 21v-3.500L12 12l4.500 5.500V21"/>',
+  globe: '<circle cx="12" cy="12" r="8.500"/><path d="M3.500 12h17M12 3.500c2.300 2.300 3.400 5.200 3.400 8.500s-1.100 6.200-3.400 8.500c-2.300-2.300-3.400-5.200-3.400-8.500S9.700 5.800 12 3.500z"/>',
+  paw: '<circle cx="6.500" cy="10" r="1.800"/><circle cx="10" cy="5.800" r="1.800"/><circle cx="14" cy="5.800" r="1.800"/><circle cx="17.500" cy="10" r="1.800"/><path d="M12 11.500c-3 0-5.500 3.600-5.500 6 0 1.500 1.200 2.500 2.700 2.500 1.200 0 1.800-.7 2.800-.7s1.600.7 2.800.7c1.500 0 2.700-1 2.700-2.500 0-2.400-2.500-6-5.500-6z"/>',
+  nopaw: '<circle cx="6.500" cy="10" r="1.800"/><circle cx="10" cy="5.800" r="1.800"/><circle cx="14" cy="5.800" r="1.800"/><circle cx="17.500" cy="10" r="1.800"/><path d="M12 11.500c-3 0-5.500 3.600-5.500 6 0 1.500 1.200 2.500 2.700 2.500 1.200 0 1.800-.7 2.800-.7s1.600.7 2.800.7c1.500 0 2.700-1 2.700-2.500 0-2.400-2.500-6-5.500-6z"/><path d="M3 3l18 18"/>',
+  yes: '<path d="M5 12.500l4.500 4.500L19 7"/>', no: '<path d="M6 6l12 12M18 6L6 18"/>',
+  tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.300"/>'
 };
+/* custom actions get an icon from their name, so every metric on the results page can be shown as an icon */
+const ICON_KW = [
+  [/dislike|downvote|thumbs? ?down/i, 'dislike'], [/like|love|heart|upvote|fav/i, 'like'], [/comment|reply|review|message|chat/i, 'comment'],
+  [/share|send|forward|repost/i, 'share'], [/save|bookmark|playlist|later/i, 'save'], [/subscri|notif|bell|follow|join|sign ?up|register/i, 'subscribe'],
+  [/replay|rewatch|repeat|again/i, 'replay'], [/buy|purchase|cart|order|checkout|pay/i, 'cart'], [/report|flag|block|hide/i, 'flag'],
+  [/download|install/i, 'download'], [/leave|away|skip|close|exit|bounce|ignore|scroll/i, 'away'], [/click|visit|open|link|tap|website/i, 'link'],
+  [/watch|view|keep|stay|read|continue/i, 'keep']
+];
+/* actions where fewer is better, so a lower score ranks higher */
+const BAD_RE = /dislike|downvote|leave|away|skip|report|unsub|block|hide|ignore|close|exit|bounce|mute|scroll past/i;
 const TYPES = {
   youtube: { label: 'YouTube video', sub: 'Transcripts, intros, titles', who: 'viewers', fields: [['Channel', 'Slow Miles'], ['Video', 'We hiked 400 miles with a rescue dog']], drop: 'Drop transcripts or intros here', aud: 'YouTube outdoor and travel audiences' },
   ad: { label: 'Ad copy', sub: 'Headlines, scripts', who: 'readers', fields: [['Brand', ''], ['Campaign', '']], drop: 'Drop ad versions here', aud: 'audiences for this kind of ad' },
@@ -463,11 +627,16 @@ const S = {
   ],
   prompt: 'You are {name}, a {age}-year-old {gender} viewer in {region}. {pet_status}. It is a weeknight and you are scrolling YouTube. You will be shown the first 30 seconds of a video. React the way you honestly would.',
   actions: [
-    { id: 'keep', name: 'Keep watching past 30s', on: true }, { id: 'like', name: 'Like', on: true }, { id: 'dislike', name: 'Dislike', on: true },
+    { id: 'keep', name: 'Keep watching past 30s', on: true }, { id: 'like', name: 'Like', on: true }, { id: 'dislike', name: 'Dislike', on: true, bad: true },
     { id: 'comment', name: 'Comment', on: true }, { id: 'save', name: 'Save', on: true }, { id: 'replay', name: 'Replay intro', on: true },
-    { id: 'share', name: 'Share', on: false }, { id: 'subscribe', name: 'Subscribe', on: false }, { id: 'away', name: 'Click away', on: true }
+    { id: 'share', name: 'Share', on: false }, { id: 'subscribe', name: 'Subscribe', on: false }, { id: 'away', name: 'Click away', on: true, bad: true }
   ],
-  main: 'keep', metric: null, split: 'none', seed: 214, running: false, nextVar: 1, nextAct: 1
+  /* follow-up questions, asked after the participant has reacted. "each": ask once per action they took */
+  questions: [
+    { id: 'why', text: 'Why did you make these choices?', each: true },
+    { id: 'q1', text: 'What would you not like about this video?', each: false }
+  ],
+  main: 'keep', metric: null, view: null, seed: 214, running: false, nextVar: 1, nextAct: 1, nextQ: 2, open: null
 };
 const AI = { gender: [60, 36, 4], age: [6, 22, 31, 21, 12, 8], region: [46, 27, 15, 8, 4], pet: [58, 42] };
 
@@ -476,11 +645,6 @@ const BASE = {
   A: { keep: 71, like: 24, dislike: 3, comment: 6, save: 5, replay: 4, share: 3, subscribe: 4 },
   B: { keep: 58, like: 19, dislike: 11, comment: 14, save: 9, replay: 2, share: 5, subscribe: 6 },
   C: { keep: 64, like: 21, dislike: 4, comment: 5, save: 4, replay: 9, share: 3, subscribe: 3 }
-};
-const OVR = {
-  'A|keep|age': [66, 78, 78, 65, 61, 58], 'B|keep|age': [55, 57, 59, 60, 57, 56], 'C|keep|age': [60, 62, 66, 59, 70, 70],
-  'B|dislike|pet': [16, 4], 'A|dislike|pet': [3, 3], 'C|dislike|pet': [4, 4], 'B|keep|pet': [53, 65], 'B|comment|pet': [19, 7],
-  'B|dislike|gender': [12, 9, 10], 'B|dislike|age': [7, 9, 11, 13, 12, 12], 'C|replay|age': [8, 9, 10, 9, 8, 7]
 };
 const NOTES = {
   A: [
@@ -496,6 +660,237 @@ const NOTES = {
     { t: 'Some felt the ending was spoiled', p: 'It won viewers 45 and over at 70%, but a group of 35 to 44 year olds left, saying the intro "spoiled the ending".', q: 'Why would I watch twenty minutes when you just showed me the finish?', by: 'Daniel K., 38, male, Europe, no pet', m: 'keep', s: 'age' }
   ]
 };
+/* ---------- what each synthetic participant is asked ----------
+   One conversation per participant per version, in two stages:
+   1. React: they see the version and pick their actions (stage1Message, stage1Schema).
+   2. Audit: we ask the follow-up questions in a second turn (stage2Message, stage2Schema).
+      Asking them separately stops the questions from steering the choices.
+   The system prompt makes every answer come back twice, in full and as a 2-3 word tag,
+   so the user only ever writes the question. The schemas fit Claude's structured outputs
+   (output_config.format = { type: 'json_schema', schema }). tally() groups the tags. */
+function personaText(p) {
+  return S.prompt.replace(/\{([a-z0-9_]+)\}/gi, (m, k) => {
+    if (k === 'name') return p.name;
+    const v = S.vars.find(x => x.key === k);
+    return v ? (p.pick[v.id] != null ? sayOpt(v, p.pick[v.id], p.n) : `(${v.name.toLowerCase()} not specified)`) : m;
+  });
+}
+function systemPrompt(p) {
+  return `${personaText(p)}
+
+You are taking part in a study with two stages. Stay in character throughout: answer only as this person would, in their own words.
+
+Stage 1, react. You will be shown something. Decide which of these actions you would really take. Pick any number, including none.
+${onActs().map(a => `- ${a.id}: ${a.name}`).join('\n')}
+Reply with JSON only: {"actions": ["<action id>", ...]}
+
+Stage 2, questions. You will then be asked about what you did. Answer every question, and give each answer twice:
+- "full": your complete answer, in your own words, the way you would actually say it.
+- "short": the same answer in 2 to 3 words, plain and specific, so it can be grouped with other people's answers.
+A question marked "for each action" gets one answer for every action you chose in stage 1. Other questions get one answer, with "action" set to null.
+Reply with JSON only: {"answers": [{"question": "<question id>", "action": "<action id or null>", "full": "...", "short": "..."}]}`;
+}
+function stage1Message(v) {
+  const t = TYPES[S.type], ctx = t.fields.map((f, i) => S.ctx[S.type][i] ? `${f[0]}: ${S.ctx[S.type][i]}` : '').filter(Boolean).join('\n');
+  return `${ctx ? ctx + '\n\n' : ''}${t.label}, version "${v.name}":\n"""\n${v.full || v.ex}\n"""\n\nStage 1: which actions do you take?`;
+}
+function stage2Message() {
+  return 'Stage 2: answer these questions.\n' + S.questions.map(q => `- ${q.id}: ${q.text}${q.each ? ' (for each action)' : ''}`).join('\n');
+}
+function stage1Schema() {
+  return { type: 'object', additionalProperties: false, required: ['actions'], properties: { actions: { type: 'array', items: { type: 'string', enum: onActs().map(a => a.id) } } } };
+}
+function stage2Schema() {
+  const item = { type: 'object', additionalProperties: false, required: ['question', 'action', 'full', 'short'], properties: {
+    question: { type: 'string', enum: S.questions.map(q => q.id) },
+    action: { anyOf: [{ type: 'string', enum: onActs().map(a => a.id) }, { type: 'null' }] },
+    full: { type: 'string' }, short: { type: 'string', description: '2 to 3 words' } } };
+  return { type: 'object', additionalProperties: false, required: ['answers'], properties: { answers: { type: 'array', items: item } } };
+}
+/* ---------- turning answers into reasons ----------
+   responses: [{ variant, persona, profile: { varId: optionIndex }, actions, answers: [{ question, action, full, short }] }]
+   1. collect(): count every short tag, per question and action, across all versions.
+   2. group: merge tags that mean the same thing into one named reason, e.g. "I was pregnant" and
+      "I am pregnant" become "Pregnant". Grouping across versions keeps the reasons comparable.
+      groupLocal() does it without a model; with a model, send groupPrompt() and pass the reply
+      through groupsFromReply(), which also catches synonyms the local version can't.
+   3. build(): per version, each reason with its count, wordings, quotes and who gave it. */
+const STOP = new Set("i i'm im i'd me my mine we we're us our you your it it's its is was am are be been being the a an to of for and or but so too very really just quite that this these those there by with at in on about as all out felt feel feels".split(' '));
+const tagKey = s => String(s).toLowerCase().replace(/[‘’]/g, "'").replace(/[^\p{L}\p{N}' ]+/gu, ' ').replace(/\s+/g, ' ').trim();
+function stem(w) {
+  w = w.replace(/'s$/, '').replace(/'/g, '');
+  if (w.length > 5) w = w.replace(/(ingly|edly|ing|ed|ly|ness|ment|er)$/, '');
+  else if (w.length > 4) w = w.replace(/(ing|ed)$/, '');
+  return w.replace(/ies$/, 'y').replace(/([^s])s$/, '$1').replace(/y$/, 'i').replace(/e$/, '').replace(/([b-df-hj-np-tv-z])\1$/, '$1').slice(0, 6);
+}
+function tagStems(s) { const ws = tagKey(s).split(' ').filter(w => w && !STOP.has(w)).map(stem).filter(Boolean); return ws.length ? [...new Set(ws)] : [tagKey(s)]; }
+const LEAD = /^(i'm|im|i am|i was|i'd|i|me|my|we're|we were|we|it's|it was|it|the|an|a|was|am|is|being)\s+/i;
+function tagName(s) { let t = String(s).trim().replace(/[.!?]+$/, ''); while (LEAD.test(t)) t = t.replace(LEAD, ''); return t ? t[0].toUpperCase() + t.slice(1) : String(s).trim(); }
+/* same meaningful words, ignoring pronouns, tense and filler. The most common, most specific wording
+   anchors each group; a tag joins if it matches the anchor, or is a near-subset of a member already in it.
+   The shortest wording in the group names it. */
+function groupLocal(tags) {
+  const sub = (lo, hi) => lo.every(w => hi.includes(w)) && hi.length - lo.length <= 1;
+  const words = s => tagName(s).split(/\s+/).length;
+  const list = tags.map(t => ({ ...t, stems: tagStems(t.short) }))
+    .sort((a, b) => b.n - a.n || b.stems.length - a.stems.length || words(a.short) - words(b.short) || a.short.localeCompare(b.short));
+  const groups = [];
+  list.forEach(t => {
+    const s = t.stems, g = groups.find(g => (s.length <= g.stems.length ? sub(s, g.stems) : sub(g.stems, s)) || g.sets.some(m => s.length < m.length && sub(s, m)));
+    if (g) { g.members.push(t); g.sets.push(s); } else groups.push({ stems: s, sets: [s], members: [t] });
+  });
+  return groups.map(g => {
+    const best = Math.max(...g.members.map(m => m.n)), named = g.members.filter(m => m.n >= best * .75).sort((a, b) => words(a.short) - words(b.short) || b.n - a.n)[0];
+    return { name: tagName(named.short), members: g.members.map(m => m.key) };
+  });
+}
+function groupPrompt(questionText, actionName, tags) {
+  return {
+    system: 'You sort short survey answers into categories. Answers that mean the same thing go together even when worded differently. Answers with different meanings stay apart.',
+    user: `Question: "${questionText}"${actionName ? `, asked about: ${actionName}` : ''}\n\nAnswers (2 to 3 word tags, with how many people gave each):\n${tags.map((t, i) => `${i + 1}. ${t.short} (${t.n})`).join('\n')}\n\nGroup the answers. Name each group in 1 to 3 plain words; for example "I was pregnant" and "I am pregnant" both become "Pregnant". Put every answer number in exactly one group.`,
+    schema: { type: 'object', additionalProperties: false, required: ['groups'], properties: { groups: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['name', 'members'], properties: { name: { type: 'string' }, members: { type: 'array', items: { type: 'integer' } } } } } } }
+  };
+}
+function groupsFromReply(tags, reply) {
+  const used = new Set(), groups = (reply.groups || []).map(g => ({ name: g.name, members: g.members.map(i => tags[i - 1] && tags[i - 1].key).filter(k => k && !used.has(k) && used.add(k)) })).filter(g => g.members.length);
+  tags.forEach(t => { if (!used.has(t.key)) groups.push({ name: tagName(t.short), members: [t.key] }); });
+  return groups;
+}
+function collect(responses) {
+  const B = {};
+  responses.forEach(r => {
+    const seen = new Set();
+    r.answers.forEach(a => {
+      if (!a || !a.short) return;
+      const k = a.question + '|' + (a.action || '*'), b = B[k] ??= { tags: new Map(), byVar: {}, base: {} }, key = tagKey(a.short);
+      if (!seen.has(k)) { seen.add(k); (b.base[r.variant] ??= []).push(r.profile || {}); }
+      const t = b.tags.get(key); if (t) t.n++; else b.tags.set(key, { key, short: String(a.short).trim(), n: 1 });
+      const c = (b.byVar[r.variant] ??= {})[key] ??= { n: 0, quotes: [], who: [] };
+      c.n++; c.who.push({ profile: r.profile || {}, persona: a.by || r.persona || '' });
+      if (a.full && c.quotes.length < 3 && !c.quotes.some(q => q.full === a.full)) c.quotes.push({ full: a.full, by: a.by || r.persona || '' });
+    });
+  });
+  return B;
+}
+/* out[variant][question][action, or '*' for questions not asked per action] = [{ short, n, forms, quotes, who, base }] */
+function build(B, groupsFor = b => groupLocal([...b.tags.values()])) {
+  const out = {};
+  for (const k in B) {
+    const b = B[k], [q, aid] = k.split('|'), groups = groupsFor(b, k);
+    for (const vid in b.byVar) {
+      const vb = b.byVar[vid];
+      ((out[vid] ??= {})[q] ??= {})[aid] = groups.map(g => {
+        const parts = g.members.filter(m => vb[m]).map(m => ({ short: b.tags.get(m).short, ...vb[m] })).sort((x, y) => y.n - x.n);
+        if (!parts.length) return null;
+        return { short: g.name, n: parts.reduce((s, p) => s + p.n, 0), forms: parts.map(p => ({ short: p.short, n: p.n })), quotes: parts.flatMap(p => p.quotes).slice(0, 3), who: parts.flatMap(p => p.who), base: b.base[vid] || [] };
+      }).filter(Boolean).sort((x, y) => y.n - x.n);
+    }
+  }
+  return out;
+}
+const tally = responses => build(collect(responses));
+
+/* ---------- follow-up answers (fake) ----------
+   Pools of [wordings, weight, quotes, lean]. Several wordings of one reason show the grouping at work;
+   lean ({ varId: option index or indices }) makes that reason come mostly from one kind of participant.
+   demoResponses() hands them out in exactly the shape stage 2 returns. */
+const PETS = { pet: 0 }, YOUNG = { age: [1, 2] }, OLDER = { age: [4, 5] }, MIDAGE = { age: 3 };
+const WHY = {
+  A: {
+    keep: [[['Instant action', 'Action instantly', 'The instant action'], 40, ['No intro, no asking me to subscribe, just weather.', 'The storm starts in the first second. I was in.'], YOUNG], [['Needed the outcome', 'Need the outcome'], 30, ['I had to know if they got off that ridge.']], [['Dog in danger', 'Dog was in danger'], 18, ['Pepper in that wind? I am not leaving until she is safe.'], PETS], [['Great footage'], 12, ['That storm footage looks unreal.']]],
+    like: [[['Gripping opening', 'Opening was gripping'], 45, ['Best first ten seconds I have seen in a while.'], YOUNG], [['Feels real', 'Felt real'], 30, ['No script, no music swell. It felt like being there.']], [['Loved Pepper', 'Love Pepper'], 25, ['Pepper leaning into the wind. Instant like.'], PETS]],
+    dislike: [[['Too chaotic', 'Chaotic', 'Way too chaotic'], 60, ['I could not tell what was going on.'], OLDER], [['Wind too loud', 'Wind was loud'], 40, ['The wind noise hurt my ears.']]],
+    comment: [[['Asked about gear', 'Asking about gear'], 40, ['What tent survives forty-mile wind?']], [['Worried for Pepper', 'Worried about Pepper'], 35, ['Please tell me Pepper had a jacket on.'], PETS], [['Own storm story', 'My storm story'], 25, ['Got caught like this on Snowdon once. Terrifying.']]],
+    away: [[['Too chaotic', 'Chaotic'], 45, ['Just shouting and wind. I scrolled on.'], OLDER], [['No context', 'No context given'], 30, ['I did not know who they were or why I should care.']], [['Wind too loud'], 25, ['Had to turn it off, the wind noise was too much.']]]
+  },
+  B: {
+    keep: [[['Emotional hook', 'Emotionally hooked'], 45, ['You cannot hear about Juno and not stay.', 'I needed to see Pepper make it, for her.'], PETS], [["Pepper's story", 'Story of Pepper'], 35, ["A rescue dog walking in the old dog's place? I am in."]], [['Felt personal', 'Personal'], 20, ['It felt like they were talking to me, not to a camera.']]],
+    like: [[['Touching tribute', 'Tribute was touching'], 55, ['Lovely way to honour Juno.'], PETS], [['Honest storytelling', 'Storytelling was honest'], 45, ['They did not dress it up. I respect that.']]],
+    dislike: [[['Dog death upsetting', 'Upsetting dog death', "Dog's death upset"], 29, ["I lost my own dog in March. I can't watch this tonight.", 'I did not expect a dead dog in the first fifteen seconds.'], PETS], [['Too sad tonight', 'Sad tonight'], 12, ['Not what I want after a long day.'], PETS], [['Slow to start', 'Slow start'], 9, ['Thirty seconds in and still no hike.']], [['Feels manipulative', 'Manipulative'], 5, ['Using a dead dog to get views. No thanks.']]],
+    comment: [[['Shared own story', 'Sharing my story', 'My own story'], 55, ['Juno looks just like my Biscuit did. I was in before the hike even started.'], PETS], [['Sent condolences', 'Condolences'], 30, ['So sorry about Juno. Fourteen good years.']], [['Asked about Pepper'], 15, ['How old is Pepper? Where did you adopt her?']]],
+    away: [[['Too upsetting', 'Upsetting'], 50, ['I could not do the dog part. Closed it.'], PETS], [['Slow start', 'Slow to start'], 35, ['I came for a hike, not a eulogy.']], [['Wrong expectations', 'Wrong expectation'], 15, ['The title said hike. This was something else.']]]
+  },
+  C: {
+    keep: [[['Wanted the journey', 'Want the journey'], 40, ['Now I want to see how they got up there.'], OLDER], [['Stunning summit', 'Summit was stunning'], 35, ['That view sold me straight away.']], [['Clear payoff', 'Payoff is clear'], 25, ['I know where this is going, so I will give it time.']]],
+    like: [[['Beautiful summit', 'Summit was beautiful'], 50, ['That ridge at sunrise. Instant like.'], OLDER], [['Knew the payoff'], 30, ['Nice to know the ending is worth it.']], [['Good pacing', 'Pacing was good'], 20, ['Fast, clear, no waffle.']]],
+    dislike: [[['Spoiled ending', 'Spoils the ending', 'Ending spoiled'], 60, ['Why would I watch twenty minutes when you just showed me the finish?'], MIDAGE], [['Feels clickbaity', 'Clickbait'], 40, ['Leading with the summit feels like a trailer.']]],
+    comment: [[['Asked which peak', 'Which peak?'], 45, ['Which mountain is that at the start?']], [['Said congrats', 'Congrats'], 35, ['Four hundred miles! Huge congrats to you and Pepper.']], [['Asked about route', 'Asked for route'], 20, ['Can you share the route map?']]],
+    away: [[['Spoiled ending', 'Ending spoiled'], 55, ['Already saw the end, so why stay?'], MIDAGE], [['Seen enough'], 25, ['Got the best bit in five seconds. Done.']], [['Feels clickbaity', 'Clickbaity'], 20, ['Felt like an ad for the rest of the video.']]]
+  }
+};
+const WHY_ANY = {
+  keep: [[['Hooked early', 'Hooked'], 50, ['It grabbed me straight away.']], [['Curious'], 30, ['I wanted to see where it went.']], [['Nothing better on'], 20, ['Nothing else caught my eye.']]],
+  like: [[['Enjoyed it', 'Enjoyed'], 60, ['Just a good watch.']], [['Well made'], 40, ['You can tell they put work into it.']]],
+  dislike: [[['Not for me'], 60, ['Not really my kind of thing.']], [['Felt off'], 40, ['Something about it did not sit right.']]],
+  comment: [[['Had a question'], 50, ['I wanted to ask them something.']], [['Said thanks', 'Thanks'], 50, ['Wanted to say I enjoyed it.']]],
+  away: [[['Lost interest'], 60, ['It did not hold me.']], [['Too slow', 'Slow'], 40, ['It took too long to get going.']]],
+  save: [[['Watch later', 'Watching later'], 50, ['Saving this for the weekend.']], [['Trip planning', 'Planning a trip'], 30, ['I might walk part of this route next summer.'], OLDER], [['For a friend'], 20, ['My sister would love this.']]],
+  replay: [[['Rewatch the view', 'Rewatched the view'], 50, ['Went back twice just for that ridge at sunrise.'], OLDER], [['Missed a detail'], 30, ['Wanted to catch what they said about the route.']], [['Loved the moment'], 20, ['Watched Pepper in the snow again.'], PETS]],
+  share: [[['For dog lovers'], 50, ['Sent it to my dog-walking group.'], PETS], [['Hiking friends'], 30, ['Shared it with the people I hike with.']], [['Just beautiful'], 20, ['Too pretty not to pass on.']]],
+  subscribe: [[['Want more trips', 'Wants more trips'], 55, ['I want to see where they go next.']], [['Like the couple'], 25, ['They seem like genuinely nice people.']], [['Dog content'], 20, ['Anything with Pepper in it, I am watching.'], PETS]],
+  other: [[['Fits my interests'], 40, ['This is the kind of thing I look for.']], [['Felt right'], 35, ['It just felt like the natural thing to do.']], [['Curious'], 25, ['I wanted to see what would happen.']]]
+};
+const ASK = {
+  q1: {
+    A: [[['Chaotic start', 'Start is chaotic'], 30, ['Too much shouting before I know who they are.'], OLDER], [['Wind too loud', 'Loud wind'], 25, ['The wind noise drowns out what they say.']], [['No context', 'No context given'], 20, ['I do not know who these people are yet.']], [['Nothing really', 'Nothing', 'Nothing at all'], 25, ['Honestly, nothing. It grabbed me.']]],
+    B: [[['Sad dog death', "Dog's sad death"], 40, ["The dog dying. I'd rather not start a video crying."], PETS], [['Slow start', 'Slow to start'], 25, ['It takes too long to get to the hike.']], [['Feels manipulative', 'Manipulative'], 10, ['Opening on a death feels like a trick.']], [['Nothing really', 'Nothing'], 25, ['Nothing. It is a lovely tribute.']]],
+    C: [[['Spoils the ending', 'Spoiled ending'], 40, ['Showing the summit first takes away the suspense.'], MIDAGE], [['Clickbait vibes', 'Clickbaity'], 20, ['It feels like a trailer, not a story.']], [['Nothing really', 'Nothing'], 40, ['Nothing, it looks great.']]]
+  }
+};
+const ASK_ANY = [[['Nothing stands out', 'Nothing'], 35, ['Honestly, nothing jumps out at me.']], [['Too long', 'Way too long'], 25, ['It could be shorter.']], [['Needs more context', 'More context'], 20, ['I would want to know more before deciding.']], [['Unclear point', 'Point unclear'], 20, ['I am not sure what it is trying to say.']]];
+const whyPool = (vid, a) => (WHY[vid] && WHY[vid][a.id]) || WHY_ANY[a.id] || WHY_ANY.other;
+const askPool = (vid, q) => (ASK[q.id] && ASK[q.id][vid]) || ASK_ANY;
+/* split n into whole numbers in proportion to the weights */
+function shares(n, w) {
+  const t = w.reduce((a, b) => a + b, 0) || 1, raw = w.map(x => x / t * n), out = raw.map(Math.floor);
+  let left = n - out.reduce((a, b) => a + b, 0);
+  raw.map((r, i) => [r - out[i], i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0) { out[i]++; left--; } });
+  return out;
+}
+function cite(p) {
+  const bits = S.vars.filter(v => p.pick[v.id] != null).map(v => v.id === 'pet' ? (p.pick[v.id] === 0 ? 'has a pet' : 'no pet') : sayOpt(v, p.pick[v.id], p.n));
+  return [`${p.name} ${'ABCDEFGHJKLMNPRSTW'[Math.floor(hash('s' + p.n) * 18)]}.`, ...bits].join(', ');
+}
+let demo = null;
+function demoResponses() {
+  const acts = onActs(), sig = JSON.stringify([S.count, S.variants.map(v => v.id), acts.map(a => a.id), S.questions.map(q => [q.id, q.each]), S.vars.map(v => v.opts.map(o => o.pct))]);
+  if (demo && demo.sig === sig) return demo.list;
+  const who = Array.from({ length: S.count }, (_, i) => { const p = person(i + 1); return { persona: cite(p), profile: p.pick }; }), list = [];
+  S.variants.forEach(v => {
+    const ppl = who.map((w, i) => ({ variant: v.id, participant: i + 1, persona: w.persona, profile: w.profile, actions: [], answers: [] }));
+    const give = (people, pool, question, action) => {
+      const counts = shares(people.length, pool.map(t => t[1]));
+      let left = people;
+      pool.forEach(([wordings, , quotes, lean], t) => {
+        /* a reason with a lean goes mostly (85%) to participants matching it */
+        const n = counts[t], fit = p => !lean || Object.entries(lean).every(([vid, idx]) => [].concat(idx).includes(p.profile[vid]));
+        const yes = left.filter(fit), no = left.filter(p => !fit(p)), k = lean ? Math.round(n * .85) : n;
+        const take = [...yes.slice(0, k), ...no.slice(0, n - Math.min(k, yes.length))];
+        if (take.length < n) take.push(...yes.slice(k, k + n - take.length));
+        const got = new Set(take); left = left.filter(p => !got.has(p));
+        take.forEach((p, j) => p.answers.push({ question, action, full: quotes[j % quotes.length], short: wordings[j % wordings.length] }));
+      });
+    };
+    acts.forEach(a => {
+      const took = ppl.map((p, i) => [hash(v.id + '|' + a.id + '|' + i), p]).sort((x, y) => x[0] - y[0]).slice(0, Math.round(overall(v.id, a.id) / 100 * S.count)).map(x => x[1]);
+      took.forEach(p => p.actions.push(a.id));
+      S.questions.filter(q => q.each).forEach(q => give(took, whyPool(v.id, a), q.id, a.id));
+    });
+    S.questions.filter(q => !q.each).forEach(q => give(ppl, askPool(v.id, q), q.id, null));
+    list.push(...ppl);
+  });
+  demo = { sig, list };
+  return list;
+}
+let tallied = null;
+function reasons(vid, qid, aid) {
+  const list = demoResponses();
+  if (!tallied || tallied.src !== list) tallied = { src: list, t: tally(list) };
+  return ((tallied.t[vid] || {})[qid] || {})[aid || '*'] || [];
+}
+/* exposed for whoever wires up the model */
+window.STANDIN = { systemPrompt, stage1Message, stage2Message, stage1Schema, stage2Schema, collect, groupLocal, groupPrompt, groupsFromReply, build, tally, person: n => person(n), state: S };
+
 function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
 function overall(vid, aid) {
   if (aid === 'away') return 100 - overall(vid, 'keep');
@@ -503,14 +898,6 @@ function overall(vid, aid) {
   if (b != null) return b;
   if (aid === 'keep') return 52 + Math.round(hash(vid + aid) * 16);
   return 2 + Math.round(hash(vid + '|' + aid) * 14);
-}
-function val(vid, aid, v, i) {
-  if (!v) return overall(vid, aid);
-  if (aid === 'away') return 100 - val(vid, 'keep', v, i);
-  const o = OVR[vid + '|' + aid + '|' + v.id];
-  if (o && o.length === v.opts.length) return o[i];
-  const base = overall(vid, aid), spread = Math.max(1.5, base * .14);
-  return Math.max(0, Math.min(100, Math.round(base + (hash([vid, aid, v.id, i].join('|')) * 2 - 1) * spread)));
 }
 
 /* ---------- helpers ---------- */
@@ -523,6 +910,11 @@ const actName = id => (S.actions.find(a => a.id === id) || {}).name || id;
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'variable';
 const cum = (v, i) => v.opts.slice(0, i + 1).reduce((s, o) => s + o.pct, 0);
 const fmt = n => n.toLocaleString('en-GB');
+const act = id => S.actions.find(a => a.id === id) || { id, name: id };
+const actIcon = a => { if (!a.custom && ICON[a.id]) return ICON[a.id]; const hit = ICON_KW.find(([re]) => re.test(a.name)); return ICON[hit ? hit[1] : 'custom']; };
+const isBad = id => !!act(id).bad;
+/* versions ordered best first on one metric; for "bad" actions lower is better */
+const ranked = id => [...S.variants].sort((a, b) => (isBad(id) ? 1 : -1) * (overall(a.id, id) - overall(b.id, id)));
 
 /* ---------- shell ---------- */
 function shell(body) {
@@ -554,10 +946,10 @@ function slab(v, i) {
   <div class="slab-body"><input class="slab-name" data-bind="vname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Version name"><p class="slab-ex">${esc(v.ex)}</p><span class="slab-meta">${esc(v.meta)}</span></div>
   <div class="slab-tools"><button class="x" data-act="vup" data-id="${v.id}" aria-label="Move ${esc(v.name)} up"${i === 0 ? ' disabled' : ''}>↑</button><button class="x" data-act="vdown" data-id="${v.id}" aria-label="Move ${esc(v.name)} down"${i === S.variants.length - 1 ? ' disabled' : ''}>↓</button><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div></article>`;
 }
-function addVariant(name, ex, meta) {
+function addVariant(name, ex, meta, full) {
   const id = [...'ABCDEFGHIJ'].find(l => !S.variants.some(v => v.id === l));
   if (!id) return;
-  S.variants.push({ id, name, ex, meta });
+  S.variants.push({ id, name, ex, meta, full: full || ex }); /* full: the whole text participants are shown */
 }
 function readFiles(files) {
   const list = [...files]; if (!list.length) return;
@@ -566,7 +958,7 @@ function readFiles(files) {
     const fr = new FileReader();
     fr.onload = () => {
       const text = String(fr.result).replace(/\s+/g, ' ').trim();
-      addVariant(f.name.replace(/\.[^.]+$/, ''), text.slice(0, 220) + (text.length > 220 ? '…' : ''), f.name + ' · ' + fmt(text.split(' ').filter(Boolean).length) + ' words');
+      addVariant(f.name.replace(/\.[^.]+$/, ''), text.slice(0, 220) + (text.length > 220 ? '…' : ''), f.name + ' · ' + fmt(text.split(' ').filter(Boolean).length) + ' words', text);
       if (!--left) render();
     };
     fr.readAsText(f);
@@ -679,11 +1071,13 @@ function refreshWho() { const w = $('#who'); if (w) w.innerHTML = whoHtml(); }
 /* ---------- 3 actions ---------- */
 function pgActions() {
   const acts = [...S.actions].sort((a, b) => (b.id === S.main) - (a.id === S.main));
-  return `<div class="head"><h1 class="ask">What can they do?</h1><p class="hint">Press in every action a participant is allowed to take. Pick one as the main metric: it decides the winner.</p></div>
+  return `<div class="head"><h1 class="ask">What can they do?</h1><p class="hint">Press in every action a participant is allowed to take. Pick one as the main metric: it decides the winner. Then ask them why.</p></div>
   <section class="sec"><div class="tiles">${acts.map(a => {
     const main = a.id === S.main;
-    return `<div class="tile${a.on ? ' on' : ''}${main ? ' main' : ''}"><button class="tile-press" data-act="toggle" data-id="${a.id}" aria-pressed="${a.on}"${main ? ' title="The main metric is always on"' : ''}>${svg(ICON[a.custom ? 'custom' : a.id] || ICON.custom)}<strong>${esc(a.name)}</strong></button>${main ? '<span class="maintag">Main metric</span>' : `<span class="state">${a.on ? 'ON' : 'OFF'}</span>`}${a.custom ? `<button class="x rm" data-act="delact" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button>` : ''}${!main && a.on ? `<button class="mk" data-act="main" data-id="${a.id}">Make main</button>` : ''}</div>`;
+    return `<div class="tile${a.on ? ' on' : ''}${main ? ' main' : ''}"><button class="tile-press" data-act="toggle" data-id="${a.id}" aria-pressed="${a.on}"${main ? ' title="The main metric is always on"' : ''}>${svg(actIcon(a))}<strong>${esc(a.name)}</strong></button>${main ? '<span class="maintag">Main metric</span>' : `<span class="state">${a.on ? 'ON' : 'OFF'}</span>`}${a.custom ? `<button class="x rm" data-act="delact" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button>` : ''}${!main && a.on ? `<button class="mk" data-act="main" data-id="${a.id}">Make main</button>` : ''}</div>`;
   }).join('')}<form class="tile add" id="addact"><label class="lbl" for="newact" style="margin:0">Your own action</label><input id="newact" placeholder="e.g. Turn on notifications" maxlength="40" autocomplete="off"><button class="btn sm" type="submit">+ Add action</button></form></div></section>
+  <section class="sec"><span class="lbl">Then ask them</span><div class="qs">${S.questions.map(q => `<div class="q"><span class="q-mark">?</span><input class="q-text" data-bind="qtext" data-id="${q.id}" value="${esc(q.text)}" maxlength="160" aria-label="Question"><button class="each" data-act="qeach" data-id="${q.id}" aria-pressed="${q.each}" title="Ask once for every action they took">Per action</button><button class="x" data-act="qdel" data-id="${q.id}" aria-label="Remove question">✕</button></div>`).join('')}
+    <form class="q add" id="addq"><span class="q-mark">+</span><input class="q-text" id="newq" placeholder="e.g. What would you not like about this?" maxlength="160" autocomplete="off"><button class="btn sm" type="submit">Add question</button></form></div></section>
   ${foot('profiles', 'run', 'Continue to Run')}`;
 }
 
@@ -695,7 +1089,7 @@ function pgRun() {
   <section class="sec"><div class="sum">
     <div class="sumbox"><header><h3>Material</h3><a class="btn sm flat" href="#/dataset">Edit</a></header><div class="big">${S.variants.length}<small>${S.variants.length === 1 ? 'version' : 'versions'}</small></div><ul class="vlist">${S.variants.map(v => `<li><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</li>`).join('')}</ul></div>
     <div class="sumbox"><header><h3>Participants</h3><a class="btn sm flat" href="#/profiles">Edit</a></header><div class="big">${fmt(S.count)}<small>${TYPES[S.type].who}</small></div><ul class="vlist">${S.vars.map(v => `<li><span class="nm">${esc(v.name)}</span>${filled(v) ? `<span class="mini">${v.opts.map((o, i) => `<i class="c-${SEG[i % SEG.length]}" style="width:${o.pct}%"></i>`).join('')}</span>` : '<span class="mini none" title="Not set, will be skipped"></span>'}</li>`).join('')}</ul></div>
-    <div class="sumbox"><header><h3>Actions</h3><a class="btn sm flat" href="#/actions">Edit</a></header><div class="big">${acts.length}<small>allowed</small></div><div class="chips">${acts.map(a => `<span class="${a.id === S.main ? 'm' : ''}">${esc(a.name)}${a.id === S.main ? ' · main' : ''}</span>`).join('')}</div></div>
+    <div class="sumbox"><header><h3>Actions</h3><a class="btn sm flat" href="#/actions">Edit</a></header><div class="big">${acts.length}<small>allowed</small></div><div class="chips">${acts.map(a => `<span class="${a.id === S.main ? 'm' : ''}">${esc(a.name)}${a.id === S.main ? ' · main' : ''}</span>`).join('')}</div>${S.questions.length ? `<div class="chips">${S.questions.map(q => `<span class="qchip" title="${esc(q.text)}">? ${esc(q.text.length > 36 ? q.text.slice(0, 35) + '…' : q.text)}</span>`).join('')}</div>` : ''}</div>
   </div>
   <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run">Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions = ${fmt(S.count * S.variants.length)} reactions. Takes a few seconds.</p></div>` : `<div class="go"><p>Add at least one version in Material before running.</p></div>`}</div></section>
   ${foot('actions', null)}`;
@@ -705,7 +1099,7 @@ function startRun() {
   zone.innerHTML = `<div class="prog" role="status"><div class="prog-top"><div class="big" id="pc">0<small>of ${fmt(total)} responded</small></div><span class="tag">Running</span></div><div class="cells">${'<i></i>'.repeat(N)}</div><p class="tick" id="tick"></p></div>`;
   const cells = $$('.cells i', zone), order = cells.map((_, i) => i).sort((a, b) => hash('c' + a) - hash('c' + b));
   let done = 0, lastTick = 0;
-  const acts = onActs();
+  const acts = onActs(), list = demoResponses();
   clearInterval(runTimer);
   runTimer = setInterval(() => {
     const k = Math.min(1, (performance.now() - t0) / dur), target = Math.round(k * N);
@@ -713,9 +1107,10 @@ function startRun() {
     $('#pc').firstChild.textContent = fmt(Math.round(k * total));
     if (performance.now() - lastTick > 380 && k < 1) {
       lastTick = performance.now();
-      const seed = 1 + Math.floor(Math.random() * total), p = person(seed), v = S.variants[Math.floor(Math.random() * S.variants.length)], a = acts[Math.floor(Math.random() * acts.length)];
+      const r = list[Math.floor(Math.random() * list.length)], seed = r.participant, p = person(seed), v = S.variants.find(x => x.id === r.variant) || S.variants[0];
+      const ans = r.answers.find(x => x.action) || r.answers[0], a = act((ans && ans.action) || r.actions[0] || (acts[0] || {}).id);
       const age = S.vars.find(x => x.id === 'age'), bits = [p.name]; if (age && p.pick.age != null) bits.push(sayOpt(age, p.pick.age, seed));
-      $('#tick').innerHTML = `${esc(bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> ${esc(a ? a.name.toLowerCase() : 'reacted')}`;
+      $('#tick').innerHTML = `${esc(bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> <span class="tk" title="${esc(a.name)}">${svg(actIcon(a))}</span>${ans ? ` “${esc(ans.short)}”` : ''}`;
     }
     if (k >= 1) { clearInterval(runTimer); runTimer = null; setTimeout(() => { if (route() === 'run') go('results'); }, 250); }
   }, 40);
@@ -725,46 +1120,126 @@ function startRun() {
 function pgResults() {
   const acts = onActs();
   if (!acts.some(a => a.id === S.metric)) S.metric = (acts.find(a => a.id === S.main) || acts[0] || {}).id;
-  if (S.split !== 'none' && !S.vars.some(v => v.id === S.split)) S.split = 'none';
   if (!S.variants.length || !acts.length) return `<div class="head"><h1 class="ask">Nothing to show yet</h1><p class="hint">Add at least one version and one action, then run the simulation.</p></div>${foot('run', null)}`;
   const mainId = acts.some(a => a.id === S.main) ? S.main : acts[0].id;
-  const rank = [...S.variants].sort((a, b) => overall(b.id, mainId) - overall(a.id, mainId)), w = rank[0], s = rank[1];
-  const sub = s ? `${overall(w.id, mainId)}% of ${fmt(S.count)} participants, ${overall(w.id, mainId) - overall(s.id, mainId)} points ahead of ${esc(s.name)}.` : `${overall(w.id, mainId)}% of ${fmt(S.count)} participants.`;
+  const rank = ranked(mainId), w = rank[0], s = rank[1], wv = overall(w.id, mainId);
+  const sub = s ? `${wv}% of ${fmt(S.count)} participants, ${Math.abs(wv - overall(s.id, mainId))} points ${isBad(mainId) ? 'below' : 'ahead of'} ${esc(s.name)}.` : `${wv}% of ${fmt(S.count)} participants.`;
   return `<div class="res-head"><div><h1 class="ask">${esc(w.name)} comes top</h1><p class="hint">For “${esc(actName(mainId))}”: ${sub}</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
-  <div class="ctrl"><span class="lbl">Showing</span><div class="pills" id="metrics">${acts.map(a => `<button class="pill" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === S.metric}">${a.id === mainId ? '<span class="star">★</span>' : ''}${esc(a.name)}</button>`).join('')}</div>
-    <span class="lbl">Split by</span><div class="pills" id="splits"><button class="pill" data-act="split" data-id="none" aria-pressed="${S.split === 'none'}">Everyone</button>${S.vars.map(v => `<button class="pill" data-act="split" data-id="${v.id}" aria-pressed="${v.id === S.split}">${esc(v.name)}</button>`).join('')}</div></div>
+  <div class="ctrl"><span class="lbl">Showing</span><div class="pills" id="metrics">${acts.map(a => `<button class="pill ico" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === S.metric}" title="${esc(a.name)}" aria-label="${esc(a.name)}${a.id === mainId ? ', main metric' : ''}">${a.id === mainId ? '<span class="star">★</span>' : ''}${svg(actIcon(a))}</button>`).join('')}<span class="mname" id="mname">${esc(actName(S.metric))}</span></div></div>
   <div id="board">${board(mainId)}</div>`;
 }
 function niceMax(m) { return [5, 10, 20, 25, 40, 50, 60, 80, 100].find(x => x >= m * 1.18) || 100; }
+/* the leaderboard, then one version at a time at full width */
 function board(mainId) {
-  const acts = onActs(), sv = S.vars.find(v => v.id === S.split), m = S.metric;
-  const all = S.variants.flatMap(v => sv ? sv.opts.map((o, i) => val(v.id, m, sv, i)) : [overall(v.id, m)]);
-  const max = niceMax(Math.max(...all, 1));
-  const rowMax = Math.max(...S.variants.flatMap(v => acts.map(a => overall(v.id, a.id))), 1);
-  const best = Math.max(...S.variants.map(v => overall(v.id, m)));
-  let gap = '';
-  if (sv) {
-    let top = null;
-    S.variants.forEach(v => { const xs = sv.opts.map((o, i) => val(v.id, m, sv, i)), hi = Math.max(...xs), lo = Math.min(...xs); if (!top || hi - lo > top.d) top = { v, d: hi - lo, hi, lo, hn: sv.opts[xs.indexOf(hi)].name, ln: sv.opts[xs.indexOf(lo)].name }; });
-    const leads = sv.opts.map((o, i) => { const r = [...S.variants].sort((a, b) => val(b.id, m, sv, i) - val(a.id, m, sv, i))[0]; return `<span class="lead"><span class="badge c-${vcol(r)}">${r.id}</span>${esc(o.name)} ${val(r.id, m, sv, i)}%</span>`; }).join('');
-    gap = `<div class="gap"><span><strong>Biggest gap:</strong> ${esc(top.v.name)}, ${esc(top.hn)} ${top.hi}% against ${esc(top.ln)} ${top.lo}%.</span><span>Highest in each group:</span>${leads}</div>`;
-  }
-  const lift = (x, col) => `<div class="lift${x / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - x / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${x}<small>%</small></span></div>`;
-  const cols = S.variants.map(v => {
-    const col = vcol(v), o = overall(v.id, m);
-    const track = sv ? `<div class="track split">${sv.opts.map((op, i) => `<div class="sub">${lift(val(v.id, m, sv, i), col)}</div>`).join('')}</div><div class="optrow">${sv.opts.map(op => `<span title="${esc(op.name)}">${esc(op.name)}</span>`).join('')}</div>` : `<div class="track"><div class="sub">${lift(o, col)}</div></div>`;
-    const notes = NOTES[v.id] || [{ t: 'No strong pattern yet', p: `Reactions to this version were spread evenly across groups. Try splitting by a variable to look for differences.`, q: '', by: '', m: mainId, s: 'none' }];
-    return `<section class="col"><div class="col-head"><span class="badge c-${col}">${v.id}</span><h3>${esc(v.name)}</h3>${o === best ? '<span class="tag win">Highest</span>' : ''}</div>${track}<p class="cap">${esc(actName(m))}${sv ? ' by ' + esc(sv.name.toLowerCase()) + ` · ${o}% overall` : ''} · scale 0 to ${max}%</p>
-      <div class="spread">${acts.map(a => `<button class="row" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === m}"><span>${esc(a.name)}</span><i class="rb c-${col}" style="transform:scaleX(${Math.max(.015, overall(v.id, a.id) / rowMax).toFixed(3)})"></i><b>${overall(v.id, a.id)}%</b></button>`).join('')}</div>
-      <div class="why"><span class="lbl" style="margin:0">Why</span>${notes.map((n, i) => `<article class="note" style="border-top-color:var(--${col})"><h4>${esc(n.t)}</h4><p>${esc(n.p)}</p>${n.q ? `<blockquote>“${esc(n.q)}”<cite>${esc(n.by)}</cite></blockquote>` : ''}<footer><span>${esc(actName(n.m))}${n.s !== 'none' ? ' × ' + esc((S.vars.find(x => x.id === n.s) || { name: n.s }).name) : ''}</span>${S.actions.some(a => a.id === n.m && a.on) ? `<button class="btn sm" data-act="see" data-m="${n.m}" data-s="${n.s}">Show me</button>` : ''}</footer></article>`).join('')}</div></section>`;
+  const acts = onActs(), m = S.metric, order = ranked(m);
+  if (!S.variants.some(x => x.id === S.view)) S.view = ranked(mainId)[0].id;
+  const v = S.variants.find(x => x.id === S.view), col = vcol(v), o = overall(v.id, m), rank = order.indexOf(v) + 1;
+  const max = niceMax(Math.max(...S.variants.map(x => overall(x.id, m)), 1));
+  const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id))), 1);
+  const wq = S.questions.find(q => q.each), others = S.questions.filter(q => !q.each);
+  const lift = `<div class="lift${o / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - o / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${o}<small>%</small></span></div>`;
+  const notes = NOTES[v.id] || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
+  const rcard = wq ? `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(wq.text)}</span></div>${reasonList(v.id, wq.id, m, col)}</div>` : '';
+  const qcards = others.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
+  const switcher = `<div class="vsw"><span class="lbl">Version</span>${S.variants.map(x => `<button class="vpick" data-act="view" data-id="${x.id}" aria-pressed="${x === v}"><span class="badge c-${vcol(x)}">${x.id}</span>${esc(x.name)}</button>`).join('')}<span class="sp"></span>${S.variants.length > 1 ? '<button class="x" data-act="vstep" data-d="-1" aria-label="Previous version">←</button><button class="x" data-act="vstep" data-d="1" aria-label="Next version">→</button>' : ''}</div>`;
+  return `${leaderboard()}
+  <section class="vd" id="vd">${switcher}
+    <article class="vd-head"><div class="vd-letter c-${col}">${v.id}</div><div class="vd-title"><h2>${esc(v.name)}${rank === 1 ? '<span class="tag win">Best</span>' : ''}</h2><p>${esc(v.ex)}</p></div><div class="vd-rank"><b>${rank}</b><small>of ${S.variants.length}</small></div></article>
+    <div class="vd-grid">
+      <div><div class="track"><div class="sub">${lift}</div></div><p class="cap">${esc(actName(m))} · scale 0 to ${max}%</p>
+        <div class="spread">${acts.map(a => `<button class="row" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === m}" title="${esc(a.name)}" aria-label="${esc(a.name)}, ${overall(v.id, a.id)}%"><span class="ri">${svg(actIcon(a))}</span><i class="rb c-${col}" style="transform:scaleX(${Math.max(.015, overall(v.id, a.id) / rowMax).toFixed(3)})"></i><b>${overall(v.id, a.id)}%</b></button>`).join('')}</div></div>
+      <div class="why"><span class="lbl" style="margin:0">Why</span>${rcard}${qcards}${notes.map(n => `<article class="note" style="border-top-color:var(--${col})"><h4>${esc(n.t)}</h4><p>${esc(n.p)}</p>${n.q ? `<blockquote>“${esc(n.q)}”<cite>${esc(n.by)}</cite></blockquote>` : ''}<footer><span class="nf" title="${esc(actName(n.m))}">${svg(actIcon(act(n.m)))}${n.s !== 'none' ? ' × ' + esc((S.vars.find(x => x.id === n.s) || { name: n.s }).name) : ''}</span>${S.actions.some(a => a.id === n.m && a.on) ? `<button class="btn sm" data-act="see" data-m="${n.m}">Show me</button>` : ''}</footer></article>`).join('')}</div>
+    </div>
+  </section>`;
+}
+/* vertical leaderboard: every version ranked on the metric being shown; a row opens that version below */
+function leaderboard() {
+  const m = S.metric, acts = onActs(), order = ranked(m), wq = S.questions.find(q => q.each);
+  const vals = order.map(v => overall(v.id, m)), max = niceMax(Math.max(...vals, 1));
+  const rows = order.map((v, i) => {
+    const col = vcol(v), x = vals[i], d = x - vals[0], tags = wq ? reasons(v.id, wq.id, m).slice(0, 2) : [];
+    const why = tags.length ? `<div class="lb-why">${tags.map(t => `<button class="rz" data-act="tag" data-k="${esc([v.id, wq.id, m, t.short].join('|'))}" title="${esc(wq.text)}">${svg(ICON.quote)}${esc(t.short)}</button>`).join('')}</div>` : '';
+    const kpis = acts.map(a => { const y = overall(v.id, a.id); return `<button class="kpi${a.id === m ? ' on' : ''}" data-act="metric" data-id="${a.id}" title="${esc(a.name)}: ${y}%" aria-label="${esc(a.name)}: ${y}%">${svg(actIcon(a))}<b>${y}<small>%</small></b></button>`; }).join('');
+    return `<li class="lb-row${i === 0 ? ' first' : ''}" data-act="view" data-id="${v.id}"${v.id === S.view ? ' aria-current="true"' : ''}><span class="lb-rank">${i + 1}</span><button class="lb-letter c-${col}" data-act="view" data-id="${v.id}" aria-label="Show ${esc(v.name)} below">${v.id}</button>
+      <div class="lb-body"><div class="lb-name"><strong>${esc(v.name)}</strong>${i === 0 ? '<span class="tag win">Best</span>' : ''}</div>
+        <div class="lb-score"><span class="lb-bar"><u class="c-${col}" style="width:${(x / max * 100).toFixed(1)}%"></u></span><b>${x}<small>%</small></b></div>${why}</div>
+      <div class="lb-kpis">${kpis}</div>
+      <span class="lb-delta">${i === 0 ? '—' : d === 0 ? '0' : (d > 0 ? '+' : '−') + Math.abs(d)}<small>${i === 0 ? 'leader' : 'pts'}</small></span></li>`;
   }).join('');
-  return `${gap}<div class="cols" style="grid-template-columns:repeat(${S.variants.length},minmax(0,1fr))">${cols}</div>`;
+  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span></div><ol class="lb">${rows}</ol></section>`;
+}
+/* ---------- who gave a reason: profile icons ---------- */
+const isGender = v => v.id === 'gender' || /gender|sex/i.test(v.name);
+const isAge = v => v.id === 'age' || /\bage\b/i.test(v.name);
+const isPet = v => /pet|dog|cat/i.test(v.name + ' ' + v.key);
+function varIcon(v) {
+  if (isGender(v)) return ICON.people;
+  if (isAge(v)) return ICON.hourglass;
+  if (v.id === 'region' || /region|country|location|continent|city/i.test(v.name)) return ICON.globe;
+  return isPet(v) ? ICON.paw : ICON.tag;
+}
+function optIcon(v, i) {
+  const o = v.opts[i]; if (!o) return null;
+  const n = o.name.toLowerCase().trim();
+  if (isGender(v)) return /female|woman|women|girl/.test(n) ? ICON.female : /\bmale|\bman\b|\bmen\b|boy/.test(n) ? ICON.male : ICON.nonbinary;
+  if (isAge(v)) { const m = o.name.match(/\d+/g); if (m) { const lo = +m[0], hi = m[1] ? +m[1] : 120; return hi <= 17 ? ICON.teen : lo >= 55 ? ICON.senior : ICON.person; } }
+  if (isPet(v)) return /^(yes|y|has|own)/.test(n) ? ICON.paw : ICON.nopaw;
+  if (/^(yes|y|true)$/.test(n)) return ICON.yes;
+  if (/^(no|n|false)$/.test(n)) return ICON.no;
+  return null;
+}
+const pctOf = (list, v) => { const c = v.opts.map(() => 0); let t = 0; list.forEach(p => { const i = p[v.id]; if (i != null && c[i] != null) { c[i]++; t++; } }); return c.map(x => t ? x / t : 0); };
+function reasonPanel(r) {
+  const vars = S.vars.filter(filled), gv = vars.find(isGender), who = r.who.map(w => w.profile);
+  /* one icon per person (shaped by gender, coloured like the Participants bars); big groups are scaled down */
+  const per = Math.max(1, Math.ceil(r.who.length / 60)), gi = w => gv ? w.profile[gv.id] : null;
+  const tile = (i, title) => `<i class="c-${i == null ? 'paper' : SEG[i % SEG.length]}" title="${esc(title)}">${svg(i == null || !gv ? ICON.person : optIcon(gv, i))}</i>`;
+  const tiles = per === 1
+    ? [...r.who].sort((a, b) => (gi(a) ?? 99) - (gi(b) ?? 99)).map(w => tile(gi(w), w.persona))
+    : (gv ? shares(Math.ceil(r.who.length / per), gv.opts.map((_, i) => r.who.filter(w => gi(w) === i).length)) : [Math.ceil(r.who.length / per)]).flatMap((c, i) => Array.from({ length: c }, () => tile(gv ? i : null, gv ? gv.opts[i].name : '')));
+  /* each variable: share of these people in each group, against everyone asked the same question */
+  let top = null;
+  const rows = vars.map(v => {
+    const here = pctOf(who, v), all = pctOf(r.base, v);
+    here.forEach((x, i) => { const d = x - all[i]; if (r.n >= 5 && d >= .1 && (!top || d > top.d)) top = { v, i, d, x, all: all[i] }; });
+    const segs = here.map((x, i) => x ? `<span class="c-${SEG[i % SEG.length]}" style="flex:${x.toFixed(3)}" title="${esc(v.opts[i].name)}: ${Math.round(x * 100)}% here, ${Math.round(all[i] * 100)}% overall">${x >= .14 && optIcon(v, i) ? svg(optIcon(v, i)) : ''}${x >= .1 ? `<b>${Math.round(x * 100)}</b>` : ''}</span>` : '').join('');
+    const leg = v.opts.map((o, i) => `<span><i class="c-${SEG[i % SEG.length]}"></i>${optIcon(v, i) ? svg(optIcon(v, i)) : ''}${esc(o.name)}</span>`).join('');
+    return `<div class="wv"><span class="wv-ic" title="${esc(v.name)}">${svg(varIcon(v))}</span><div class="wv-bar" role="img" aria-label="${esc(v.name)}: ${v.opts.map((o, i) => `${o.name} ${Math.round(here[i] * 100)}%`).join(', ')}">${segs}</div><div class="wv-leg">${leg}</div></div>`;
+  }).join('');
+  const lift = top ? `<span class="lift" title="${Math.round(top.x * 100)}% of the people giving this reason, against ${Math.round(top.all * 100)}% overall">${optIcon(top.v, top.i) ? svg(optIcon(top.v, top.i)) : ''}${esc(top.v.name)}: ${esc(top.v.opts[top.i].name)} <b>${Math.round(top.x * 100)}%</b><em>vs ${Math.round(top.all * 100)}%</em></span>` : '';
+  const forms = r.forms.length > 1 ? `<p class="forms">Grouped from ${r.forms.map(f => `“${esc(f.short)}” ${f.n}`).join(' · ')}</p>` : '';
+  return `<div class="rq"><div class="who-h"><b>${fmt(r.n)} ${r.n === 1 ? 'person' : 'people'}</b>${lift}</div>
+    <div class="pict">${tiles.join('')}</div>${per > 1 ? `<p class="forms">1 icon = ${per} people</p>` : ''}
+    ${rows}${forms}${r.quotes.map(q => `<blockquote>“${esc(q.full)}”<cite>${esc(q.by)}</cite></blockquote>`).join('')}</div>`;
+}
+const PANELS = {};
+function reasonList(vid, qid, aid, col) {
+  const rs = reasons(vid, qid, aid);
+  if (!rs.length) return `<p class="rs-none">${aid ? 'Nobody did this.' : 'No answers yet.'}</p>`;
+  const tot = rs.reduce((s, r) => s + r.n, 0), top = rs[0].n;
+  return rs.slice(0, 5).map(r => {
+    const k = [vid, qid, aid || '*', r.short].join('|'), open = S.open === k;
+    PANELS[k] = r;
+    return `<button class="rsn" data-act="tag" data-k="${esc(k)}" aria-expanded="${open}" title="${r.n} of ${tot}"><span>${esc(r.short)}</span><b>${Math.round(r.n / tot * 100)}%</b><i><u class="c-${col}" style="width:${(r.n / top * 100).toFixed(1)}%"></u></i></button>${open ? reasonPanel(r) : ''}`;
+  }).join('');
+}
+function toggleTag(k, reveal) {
+  S.open = S.open === k && !reveal ? null : k;
+  $$('.rq').forEach(e => e.remove());
+  $$('.rsn').forEach(e => { const on = e.dataset.k === S.open; e.setAttribute('aria-expanded', on); if (on && PANELS[e.dataset.k]) e.insertAdjacentHTML('afterend', reasonPanel(PANELS[e.dataset.k])); });
+  const t = reveal && $$('.rsn').find(e => e.dataset.k === k);
+  if (t) t.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 function refreshBoard() {
   const acts = onActs(), mainId = acts.some(a => a.id === S.main) ? S.main : acts[0].id;
   $$('#metrics .pill').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === S.metric));
-  $$('#splits .pill').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === S.split));
+  const mn = $('#mname'); if (mn) mn.textContent = actName(S.metric);
   $('#board').innerHTML = board(mainId);
+}
+const smooth = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+function showVersion(id, scroll) {
+  if (S.view !== id) { S.view = id; S.open = null; refreshBoard(); }
+  if (scroll) $('#vd').scrollIntoView({ block: 'start', behavior: smooth() });
 }
 
 /* ---------- render + events ---------- */
@@ -803,8 +1278,17 @@ document.addEventListener('click', e => {
   else if (a === 'delact') { S.actions = S.actions.filter(q => q.id !== id); if (S.main === id) S.main = (S.actions.find(q => q.on) || {}).id; render(); }
   else if (a === 'run') startRun();
   else if (a === 'metric') { S.metric = id; refreshBoard(); }
-  else if (a === 'split') { S.split = id; refreshBoard(); }
-  else if (a === 'see') { S.metric = b.dataset.m; S.split = S.vars.some(v => v.id === b.dataset.s) ? b.dataset.s : 'none'; refreshBoard(); $('.ctrl').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+  else if (a === 'tag') { const fromLb = !!b.closest('.lb'); if (fromLb) showVersion(b.dataset.k.split('|')[0]); toggleTag(b.dataset.k, fromLb); }
+  else if (a === 'view') showVersion(id, !!b.closest('.lb'));
+  else if (a === 'vstep') { const i = S.variants.findIndex(v => v.id === S.view), n = S.variants.length; showVersion(S.variants[(i + +b.dataset.d + n) % n].id); }
+  else if (a === 'qeach') { const q = S.questions.find(x => x.id === id); q.each = !q.each; b.setAttribute('aria-pressed', q.each); }
+  else if (a === 'qdel') { S.questions = S.questions.filter(x => x.id !== id); render(); }
+  else if (a === 'see') {
+    /* a note's "Show me": switch to its metric and open the top reason, whose panel shows who gave it */
+    S.metric = b.dataset.m; S.open = null; refreshBoard();
+    const wq = S.questions.find(q => q.each), top = wq && reasons(S.view, wq.id, S.metric)[0];
+    if (top) toggleTag([S.view, wq.id, S.metric, top.short].join('|'), true); else $('.ctrl').scrollIntoView({ block: 'start', behavior: smooth() });
+  }
 });
 document.addEventListener('input', e => {
   const t = e.target, b = t.dataset && t.dataset.bind;
@@ -816,10 +1300,12 @@ document.addEventListener('input', e => {
   else if (b === 'count') { const n = parseInt(t.value, 10); if (n > 0) { S.count = Math.min(5000, n); refreshWho(); } }
   else if (b === 'optname') { const v = S.vars.find(x => x.id === t.dataset.id), o = v.opts[+t.dataset.i]; o.name = t.value; delete o.say; if (filled(v)) paintVar(v); refreshWho(); }
   else if (b === 'varname') S.vars.find(x => x.id === t.dataset.id).name = t.value;
+  else if (b === 'qtext') S.questions.find(x => x.id === t.dataset.id).text = t.value;
 });
 document.addEventListener('change', e => {
   const t = e.target;
   if (t.id === 'file') { readFiles(t.files); t.value = ''; }
+  else if (t.dataset.bind === 'qtext' && !t.value.trim()) { S.questions = S.questions.filter(x => x.id !== t.dataset.id); render(); }
   else if (t.dataset.bind === 'count') { S.count = Math.max(10, Math.min(5000, parseInt(t.value, 10) || 500)); t.value = S.count; refreshWho(); }
   else if (t.dataset.bind === 'varname') {
     const v = S.vars.find(x => x.id === t.dataset.id); if (!v.name.trim()) { v.name = 'Variable'; t.value = v.name; }
@@ -830,9 +1316,16 @@ document.addEventListener('change', e => {
 });
 document.addEventListener('focusout', e => { if (e.target.id === 'strip') { readStrip(); e.target.innerHTML = tplHtml(); } });
 document.addEventListener('submit', e => {
+  if (e.target.id === 'addq') {
+    e.preventDefault();
+    const text = $('#newq').value.trim(); if (!text) { $('#newq').focus(); return; }
+    /* "why did you..." style questions are asked once per action by default */
+    S.questions.push({ id: 'q' + S.nextQ++, text, each: /\b(why|choice|chose|choose|decid)/i.test(text) }); render(); $('#newq').focus();
+    return;
+  }
   if (e.target.id !== 'addact') return; e.preventDefault();
   const name = $('#newact').value.trim(); if (!name) { $('#newact').focus(); return; }
-  S.actions.push({ id: 'x' + S.nextAct++, name, on: true, custom: true }); render(); $('#newact').focus();
+  S.actions.push({ id: 'x' + S.nextAct++, name, on: true, custom: true, bad: BAD_RE.test(name) }); render(); $('#newact').focus();
 });
 
 /* divider drag + keys */
