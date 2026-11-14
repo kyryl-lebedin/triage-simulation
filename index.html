@@ -438,38 +438,37 @@ body{font-size:14px}
 .note footer .nf{display:inline-flex;align-items:center;gap:4px}
 .note footer .nf svg{width:15px;height:15px}
 
-/* results: leaderboard */
-.lb-wrap{margin-bottom:18px}
-.lb-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+/* results: the ranking, one big row per version, sized to fill the page */
+.lb-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .lb-head .lbl{margin:0}
 .lb-by{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px}
 .lb-by svg{width:16px;height:16px}
-.lb{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
-.lb-row{display:grid;grid-template-columns:46px 46px minmax(0,1fr) auto 64px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
-.lb-rank,.lb-letter{display:grid;place-items:center;border-right:var(--line);font-weight:900;font-stretch:125%;font-size:24px;font-variant-numeric:tabular-nums}
+.lb-tip{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted)}
+.lb{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
+.lb-row{display:grid;grid-template-columns:84px 84px minmax(0,1fr) 104px 56px;min-height:max(132px,calc((100vh - 330px) / var(--n,3) - 12px));border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:transform 110ms var(--out),box-shadow 110ms var(--out)}
+.lb-row:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.lb-row:active{transform:translate(3px,3px);box-shadow:none}
+.lb-rank,.lb-letter{display:grid;place-items:center;border-right:var(--line);font-weight:900;font-stretch:125%;font-size:48px;line-height:1;font-variant-numeric:tabular-nums}
 .lb-rank{background:var(--ground)}
 .lb-row.first .lb-rank{background:var(--mustard)}
-.lb-body{display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;padding:9px 12px}
-.lb-name{display:flex;align-items:center;gap:8px;min-width:0}
-.lb-name strong{font-weight:900;font-stretch:110%;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lb-score{display:flex;align-items:center;gap:10px}
-.lb-bar{position:relative;flex:1;height:22px;border:var(--line);border-radius:3px;background:var(--ground);overflow:hidden}
+.lb-letter{padding:0;border:0;border-right:var(--line);border-radius:0;font-size:44px;cursor:pointer}
+.lb-body{display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0;padding:16px 22px}
+.lb-name{display:flex;align-items:center;gap:10px;min-width:0}
+.lb-name strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:900;font-stretch:112%;font-size:26px;line-height:1.1}
+.lb-score{display:flex;align-items:center;gap:16px}
+.lb-bar{position:relative;flex:1;height:34px;border:var(--line);border-radius:4px;background:var(--ground);overflow:hidden}
 .lb-bar u,.rsn u{position:absolute;left:0;top:0;bottom:0;display:block;text-decoration:none}
 .lb-bar u{border-right:var(--line)}
-.lb-score b{min-width:64px;text-align:right;font-weight:900;font-stretch:125%;font-size:24px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.lb-score b small,.kpi small{font-size:.55em;margin-left:1px}
-.lb-why{display:flex;flex-wrap:wrap;gap:5px}
-.rz{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px 0 6px;border:1.5px solid var(--ink);border-radius:4px;background:var(--ground);font-weight:800;font-size:12px;white-space:nowrap;transition:transform 110ms var(--out)}
-.rz svg{width:13px;height:13px;flex:none}
+.lb-score b{min-width:100px;text-align:right;font-weight:900;font-stretch:125%;font-size:42px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.lb-score b small{font-size:.5em;margin-left:1px}
+.lb-why{display:flex;flex-wrap:wrap;gap:6px}
+.rz{display:inline-flex;align-items:center;height:28px;padding:0 10px;border:1.5px solid var(--ink);border-radius:4px;background:var(--ground);font-weight:800;font-size:13px;white-space:nowrap;transition:transform 110ms var(--out)}
 .rz:hover{background:var(--mustard)}
 .rz:active{transform:scale(.97)}
-.lb-kpis{display:flex;flex-wrap:wrap;align-content:center;gap:5px;max-width:340px;padding:8px 10px;border-left:var(--line)}
-.kpi{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 7px 0 6px;border:var(--line);border-radius:4px;background:var(--paper);font-weight:900;font-size:12px;font-variant-numeric:tabular-nums;box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
-.kpi svg{width:15px;height:15px;flex:none}
-.kpi:active{transform:translate(2px,2px);box-shadow:none}
-.kpi.on{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(2px,2px)}
-.lb-delta{display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:var(--line);font-weight:900;font-stretch:115%;font-size:17px;font-variant-numeric:tabular-nums}
-.lb-delta small{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lb-delta{display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:var(--line);font-weight:900;font-stretch:115%;font-size:26px;font-variant-numeric:tabular-nums}
+.lb-delta small{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lb-go{display:grid;place-items:center;border-left:var(--line);background:var(--ink);color:var(--paper);font-weight:900;font-size:24px;transition:background 110ms}
+.lb-row:hover .lb-go{background:var(--tomato)}
 
 /* results: why tags */
 .rs{display:flex;flex-direction:column;gap:5px;padding:10px 12px;border:var(--line);border-top-width:6px;border-radius:var(--r);background:var(--paper)}
@@ -512,19 +511,14 @@ body{font-size:14px}
 .rs-none{margin:0;font-size:12px;font-weight:700;color:var(--muted)}
 .rs-head .q-mark{width:22px;min-height:22px;border:var(--line);border-radius:4px;font-size:13px}
 
-/* results: leaderboard rows open a version; one version at a time below */
-.lb-row{cursor:pointer;transition:transform 110ms var(--out)}
-.lb-row[aria-current=true]{box-shadow:none;transform:translate(3px,3px)}
-.lb-row[aria-current=true] .lb-rank{background:var(--ink);color:var(--paper)}
-.lb-row.first[aria-current=true] .lb-rank{background:var(--mustard);color:var(--ink)}
-.lb-letter{padding:0;border:0;border-right:var(--line);border-radius:0;cursor:pointer}
-.vsw{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:26px 0 12px}
-.vsw .lbl{margin:0 4px 0 0}
-.vsw .sp{flex:1}
-.vpick{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 5px;border:var(--line);border-radius:var(--r);background:var(--paper);font-weight:800;font-size:14px;white-space:nowrap;box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
+/* results: one version per page */
+.vtop{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+.vsw{display:flex;flex-wrap:wrap;gap:8px;margin-right:auto}
+.vstep{display:flex;gap:6px}
+.vpick{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 5px;border:var(--line);border-radius:var(--r);background:var(--paper);color:var(--ink);font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap;box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
 .vpick:active{transform:translate(2px,2px);box-shadow:none}
-.vpick[aria-pressed=true]{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(2px,2px)}
-.vpick[aria-pressed=true] .badge{border-color:var(--paper)}
+.vpick[aria-current=page]{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(2px,2px)}
+.vpick[aria-current=page] .badge{border-color:var(--paper)}
 .vd-head{display:grid;grid-template-columns:72px minmax(0,1fr) 84px;margin-bottom:16px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
 .vd-letter{display:grid;place-items:center;border-right:var(--line);font-weight:900;font-stretch:125%;font-size:42px}
 .vd-title{min-width:0;padding:12px 16px}
@@ -540,10 +534,87 @@ body{font-size:14px}
 .vd .row .ri svg{width:18px;height:18px}
 .vd .why{margin-top:0}
 @media (max-width:900px){.vd-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* top bar: contents follow the page column, the stages sit dead centre */
+.top{padding:0}
+.top-in{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;width:100%;max-width:1180px;height:100%;margin:0 auto;padding:0 28px}
+.top-l{display:flex;align-items:center;gap:10px;min-width:0}
+.top-r{display:flex;justify-content:flex-end;min-width:0}
+.top-in .stages{margin:0}
+.top-title{display:flex;align-items:center;height:30px;padding:0 12px;border:var(--line);border-radius:var(--r);background:var(--ink);color:var(--paper);font-weight:700;font-size:13px}
+a.brand{text-decoration:none;color:var(--paper)}
+.homebtn{flex:none}
+
+/* home: every experiment, as identical cards */
+.home-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.xcounts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.xgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.xgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.xgrid{grid-template-columns:minmax(0,1fr)}}
+.xcard{position:relative;display:flex;flex-direction:column;height:284px;padding:14px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden;transition:transform 110ms var(--out),box-shadow 110ms var(--out)}
+.xcard.done{cursor:pointer}
+.xcard.done:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.xcard.done:active{transform:translate(3px,3px);box-shadow:none}
+.xcard.just{animation:landed 900ms var(--out) both}
+@keyframes landed{0%{transform:scale(.96);box-shadow:0 0 0 0 var(--mustard)}40%{transform:scale(1.02);box-shadow:0 0 0 6px var(--mustard)}100%{transform:none;box-shadow:var(--sh)}}
+.xc-top{display:grid;grid-template-columns:40px minmax(0,1fr) auto;grid-template-rows:auto 1fr;align-items:start;gap:3px 10px;height:62px;flex:none}
+.xc-type{display:grid;grid-row:1 / 3;place-items:center;width:40px;height:40px;border:var(--line);border-radius:var(--r)}
+.xc-meta{grid-column:2 / 4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:700;color:var(--muted)}
+.xc-type svg{width:22px;height:22px}
+.xc-name{min-width:0}
+.xc-name h3{display:-webkit-box;margin:0;overflow:hidden;font-weight:900;font-stretch:110%;font-size:16px;line-height:1.15;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tag.xdone{background:var(--leaf);color:#fff}
+.tag.live{position:relative;gap:6px;padding-left:18px;background:var(--mustard)}
+.tag.live::before{content:"";position:absolute;left:6px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--ink);animation:blink 900ms steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.xc-body{display:flex;flex:1;flex-direction:column;gap:10px;min-height:0;padding:12px 0;border-top:1.5px solid #17140f22}
+.xc-win{margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:700}
+.xc-win b{font-weight:900}
+.xc-m{display:inline-flex;align-items:center;gap:4px;margin-left:4px;vertical-align:-2px;font-size:12px;color:var(--muted)}
+.xc-m svg{width:14px;height:14px}
+.xboard{display:flex;flex-direction:column;gap:5px;margin:0;padding:0;list-style:none}
+.xboard li{display:grid;grid-template-columns:16px 22px minmax(0,96px) minmax(0,1fr) 40px;align-items:center;gap:7px;height:22px;font-size:13px;font-weight:800}
+.xboard li.xv{grid-template-columns:22px minmax(0,1fr) auto}
+.xboard li.xmore{display:block;padding-left:23px;font-size:12px;font-weight:700;color:var(--muted)}
+.xboard .xr{font-weight:900;color:var(--muted);text-align:center}
+.xboard li:first-child .xr{color:var(--ink)}
+.xboard .badge{width:22px;height:22px;font-size:12px}
+.xboard .xn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xboard .xmeta{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:700;color:var(--muted)}
+.xboard i{position:relative;height:14px;border:1.5px solid var(--ink);border-radius:3px;background:var(--ground);overflow:hidden}
+.xboard u{position:absolute;left:0;top:0;bottom:0;display:block;border-right:1.5px solid var(--ink)}
+.xboard b{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
+.xc-draft{margin:0;font-size:13px;font-weight:600;color:var(--muted)}
+.xc-foot{display:flex;flex:none;align-items:center;gap:6px;height:40px;padding-top:10px;border-top:1.5px solid #17140f22;font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
+.xc-foot .sp{flex:1}
+.xc-del{flex:none;width:28px;height:28px;margin-right:4px;color:var(--ink)}
+.xc-del svg{width:15px;height:15px}
+.xc-del:hover{background:var(--tomato);border-color:var(--ink);color:#fff}
+.xc-confirm{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:22px;background:var(--paper);animation:rise 180ms var(--out) both}
+.xc-confirm strong{display:-webkit-box;overflow:hidden;font-weight:900;font-stretch:110%;font-size:18px;line-height:1.2;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.xc-confirm p{margin:0;font-size:13px;font-weight:600;color:var(--muted)}
+.xc-cbtns{display:flex;gap:8px;margin-top:6px}
+.xempty{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:28px;border:2px dashed var(--ink);border-radius:var(--r)}
+.xempty strong{font-weight:900;font-stretch:110%;font-size:20px}
+.xempty p{margin:0;color:var(--muted);font-weight:600}
+/* the loading animation */
+.runblk{display:flex;flex-direction:column;gap:8px}
+.page>.runblk{padding:14px 16px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh)}
+.rb-top{display:flex;align-items:baseline;gap:10px}
+.rb-top b{font-weight:900;font-stretch:125%;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.rb-top span{font-size:12px;font-weight:700;color:var(--muted)}
+.rb-top .tag{margin-left:auto;color:var(--ink)}
+.rb-cells{grid-template-columns:repeat(20,1fr);gap:3px}
+.rb-cells i{border-width:1.5px;border-radius:2px}
+.rb-cells i:not(.f){background:var(--ground)}
+.runblk .tick{margin:0;min-height:20px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.runblk .tick .badge{width:18px;height:18px;font-size:10px}
+#runzone>.runblk{margin-top:18px;padding:14px 16px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh)}
 @media (max-width:900px){
-  .lb-row{grid-template-columns:40px 40px minmax(0,1fr) 56px}
-  .lb-delta{order:4}
-  .lb-kpis{order:5;grid-column:1/-1;max-width:none;border-left:0;border-top:var(--line)}
+  .lb-row{grid-template-columns:56px 56px minmax(0,1fr) 72px}
+  .lb-go{display:none}
+  .lb-rank,.lb-letter{font-size:32px}
+  .lb-score b{min-width:70px;font-size:30px}
 }
 </style>
 </head>
@@ -597,7 +668,7 @@ const ICON = {
 const ICON_KW = [
   [/dislike|downvote|thumbs? ?down/i, 'dislike'], [/like|love|heart|upvote|fav/i, 'like'], [/comment|reply|review|message|chat/i, 'comment'],
   [/share|send|forward|repost/i, 'share'], [/save|bookmark|playlist|later/i, 'save'], [/subscri|notif|bell|follow|join|sign ?up|register/i, 'subscribe'],
-  [/replay|rewatch|repeat|again/i, 'replay'], [/buy|purchase|cart|order|checkout|pay/i, 'cart'], [/report|flag|block|hide/i, 'flag'],
+  [/replay|rewatch|repeat|again/i, 'replay'], [/buy|purchase|cart|basket|order|checkout|pay/i, 'cart'], [/report|flag|block|hide/i, 'flag'],
   [/download|install/i, 'download'], [/leave|away|skip|close|exit|bounce|ignore|scroll/i, 'away'], [/click|visit|open|link|tap|website/i, 'link'],
   [/watch|view|keep|stay|read|continue/i, 'keep']
 ];
@@ -610,34 +681,74 @@ const TYPES = {
   blank: { label: 'Blank', sub: 'Anything else', who: 'participants', fields: [['Context', ''], ['What is being compared', '']], drop: 'Drop the versions to compare here', aud: 'audiences for this kind of material' }
 };
 
-const S = {
-  name: 'Which intro keeps viewers?', type: 'youtube',
-  ctx: JSON.parse(JSON.stringify(Object.fromEntries(Object.entries(TYPES).map(([k, t]) => [k, t.fields.map(f => f[1])])))),
-  variants: [
-    { id: 'A', name: 'Cold open', meta: 'Transcript · 0:00 to 0:30', ex: 'Wind is hitting forty. Pepper, stay close. Stay. If we are not off this ridge in ten minutes, we are sleeping on it.' },
-    { id: 'B', name: 'Story first', meta: 'Transcript · 0:00 to 0:30', ex: 'Last spring we lost Juno. She was fourteen, and she had walked every trail with us. This is the trip we promised her, and Pepper is coming in her place.' },
-    { id: 'C', name: 'Payoff tease', meta: 'Transcript · 0:00 to 0:30', ex: 'This is the summit. Four hundred miles, thirty-one days, and one rescue dog who had never seen snow. Here is how we got there.' }
-  ],
-  count: 500,
-  vars: [
-    { id: 'gender', key: 'gender', name: 'Gender', opts: [{ name: 'Female', pct: 60, say: 'female' }, { name: 'Male', pct: 36, say: 'male' }, { name: 'Non-binary / other', pct: 4, say: 'non-binary' }] },
-    { id: 'age', key: 'age', name: 'Age', opts: [['13-17', 6], ['18-24', 22], ['25-34', 31], ['35-44', 21], ['45-54', 12], ['55+', 8]].map(([name, pct]) => ({ name, pct })) },
-    { id: 'region', key: 'region', name: 'Region', opts: ['North America', 'Europe', 'Asia-Pacific', 'Latin America', 'Other'].map(name => ({ name, pct: null })) },
-    { id: 'pet', key: 'pet_status', name: 'Owns a pet', opts: [{ name: 'Yes', pct: 58, say: 'You have a pet at home' }, { name: 'No', pct: 42, say: 'You do not have a pet' }] }
-  ],
-  prompt: 'You are {name}, a {age}-year-old {gender} viewer in {region}. {pet_status}. It is a weeknight and you are scrolling YouTube. You will be shown the first 30 seconds of a video. React the way you honestly would.',
-  actions: [
-    { id: 'keep', name: 'Keep watching past 30s', on: true }, { id: 'like', name: 'Like', on: true }, { id: 'dislike', name: 'Dislike', on: true, bad: true },
-    { id: 'comment', name: 'Comment', on: true }, { id: 'save', name: 'Save', on: true }, { id: 'replay', name: 'Replay intro', on: true },
-    { id: 'share', name: 'Share', on: false }, { id: 'subscribe', name: 'Subscribe', on: false }, { id: 'away', name: 'Click away', on: true, bad: true }
-  ],
-  /* follow-up questions, asked after the participant has reacted. "each": ask once per action they took */
-  questions: [
-    { id: 'why', text: 'Why did you make these choices?', each: true },
-    { id: 'q1', text: 'What would you not like about this video?', each: false }
-  ],
-  main: 'keep', metric: null, view: null, seed: 214, running: false, nextVar: 1, nextAct: 1, nextQ: 2, open: null
-};
+/* ---------- experiments ----------
+   Every experiment is one object. S is the one being edited or viewed; the pages read and write S,
+   and the home page lists them all. status: 'draft' | 'running' | 'done'. */
+const VARS = () => [
+  { id: 'gender', key: 'gender', name: 'Gender', opts: [{ name: 'Female', pct: 60, say: 'female' }, { name: 'Male', pct: 36, say: 'male' }, { name: 'Non-binary / other', pct: 4, say: 'non-binary' }] },
+  { id: 'age', key: 'age', name: 'Age', opts: [['13-17', 6], ['18-24', 22], ['25-34', 31], ['35-44', 21], ['45-54', 12], ['55+', 8]].map(([name, pct]) => ({ name, pct })) },
+  { id: 'region', key: 'region', name: 'Region', opts: ['North America', 'Europe', 'Asia-Pacific', 'Latin America', 'Other'].map(name => ({ name, pct: null })) }
+];
+const ACTIONS = () => [
+  { id: 'keep', name: 'Keep watching past 30s', on: true }, { id: 'like', name: 'Like', on: true }, { id: 'dislike', name: 'Dislike', on: true, bad: true },
+  { id: 'comment', name: 'Comment', on: true }, { id: 'save', name: 'Save', on: true }, { id: 'replay', name: 'Replay intro', on: true },
+  { id: 'share', name: 'Share', on: false }, { id: 'subscribe', name: 'Subscribe', on: false }, { id: 'away', name: 'Click away', on: true, bad: true }
+];
+let nextExp = 1;
+const HOUR = 36e5;
+function newExperiment(over = {}) {
+  return {
+    id: 'e' + nextExp++, name: '', type: 'youtube',
+    ctx: Object.fromEntries(Object.entries(TYPES).map(([k, t]) => [k, t.fields.map(() => '')])),
+    variants: [], count: 500, vars: VARS(),
+    prompt: 'You are {name}, a {age}-year-old {gender} in {region}. You will be shown something. React the way you honestly would.',
+    actions: ACTIONS(),
+    /* follow-up questions, asked after the participant has reacted. "each": ask once per action they took */
+    questions: [{ id: 'why', text: 'Why did you make these choices?', each: true }],
+    main: 'keep', metric: null, open: null, seed: 214, nextVar: 1, nextAct: 1, nextQ: 1,
+    status: 'draft', created: Date.now(), started: null, finished: null, run: null,
+    ...over
+  };
+}
+const EXPS = [
+  newExperiment({
+    /* the demo story: its numbers, notes and reasons are hand-written (demo: true) */
+    demo: true, name: 'Which intro keeps viewers?', status: 'done', created: Date.now() - 3 * HOUR, started: Date.now() - 1.1 * HOUR, finished: Date.now() - HOUR,
+    ctx: JSON.parse(JSON.stringify(Object.fromEntries(Object.entries(TYPES).map(([k, t]) => [k, t.fields.map(f => f[1])])))),
+    variants: [
+      { id: 'A', name: 'Cold open', meta: 'Transcript · 0:00 to 0:30', ex: 'Wind is hitting forty. Pepper, stay close. Stay. If we are not off this ridge in ten minutes, we are sleeping on it.' },
+      { id: 'B', name: 'Story first', meta: 'Transcript · 0:00 to 0:30', ex: 'Last spring we lost Juno. She was fourteen, and she had walked every trail with us. This is the trip we promised her, and Pepper is coming in her place.' },
+      { id: 'C', name: 'Payoff tease', meta: 'Transcript · 0:00 to 0:30', ex: 'This is the summit. Four hundred miles, thirty-one days, and one rescue dog who had never seen snow. Here is how we got there.' }
+    ],
+    vars: [...VARS(), { id: 'pet', key: 'pet_status', name: 'Owns a pet', opts: [{ name: 'Yes', pct: 58, say: 'You have a pet at home' }, { name: 'No', pct: 42, say: 'You do not have a pet' }] }],
+    prompt: 'You are {name}, a {age}-year-old {gender} viewer in {region}. {pet_status}. It is a weeknight and you are scrolling YouTube. You will be shown the first 30 seconds of a video. React the way you honestly would.',
+    questions: [{ id: 'why', text: 'Why did you make these choices?', each: true }, { id: 'q1', text: 'What would you not like about this video?', each: false }],
+    nextQ: 2
+  }),
+  newExperiment({
+    name: 'Which headline gets the click?', type: 'ad', count: 300, status: 'done', created: Date.now() - 52 * HOUR, started: Date.now() - 49 * HOUR, finished: Date.now() - 48 * HOUR,
+    ctx: { ...Object.fromEntries(Object.entries(TYPES).map(([k, t]) => [k, t.fields.map(() => '')])), ad: ['Trailhead Outfitters', 'Summer packs'] },
+    variants: [
+      { id: 'A', name: 'Discount first', meta: 'Headline · 10 words', ex: 'Save 20% on every trail pack this week only.' },
+      { id: 'B', name: 'Story first', meta: 'Headline · 13 words', ex: 'Your summer, sorted: everything you need for the trail, packed in one bag.' }
+    ],
+    actions: [{ id: 'click', name: 'Click through', on: true, custom: true }, { id: 'like', name: 'Like', on: true }, { id: 'save', name: 'Save', on: true }, { id: 'share', name: 'Share', on: true }, { id: 'scroll', name: 'Scroll past', on: true, custom: true, bad: true }],
+    main: 'click', questions: [{ id: 'why', text: 'Why did you make these choices?', each: true }, { id: 'q1', text: 'What would put you off this ad?', each: false }], nextQ: 2
+  }),
+  newExperiment({
+    name: 'Price first or story first?', type: 'product', count: 400, created: Date.now() - 120 * HOUR,
+    ctx: { ...Object.fromEntries(Object.entries(TYPES).map(([k, t]) => [k, t.fields.map(() => '')])), product: ['Trailhead Outfitters', '40L trail pack'] },
+    variants: [
+      { id: 'A', name: 'Price first', meta: 'Product copy · 24 words', ex: '£89, down from £120. A 40-litre pack with a rain cover, hip belt pockets and a frame that carries like it weighs nothing.' },
+      { id: 'B', name: 'Story first', meta: 'Product copy · 26 words', ex: 'We carried this pack 400 miles with a rescue dog. It came back with mud on it and nothing broken. Now it is yours for £89.' }
+    ],
+    actions: [{ id: 'buy', name: 'Add to basket', on: true, custom: true }, { id: 'save', name: 'Save for later', on: true }, { id: 'reviews', name: 'Read reviews', on: true, custom: true }, { id: 'share', name: 'Share', on: true }, { id: 'leave', name: 'Leave page', on: true, custom: true, bad: true }],
+    main: 'buy'
+  })
+];
+let S = EXPS[0];
+/* run a function with another experiment as the current one (the home page summarises them all) */
+function withExp(e, f) { const prev = S; S = e; try { return f(); } finally { S = prev; } }
 const AI = { gender: [60, 36, 4], age: [6, 22, 31, 21, 12, 8], region: [46, 27, 15, 8, 4], pet: [58, 42] };
 
 /* ---------- results data (fake) ---------- */
@@ -838,8 +949,8 @@ const ASK = {
   }
 };
 const ASK_ANY = [[['Nothing stands out', 'Nothing'], 35, ['Honestly, nothing jumps out at me.']], [['Too long', 'Way too long'], 25, ['It could be shorter.']], [['Needs more context', 'More context'], 20, ['I would want to know more before deciding.']], [['Unclear point', 'Point unclear'], 20, ['I am not sure what it is trying to say.']]];
-const whyPool = (vid, a) => (WHY[vid] && WHY[vid][a.id]) || WHY_ANY[a.id] || WHY_ANY.other;
-const askPool = (vid, q) => (ASK[q.id] && ASK[q.id][vid]) || ASK_ANY;
+const whyPool = (vid, a) => (S.demo && WHY[vid] && WHY[vid][a.id]) || WHY_ANY[a.id] || WHY_ANY.other;
+const askPool = (vid, q) => (S.demo && ASK[q.id] && ASK[q.id][vid]) || ASK_ANY;
 /* split n into whole numbers in proportion to the weights */
 function shares(n, w) {
   const t = w.reduce((a, b) => a + b, 0) || 1, raw = w.map(x => x / t * n), out = raw.map(Math.floor);
@@ -851,10 +962,10 @@ function cite(p) {
   const bits = S.vars.filter(v => p.pick[v.id] != null).map(v => v.id === 'pet' ? (p.pick[v.id] === 0 ? 'has a pet' : 'no pet') : sayOpt(v, p.pick[v.id], p.n));
   return [`${p.name} ${'ABCDEFGHJKLMNPRSTW'[Math.floor(hash('s' + p.n) * 18)]}.`, ...bits].join(', ');
 }
-let demo = null;
+const DEMO = {}, TALLY = {}; /* per experiment */
 function demoResponses() {
   const acts = onActs(), sig = JSON.stringify([S.count, S.variants.map(v => v.id), acts.map(a => a.id), S.questions.map(q => [q.id, q.each]), S.vars.map(v => v.opts.map(o => o.pct))]);
-  if (demo && demo.sig === sig) return demo.list;
+  if (DEMO[S.id] && DEMO[S.id].sig === sig) return DEMO[S.id].list;
   const who = Array.from({ length: S.count }, (_, i) => { const p = person(i + 1); return { persona: cite(p), profile: p.pick }; }), list = [];
   S.variants.forEach(v => {
     const ppl = who.map((w, i) => ({ variant: v.id, participant: i + 1, persona: w.persona, profile: w.profile, actions: [], answers: [] }));
@@ -879,29 +990,30 @@ function demoResponses() {
     S.questions.filter(q => !q.each).forEach(q => give(ppl, askPool(v.id, q), q.id, null));
     list.push(...ppl);
   });
-  demo = { sig, list };
+  DEMO[S.id] = { sig, list };
   return list;
 }
-let tallied = null;
 function reasons(vid, qid, aid) {
   const list = demoResponses();
-  if (!tallied || tallied.src !== list) tallied = { src: list, t: tally(list) };
-  return ((tallied.t[vid] || {})[qid] || {})[aid || '*'] || [];
+  if (!TALLY[S.id] || TALLY[S.id].src !== list) TALLY[S.id] = { src: list, t: tally(list) };
+  return ((TALLY[S.id].t[vid] || {})[qid] || {})[aid || '*'] || [];
 }
 /* exposed for whoever wires up the model */
-window.STANDIN = { systemPrompt, stage1Message, stage2Message, stage1Schema, stage2Schema, collect, groupLocal, groupPrompt, groupsFromReply, build, tally, person: n => person(n), state: S };
+window.STANDIN = { systemPrompt, stage1Message, stage2Message, stage1Schema, stage2Schema, collect, groupLocal, groupPrompt, groupsFromReply, build, tally, person: n => person(n), get state() { return S; }, experiments: EXPS };
 
 function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
 function overall(vid, aid) {
   if (aid === 'away') return 100 - overall(vid, 'keep');
-  const b = BASE[vid] && BASE[vid][aid];
+  const b = S.demo && BASE[vid] && BASE[vid][aid];
   if (b != null) return b;
-  if (aid === 'keep') return 52 + Math.round(hash(vid + aid) * 16);
-  return 2 + Math.round(hash(vid + '|' + aid) * 14);
+  if (aid === 'keep') return 52 + Math.round(hash(S.id + vid + aid) * 16);
+  return 2 + Math.round(hash(S.id + vid + '|' + aid) * 14);
 }
 
 /* ---------- helpers ---------- */
-const route = () => { const r = location.hash.replace(/^#\/?/, ''); return ROUTES.some(x => x[0] === r) ? r : 'dataset'; };
+const hashParts = () => location.hash.replace(/^#\/?/, '').split('/');
+const route = () => { const r = hashParts()[0]; return ROUTES.some(x => x[0] === r) ? r : 'home'; };
+const routeArg = () => hashParts()[1] || null; /* e.g. #/results/B -> 'B' */
 const go = r => { location.hash = '#/' + r; };
 const vcol = v => VCOL['ABCDEFGHIJ'.indexOf(v.id) % VCOL.length] || 'ink';
 const filled = v => v.opts.every(o => o.pct != null);
@@ -924,7 +1036,9 @@ function shell(body) {
     const mark = i < idx ? '✓' : i < 3 ? i + 1 : i === 3 ? '▸' : '▦';
     return (i ? `<span class="stage-gap${i === 3 ? ' wide' : ''}"></span>` : '') + `<a class="stage ${cls}" href="#/${k}"${i === idx ? ' aria-current="step"' : ''}><b>${mark}</b>${l}</a>`;
   }).join('');
-  return `<header class="top"><span class="brand">Stand-in</span><nav class="stages" aria-label="Stages">${st}</nav><span class="top-name" id="topName">${esc(S.name)}</span></header><main class="page" id="page">${body}</main>`;
+  /* the bar's contents line up with the page column; the stages sit dead centre */
+  if (r === 'home') return `<header class="top"><div class="top-in"><div class="top-l"><a class="brand" href="#/home">Stand-in</a></div><span class="top-title">Experiments</span><div class="top-r"></div></div></header><main class="page" id="page">${body}</main>`;
+  return `<header class="top"><div class="top-in"><div class="top-l"><a class="brand" href="#/home" title="All experiments">Stand-in</a><a class="btn sm flat homebtn" href="#/home">← All experiments</a></div><nav class="stages" aria-label="Stages">${st}</nav><div class="top-r"><span class="top-name" id="topName">${esc(S.name || 'Untitled experiment')}</span></div></div></header><main class="page" id="page">${body}</main>`;
 }
 function foot(back, next, nextLabel, disabled) {
   return `<div class="foot">${back ? `<a class="btn" href="#/${back}">← Back</a>` : '<span></span>'}${next ? `<button class="btn pri" data-act="go" data-to="${next}"${disabled ? ' disabled' : ''}>${nextLabel} →</button>` : ''}</div>`;
@@ -1082,7 +1196,6 @@ function pgActions() {
 }
 
 /* ---------- 4 run ---------- */
-let runTimer = null;
 function pgRun() {
   const acts = onActs();
   return `<div class="head"><h1 class="ask">Ready to run?</h1><p class="hint">Check the setup. Each participant sees every version and reacts on their own.</p></div>
@@ -1091,59 +1204,137 @@ function pgRun() {
     <div class="sumbox"><header><h3>Participants</h3><a class="btn sm flat" href="#/profiles">Edit</a></header><div class="big">${fmt(S.count)}<small>${TYPES[S.type].who}</small></div><ul class="vlist">${S.vars.map(v => `<li><span class="nm">${esc(v.name)}</span>${filled(v) ? `<span class="mini">${v.opts.map((o, i) => `<i class="c-${SEG[i % SEG.length]}" style="width:${o.pct}%"></i>`).join('')}</span>` : '<span class="mini none" title="Not set, will be skipped"></span>'}</li>`).join('')}</ul></div>
     <div class="sumbox"><header><h3>Actions</h3><a class="btn sm flat" href="#/actions">Edit</a></header><div class="big">${acts.length}<small>allowed</small></div><div class="chips">${acts.map(a => `<span class="${a.id === S.main ? 'm' : ''}">${esc(a.name)}${a.id === S.main ? ' · main' : ''}</span>`).join('')}</div>${S.questions.length ? `<div class="chips">${S.questions.map(q => `<span class="qchip" title="${esc(q.text)}">? ${esc(q.text.length > 36 ? q.text.slice(0, 35) + '…' : q.text)}</span>`).join('')}</div>` : ''}</div>
   </div>
-  <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run">Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions = ${fmt(S.count * S.variants.length)} reactions. Takes a few seconds.</p></div>` : `<div class="go"><p>Add at least one version in Material before running.</p></div>`}</div></section>
+  <div id="runzone">${S.status === 'running' ? `<div class="go"><p>Running now. Follow it from your experiments.</p><a class="btn" href="#/home">← All experiments</a></div>${runBlock(S)}`
+    : S.variants.length ? `<div class="go"><button class="runbtn" data-act="run">Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions = ${fmt(S.count * S.variants.length)} reactions. It runs in the background; you go back to your experiments.</p></div>`
+    : `<div class="go"><p>Add at least one version in Material before running.</p></div>`}</div></section>
   ${foot('actions', null)}`;
 }
-function startRun() {
-  const zone = $('#runzone'), N = 100, total = S.count, dur = 3000, t0 = performance.now();
-  zone.innerHTML = `<div class="prog" role="status"><div class="prog-top"><div class="big" id="pc">0<small>of ${fmt(total)} responded</small></div><span class="tag">Running</span></div><div class="cells">${'<i></i>'.repeat(N)}</div><p class="tick" id="tick"></p></div>`;
-  const cells = $$('.cells i', zone), order = cells.map((_, i) => i).sort((a, b) => hash('c' + a) - hash('c' + b));
-  let done = 0, lastTick = 0;
-  const acts = onActs(), list = demoResponses();
-  clearInterval(runTimer);
-  runTimer = setInterval(() => {
-    const k = Math.min(1, (performance.now() - t0) / dur), target = Math.round(k * N);
-    while (done < target) { const c = cells[order[done]], v = S.variants[done % S.variants.length]; c.className = 'f c-' + vcol(v); done++; }
-    $('#pc').firstChild.textContent = fmt(Math.round(k * total));
-    if (performance.now() - lastTick > 380 && k < 1) {
-      lastTick = performance.now();
-      const r = list[Math.floor(Math.random() * list.length)], seed = r.participant, p = person(seed), v = S.variants.find(x => x.id === r.variant) || S.variants[0];
-      const ans = r.answers.find(x => x.action) || r.answers[0], a = act((ans && ans.action) || r.actions[0] || (acts[0] || {}).id);
-      const age = S.vars.find(x => x.id === 'age'), bits = [p.name]; if (age && p.pick.age != null) bits.push(sayOpt(age, p.pick.age, seed));
-      $('#tick').innerHTML = `${esc(bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> <span class="tk" title="${esc(a.name)}">${svg(actIcon(a))}</span>${ans ? ` “${esc(ans.short)}”` : ''}`;
+/* ---------- running in the background ----------
+   launch() starts a run and goes home. One timer moves every running experiment along and
+   repaints its progress wherever it is on screen (home card, Run page, Results). */
+const CELLS = 60;
+let runLoop = null;
+const runProgress = e => e.status === 'running' ? Math.min(1, (Date.now() - e.run.t0) / e.run.dur) : e.status === 'done' ? 1 : 0;
+function launch(e) {
+  if (!e.variants.length || e.status === 'running') return;
+  if (!EXPS.includes(e)) EXPS.push(e);
+  Object.assign(e, { status: 'running', started: Date.now(), finished: null, open: null, metric: null, run: { t0: Date.now(), dur: 5000 + Math.min(6000, e.count * e.variants.length * 2), tick: 0 } });
+  if (!runLoop) runLoop = setInterval(tickRuns, 100);
+  if (route() === 'home') render(); else go('home');
+}
+function tickRuns() {
+  let finished = false;
+  EXPS.forEach(e => { if (e.status === 'running' && runProgress(e) >= 1) { Object.assign(e, { status: 'done', finished: Date.now(), justDone: Date.now() }); finished = true; } });
+  if (finished && ['home', 'run', 'results'].includes(route())) render(); else paintRuns();
+  if (!EXPS.some(e => e.status === 'running')) { clearInterval(runLoop); runLoop = null; }
+}
+/* the loading animation: cells fill in version colours, and a ticker shows who just answered and why */
+function runBlock(e) {
+  const total = e.count * e.variants.length;
+  return `<div class="runblk" data-run="${e.id}" role="status"><div class="rb-top"><b data-pc>0%</b><span data-cnt>0 of ${fmt(total)} reactions</span></div><div class="cells rb-cells">${'<i></i>'.repeat(CELLS)}</div><p class="tick" data-tick></p></div>`;
+}
+function paintRuns() {
+  $$('[data-run]').forEach(el => {
+    const e = EXPS.find(x => x.id === el.dataset.run); if (!e || e.status !== 'running') return;
+    const k = runProgress(e), total = e.count * e.variants.length, fill = Math.round(k * CELLS);
+    $$('.rb-cells i', el).forEach((c, i) => { const slot = Math.floor(hash(e.id + 'c' + i) * CELLS); if (slot < fill && !c.className) c.className = 'f c-' + vcol(e.variants[i % e.variants.length]); });
+    $('[data-pc]', el).textContent = Math.round(k * 100) + '%';
+    $('[data-cnt]', el).textContent = `${fmt(Math.round(k * total))} of ${fmt(total)} reactions`;
+    if (Date.now() - e.run.tick > 650) {
+      e.run.tick = Date.now();
+      $('[data-tick]', el).innerHTML = withExp(e, () => {
+        const list = demoResponses();
+        let r = list[0];
+        for (let n = 0; n < 15; n++) { r = list[Math.floor(Math.random() * list.length)]; if (r.answers.length) break; } /* prefer someone who gave a reason */
+        const p = person(r.participant), v = e.variants.find(x => x.id === r.variant) || e.variants[0];
+        const ans = r.answers.find(x => x.action) || r.answers[0], a = act((ans && ans.action) || r.actions[0] || S.main);
+        const age = S.vars.find(x => x.id === 'age'), bits = [p.name]; if (age && p.pick.age != null) bits.push(sayOpt(age, p.pick.age, r.participant));
+        return `${esc(bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> <span class="tk" title="${esc(a.name)}">${svg(actIcon(a))}</span>${ans ? ` “${esc(ans.short)}”` : ''}`;
+      });
     }
-    if (k >= 1) { clearInterval(runTimer); runTimer = null; setTimeout(() => { if (route() === 'run') go('results'); }, 250); }
-  }, 40);
+  });
+}
+
+/* ---------- home: every experiment ---------- */
+const ago = t => { const m = Math.round((Date.now() - t) / 6e4); return m < 1 ? 'just now' : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} d ago`; };
+const TCOL = { youtube: 'tomato', ad: 'mustard', product: 'leaf', blank: 'sky' };
+let confirmDel = null; /* id of the experiment whose delete is waiting for a yes */
+function pgHome() {
+  const list = [...EXPS].sort((a, b) => (b.started || b.created) - (a.started || a.created));
+  const n = s => EXPS.filter(e => e.status === s).length;
+  const counts = [['live', n('running'), 'running'], ['xdone', n('done'), 'done'], ['', n('draft'), n('draft') === 1 ? 'draft' : 'drafts']].filter(c => c[1]);
+  return `<div class="head home-head"><div><h1 class="ask">Your experiments</h1><p class="hint">Start a new one, or open a finished one to see which version won and why.</p>${counts.length ? `<div class="xcounts">${counts.map(([c, k, l]) => `<span class="tag ${c}">${k} ${l}</span>`).join('')}</div>` : ''}</div>${list.length ? '<button class="btn pri" data-act="newexp">+ New experiment</button>' : ''}</div>
+  ${list.length ? `<div class="xgrid">${list.map(xcard).join('')}</div>` : `<div class="xempty"><strong>No experiments yet</strong><p>Set up the versions you want to compare, who should react, and what they can do.</p><button class="btn pri" data-act="newexp">+ New experiment</button></div>`}`;
+}
+/* every card has the same shape: header, a fixed-height middle, footer */
+function xcard(e) {
+  return withExp(e, () => {
+    const t = TYPES[e.type], acts = onActs(), mainId = acts.some(a => a.id === e.main) ? e.main : (acts[0] || {}).id;
+    const title = esc(e.name || 'Untitled experiment');
+    const tag = e.status === 'running' ? '<span class="tag live">Running</span>' : e.status === 'done' ? '<span class="tag xdone">Done</span>' : '<span class="tag">Draft</span>';
+    const head = `<header class="xc-top"><span class="xc-type c-${TCOL[e.type] || 'sky'}">${svg(ICON[e.type])}</span><div class="xc-name"><h3 title="${title}">${title}</h3></div>${tag}<span class="xc-meta">${t.label} · ${e.variants.length} version${e.variants.length === 1 ? '' : 's'} · ${fmt(e.count)} ${t.who}</span></header>`;
+    const del = `<button class="x xc-del" data-act="del" data-id="${e.id}" aria-label="Delete ${title}" title="Delete">${svg('<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>')}</button>`;
+    const confirm = confirmDel === e.id ? `<div class="xc-confirm" role="alertdialog" aria-label="Delete ${title}?"><strong>Delete “${title}”?</strong><p>${e.status === 'running' ? 'This stops the run and removes it. ' : ''}Its setup and results are removed. This can't be undone.</p><div class="xc-cbtns"><button class="btn sm" data-act="delno">Cancel</button><button class="btn sm pri" data-act="delyes" data-id="${e.id}">Delete</button></div></div>` : '';
+    const rows = (list, row) => list.slice(0, 3).map(row).join('') + (list.length > 3 ? `<li class="xmore">+${list.length - 3} more</li>` : '');
+    let body, foot, cls = e.status, open = '';
+    if (e.status === 'running') {
+      body = runBlock(e);
+      foot = `<span>Started ${ago(e.started)}</span>`;
+    } else if (e.status === 'done' && mainId) {
+      const order = ranked(mainId), vals = order.map(v => overall(v.id, mainId)), max = niceMax(Math.max(...vals, 1));
+      body = `<p class="xc-win"><b>${esc(order[0].name)}</b> comes top <span class="xc-m">${svg(actIcon(act(mainId)))}${esc(actName(mainId))}</span></p><ol class="xboard">${rows(order, (v, i) => `<li><span class="xr">${i + 1}</span><span class="badge c-${vcol(v)}">${v.id}</span><span class="xn">${esc(v.name)}</span><i><u class="c-${vcol(v)}" style="width:${(vals[i] / max * 100).toFixed(1)}%"></u></i><b>${vals[i]}%</b></li>`)}</ol>`;
+      foot = `<span>Ran ${ago(e.finished)}</span><span class="sp"></span><button class="btn sm" data-act="rerun" data-id="${e.id}">Run again</button><button class="btn sm pri" data-act="open" data-id="${e.id}">View results →</button>`;
+      if (e.justDone && Date.now() - e.justDone < 2500) cls += ' just';
+      if (!confirm) open = ` data-act="open" data-id="${e.id}"`;
+    } else {
+      body = `<p class="xc-win">${e.variants.length ? 'Not run yet' : 'No versions yet'}</p>${e.variants.length ? `<ol class="xboard">${rows(e.variants, v => `<li class="xv"><span class="badge c-${vcol(v)}">${v.id}</span><span class="xn">${esc(v.name)}</span><span class="xmeta">${esc(v.meta || '')}</span></li>`)}</ol>` : '<p class="xc-draft">Add the versions you want to compare.</p>'}`;
+      foot = `<span>Created ${ago(e.created)}</span><span class="sp"></span><button class="btn sm" data-act="edit" data-id="${e.id}">Continue setup</button><button class="btn sm pri" data-act="rerun" data-id="${e.id}"${e.variants.length ? '' : ' disabled'}>Run</button>`;
+    }
+    return `<article class="xcard ${cls}"${open}>${head}<div class="xc-body">${body}</div><footer class="xc-foot">${del}${foot}</footer>${confirm}</article>`;
+  });
+}
+function deleteExperiment(id) {
+  const i = EXPS.findIndex(e => e.id === id);
+  if (i < 0) return;
+  EXPS.splice(i, 1);
+  delete DEMO[id]; delete TALLY[id];
+  if (S.id === id) S = EXPS[0] || newExperiment();
 }
 
 /* ---------- 5 results ---------- */
 function pgResults() {
   const acts = onActs();
   if (!acts.some(a => a.id === S.metric)) S.metric = (acts.find(a => a.id === S.main) || acts[0] || {}).id;
+  if (S.status === 'running') return `<div class="head"><h1 class="ask">Still running</h1><p class="hint">Results open here when it finishes. You can leave this page; it keeps going.</p></div>${runBlock(S)}<div class="foot"><a class="btn" href="#/home">← All experiments</a><span></span></div>`;
+  if (S.status !== 'done' && S.variants.length) return `<div class="head"><h1 class="ask">Not run yet</h1><p class="hint">Run it to see which version wins and why.</p></div><div class="go"><button class="runbtn" data-act="run">Run simulation</button><p>It runs in the background; you go back to your experiments.</p></div>${foot('run', null)}`;
   if (!S.variants.length || !acts.length) return `<div class="head"><h1 class="ask">Nothing to show yet</h1><p class="hint">Add at least one version and one action, then run the simulation.</p></div>${foot('run', null)}`;
   const mainId = acts.some(a => a.id === S.main) ? S.main : acts[0].id;
+  const ctrl = `<div class="ctrl"><span class="lbl">Showing</span><div class="pills" id="metrics">${acts.map(a => `<button class="pill ico" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === S.metric}" title="${esc(a.name)}" aria-label="${esc(a.name)}${a.id === mainId ? ', main metric' : ''}">${a.id === mainId ? '<span class="star">★</span>' : ''}${svg(actIcon(a))}</button>`).join('')}<span class="mname" id="mname">${esc(actName(S.metric))}</span></div></div>`;
+  /* #/results/B: one version on its own page */
+  const vid = routeArg();
+  if (vid && S.variants.some(v => v.id === vid)) {
+    return `<div class="vtop"><a class="btn" href="#/results">← Ranking</a><div class="vsw">${S.variants.map(x => `<a class="vpick" href="#/results/${x.id}" aria-current="${x.id === vid ? 'page' : 'false'}"><span class="badge c-${vcol(x)}">${x.id}</span>${esc(x.name)}</a>`).join('')}</div>${S.variants.length > 1 ? `<span class="vstep"><button class="x" data-act="vstep" data-d="-1" aria-label="Previous version">←</button><button class="x" data-act="vstep" data-d="1" aria-label="Next version">→</button></span>` : ''}</div>
+    ${ctrl}<div id="board">${versionView(vid, mainId)}</div>`;
+  }
+  /* #/results: the ranking fills the page; each version opens on its own page */
   const rank = ranked(mainId), w = rank[0], s = rank[1], wv = overall(w.id, mainId);
   const sub = s ? `${wv}% of ${fmt(S.count)} participants, ${Math.abs(wv - overall(s.id, mainId))} points ${isBad(mainId) ? 'below' : 'ahead of'} ${esc(s.name)}.` : `${wv}% of ${fmt(S.count)} participants.`;
-  return `<div class="res-head"><div><h1 class="ask">${esc(w.name)} comes top</h1><p class="hint">For “${esc(actName(mainId))}”: ${sub}</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
-  <div class="ctrl"><span class="lbl">Showing</span><div class="pills" id="metrics">${acts.map(a => `<button class="pill ico" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === S.metric}" title="${esc(a.name)}" aria-label="${esc(a.name)}${a.id === mainId ? ', main metric' : ''}">${a.id === mainId ? '<span class="star">★</span>' : ''}${svg(actIcon(a))}</button>`).join('')}<span class="mname" id="mname">${esc(actName(S.metric))}</span></div></div>
-  <div id="board">${board(mainId)}</div>`;
+  return `<div class="res-head"><div><h1 class="ask">${esc(w.name)} comes top</h1><p class="hint">For “${esc(actName(mainId))}”: ${sub}</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><button class="btn pri" data-act="run">Run again</button></div></div>
+  ${ctrl}<div id="board">${leaderboard()}</div>`;
 }
 function niceMax(m) { return [5, 10, 20, 25, 40, 50, 60, 80, 100].find(x => x >= m * 1.18) || 100; }
-/* the leaderboard, then one version at a time at full width */
-function board(mainId) {
+/* one version: chart and every metric on the left, everything about why on the right */
+function versionView(vid, mainId) {
   const acts = onActs(), m = S.metric, order = ranked(m);
-  if (!S.variants.some(x => x.id === S.view)) S.view = ranked(mainId)[0].id;
-  const v = S.variants.find(x => x.id === S.view), col = vcol(v), o = overall(v.id, m), rank = order.indexOf(v) + 1;
+  const v = S.variants.find(x => x.id === vid), col = vcol(v), o = overall(v.id, m), rank = order.indexOf(v) + 1;
   const max = niceMax(Math.max(...S.variants.map(x => overall(x.id, m)), 1));
   const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id))), 1);
   const eachQs = S.questions.filter(q => q.each), others = S.questions.filter(q => !q.each);
   const lift = `<div class="lift${o / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - o / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${o}<small>%</small></span></div>`;
-  const notes = NOTES[v.id] || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
+  const notes = (S.demo && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
   const rcard = eachQs.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, m, col)}</div>`).join('');
   const qcards = others.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
-  const switcher = `<div class="vsw"><span class="lbl">Version</span>${S.variants.map(x => `<button class="vpick" data-act="view" data-id="${x.id}" aria-pressed="${x === v}"><span class="badge c-${vcol(x)}">${x.id}</span>${esc(x.name)}</button>`).join('')}<span class="sp"></span>${S.variants.length > 1 ? '<button class="x" data-act="vstep" data-d="-1" aria-label="Previous version">←</button><button class="x" data-act="vstep" data-d="1" aria-label="Next version">→</button>' : ''}</div>`;
-  return `${leaderboard()}
-  <section class="vd" id="vd">${switcher}
+  return `<section class="vd" id="vd">
     <article class="vd-head"><div class="vd-letter c-${col}">${v.id}</div><div class="vd-title"><h2>${esc(v.name)}${rank === 1 ? '<span class="tag win">Best</span>' : ''}</h2><p>${esc(v.ex)}</p></div><div class="vd-rank"><b>${rank}</b><small>of ${S.variants.length}</small></div></article>
     <div class="vd-grid">
       <div><div class="track"><div class="sub">${lift}</div></div><p class="cap">${esc(actName(m))} · scale 0 to ${max}%</p>
@@ -1152,21 +1343,20 @@ function board(mainId) {
     </div>
   </section>`;
 }
-/* vertical leaderboard: every version ranked on the metric being shown; a row opens that version below */
+/* the ranking: big rows that fill the page; each row opens that version on its own page */
 function leaderboard() {
-  const m = S.metric, acts = onActs(), order = ranked(m), wq = S.questions.find(q => q.each);
+  const m = S.metric, order = ranked(m), wq = S.questions.find(q => q.each);
   const vals = order.map(v => overall(v.id, m)), max = niceMax(Math.max(...vals, 1));
   const rows = order.map((v, i) => {
-    const col = vcol(v), x = vals[i], d = x - vals[0], tags = wq ? reasons(v.id, wq.id, m).slice(0, 2) : [];
-    const why = tags.length ? `<div class="lb-why">${tags.map(t => `<button class="rz" data-act="tag" data-k="${esc([v.id, wq.id, m, t.short].join('|'))}" title="${esc(wq.text)}">${svg(ICON.quote)}${esc(t.short)}</button>`).join('')}</div>` : '';
-    const kpis = acts.map(a => { const y = overall(v.id, a.id); return `<button class="kpi${a.id === m ? ' on' : ''}" data-act="metric" data-id="${a.id}" title="${esc(a.name)}: ${y}%" aria-label="${esc(a.name)}: ${y}%">${svg(actIcon(a))}<b>${y}<small>%</small></b></button>`; }).join('');
-    return `<li class="lb-row${i === 0 ? ' first' : ''}" data-act="view" data-id="${v.id}"${v.id === S.view ? ' aria-current="true"' : ''}><span class="lb-rank">${i + 1}</span><button class="lb-letter c-${col}" data-act="view" data-id="${v.id}" aria-label="Show ${esc(v.name)} below">${v.id}</button>
+    const col = vcol(v), x = vals[i], d = x - vals[0], tags = wq ? reasons(v.id, wq.id, m).slice(0, 3) : [];
+    const why = tags.length ? `<div class="lb-why">${tags.map(t => `<button class="rz" data-act="tag" data-k="${esc([v.id, wq.id, m, t.short].join('|'))}" title="${esc(wq.text)}">${esc(t.short)}</button>`).join('')}</div>` : '';
+    return `<li class="lb-row${i === 0 ? ' first' : ''}" data-act="view" data-id="${v.id}"><span class="lb-rank">${i + 1}</span><button class="lb-letter c-${col}" data-act="view" data-id="${v.id}" aria-label="Open ${esc(v.name)}">${v.id}</button>
       <div class="lb-body"><div class="lb-name"><strong>${esc(v.name)}</strong>${i === 0 ? '<span class="tag win">Best</span>' : ''}</div>
         <div class="lb-score"><span class="lb-bar"><u class="c-${col}" style="width:${(x / max * 100).toFixed(1)}%"></u></span><b>${x}<small>%</small></b></div>${why}</div>
-      <div class="lb-kpis">${kpis}</div>
-      <span class="lb-delta">${i === 0 ? '—' : d === 0 ? '0' : (d > 0 ? '+' : '−') + Math.abs(d)}<small>${i === 0 ? 'leader' : 'pts'}</small></span></li>`;
+      <span class="lb-delta">${i === 0 ? '—' : d === 0 ? '0' : (d > 0 ? '+' : '−') + Math.abs(d)}<small>${i === 0 ? 'leader' : 'pts'}</small></span>
+      <span class="lb-go" aria-hidden="true">→</span></li>`;
   }).join('');
-  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span></div><ol class="lb">${rows}</ol></section>`;
+  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span><span class="lb-tip">Click a version for the details</span></div><ol class="lb" style="--n:${order.length}">${rows}</ol></section>`;
 }
 /* ---------- who gave a reason: profile icons ---------- */
 const isGender = v => v.id === 'gender' || /gender|sex/i.test(v.name);
@@ -1234,24 +1424,24 @@ function refreshBoard() {
   const acts = onActs(), mainId = acts.some(a => a.id === S.main) ? S.main : acts[0].id;
   $$('#metrics .pill').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === S.metric));
   const mn = $('#mname'); if (mn) mn.textContent = actName(S.metric);
-  $('#board').innerHTML = board(mainId);
+  const vid = routeArg();
+  $('#board').innerHTML = vid && S.variants.some(v => v.id === vid) ? versionView(vid, mainId) : leaderboard();
 }
 const smooth = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-function showVersion(id, scroll) {
-  if (S.view !== id) { S.view = id; S.open = null; refreshBoard(); }
-  if (scroll) $('#vd').scrollIntoView({ block: 'start', behavior: smooth() });
-}
+let reveal = null; /* a reason to open and scroll to once a version's page has rendered */
+function openVersion(id, tagKey) { S.open = tagKey || null; reveal = tagKey || null; go('results/' + id); }
 
 /* ---------- render + events ---------- */
-const PAGES = { dataset: pgDataset, profiles: pgProfiles, actions: pgActions, run: pgRun, results: pgResults };
+const PAGES = { home: pgHome, dataset: pgDataset, profiles: pgProfiles, actions: pgActions, run: pgRun, results: pgResults };
 let lastRoute = null;
 function render() {
-  const r = route(), y = r === lastRoute ? scrollY : 0;
-  if (r !== 'run' && runTimer) { clearInterval(runTimer); runTimer = null; }
+  const r = route(), key = location.hash, same = key === lastRoute, y = same ? scrollY : 0;
   $('#app').innerHTML = shell(PAGES[r]());
   if (r === 'profiles') S.vars.forEach(paintVar);
-  if (r === lastRoute) { $$('#page>*').forEach(e => e.style.animation = 'none'); }
-  scrollTo(0, y); lastRoute = r;
+  paintRuns();
+  if (same) { $$('#page>*').forEach(e => e.style.animation = 'none'); }
+  scrollTo(0, y); lastRoute = key;
+  if (reveal) { const t = $$('.rsn').find(e => e.dataset.k === reveal); reveal = null; if (t) t.scrollIntoView({ block: 'center', behavior: smooth() }); }
 }
 addEventListener('hashchange', render);
 
@@ -1276,18 +1466,24 @@ document.addEventListener('click', e => {
   else if (a === 'toggle') { const x = S.actions.find(q => q.id === id); if (x.id === S.main) return; x.on = !x.on; render(); }
   else if (a === 'main') { S.main = id; render(); }
   else if (a === 'delact') { S.actions = S.actions.filter(q => q.id !== id); if (S.main === id) S.main = (S.actions.find(q => q.on) || {}).id; render(); }
-  else if (a === 'run') startRun();
+  else if (a === 'run') launch(S);
+  else if (a === 'newexp') { const e = newExperiment(); EXPS.push(e); S = e; go('dataset'); }
+  else if (a === 'open' || a === 'edit') { const e = EXPS.find(x => x.id === id); if (!e) return; S = e; if (a === 'open') { S.open = null; go('results'); } else go('dataset'); }
+  else if (a === 'rerun') { const e = EXPS.find(x => x.id === id); if (e) launch(e); }
+  else if (a === 'del') { confirmDel = id; render(); const c = $('.xc-confirm .btn'); if (c) c.focus(); }
+  else if (a === 'delno') { confirmDel = null; render(); }
+  else if (a === 'delyes') { deleteExperiment(id); confirmDel = null; render(); }
   else if (a === 'metric') { S.metric = id; refreshBoard(); }
-  else if (a === 'tag') { const fromLb = !!b.closest('.lb'); if (fromLb) showVersion(b.dataset.k.split('|')[0]); toggleTag(b.dataset.k, fromLb); }
-  else if (a === 'view') showVersion(id, !!b.closest('.lb'));
-  else if (a === 'vstep') { const i = S.variants.findIndex(v => v.id === S.view), n = S.variants.length; showVersion(S.variants[(i + +b.dataset.d + n) % n].id); }
+  else if (a === 'tag') { if (b.closest('.lb')) openVersion(b.dataset.k.split('|')[0], b.dataset.k); else toggleTag(b.dataset.k); }
+  else if (a === 'view') openVersion(id);
+  else if (a === 'vstep') { const i = S.variants.findIndex(v => v.id === routeArg()), n = S.variants.length; openVersion(S.variants[(i + +b.dataset.d + n) % n].id); }
   else if (a === 'qeach') { const q = S.questions.find(x => x.id === id); q.each = !q.each; b.setAttribute('aria-pressed', q.each); }
   else if (a === 'qdel') { S.questions = S.questions.filter(x => x.id !== id); render(); }
   else if (a === 'see') {
     /* a note's "Show me": switch to its metric and open the top reason, whose panel shows who gave it */
     S.metric = b.dataset.m; S.open = null; refreshBoard();
-    const wq = S.questions.find(q => q.each), top = wq && reasons(S.view, wq.id, S.metric)[0];
-    if (top) toggleTag([S.view, wq.id, S.metric, top.short].join('|'), true); else $('.ctrl').scrollIntoView({ block: 'start', behavior: smooth() });
+    const vid = routeArg(), wq = S.questions.find(q => q.each), top = vid && wq && reasons(vid, wq.id, S.metric)[0];
+    if (top) toggleTag([vid, wq.id, S.metric, top.short].join('|'), true); else $('.ctrl').scrollIntoView({ block: 'start', behavior: smooth() });
   }
 });
 document.addEventListener('input', e => {
@@ -1348,6 +1544,7 @@ document.addEventListener('keydown', e => {
   const v = S.vars.find(x => x.id === h.parentElement.dataset.bar), i = +h.dataset.hand;
   setPair(v, i, v.opts[i].pct + d * (e.shiftKey ? 5 : 1));
 }, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && confirmDel) { confirmDel = null; render(); } });
 
 /* drag placeholders into the strip */
 document.addEventListener('dragstart', e => {
@@ -1371,7 +1568,7 @@ document.addEventListener('drop', e => {
   else if (e.dataTransfer.files.length && e.target.closest('#drop')) { e.preventDefault(); readFiles(e.dataTransfer.files); }
 });
 
-if (!location.hash) history.replaceState(null, '', '#/dataset');
+if (!location.hash) history.replaceState(null, '', '#/home');
 render();
 </script>
 </body>
