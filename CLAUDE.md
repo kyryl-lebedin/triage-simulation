@@ -36,9 +36,7 @@ The point is not only the numbers but the reasons behind them: the user should c
 
 - A **generalisable UI** covering the flow above: scenario creation, upload, participant variables, actions, run, dashboard.
 - **YouTube is the demo case.** Use it for example data and copy, but do not bake YouTube-specific assumptions into the structure.
-- **The chosen UI base is "Tactile, compact"**, in `index.html` on branch `ui-v3` (folder `triage-ui-v3`). It is a single self-contained clickable prototype with fixed demo numbers and no real simulation behind it. Build on this; keep its look (flat colour blocks, ink outlines, hard offset shadows, drag-to-resize distribution bars, press-in tiles) and its compact sizing.
-- Branches `ui-v1` and `ui-v2` hold rejected directions and can be removed.
-
+- **The chosen UI base is "Tactile, compact"**, in `index.html` at the top of this repo. It is a single self-contained clickable prototype with fixed demo numbers and no real simulation behind it. Build on this; keep its look (flat colour blocks, ink outlines, hard offset shadows, drag-to-resize distribution bars, press-in tiles) and its compact sizing.
 ## Team workflow
 
 - Nobody commits straight to `main`; work on a branch and merge small and often.
