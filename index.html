@@ -488,9 +488,9 @@ body{font-size:14px}
 .rq{display:flex;flex-direction:column;gap:8px;margin:2px 0 6px;padding:10px;border:1.5px solid var(--ink);border-radius:4px;background:var(--ground);animation:rise 200ms var(--out) both}
 .who-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
 .who-h>b{font-weight:900;font-stretch:115%;font-size:15px}
-.lift{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border:1.5px solid var(--ink);border-radius:4px;background:var(--mustard);font-weight:800;font-size:12px;white-space:nowrap}
-.lift svg{width:14px;height:14px;flex:none}
-.lift em{font-style:normal;font-weight:700;opacity:.7}
+.over{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border:1.5px solid var(--ink);border-radius:4px;background:var(--mustard);font-weight:800;font-size:12px;white-space:nowrap}
+.over svg{width:14px;height:14px;flex:none}
+.over em{font-style:normal;font-weight:700;opacity:.7}
 .pict{display:flex;flex-wrap:wrap;gap:3px}
 .pict i{display:grid;place-items:center;width:20px;height:20px;border:1.5px solid var(--ink);border-radius:3px}
 .pict svg{width:13px;height:13px}
@@ -1136,10 +1136,10 @@ function board(mainId) {
   const v = S.variants.find(x => x.id === S.view), col = vcol(v), o = overall(v.id, m), rank = order.indexOf(v) + 1;
   const max = niceMax(Math.max(...S.variants.map(x => overall(x.id, m)), 1));
   const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id))), 1);
-  const wq = S.questions.find(q => q.each), others = S.questions.filter(q => !q.each);
+  const eachQs = S.questions.filter(q => q.each), others = S.questions.filter(q => !q.each);
   const lift = `<div class="lift${o / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - o / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${o}<small>%</small></span></div>`;
   const notes = NOTES[v.id] || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
-  const rcard = wq ? `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(wq.text)}</span></div>${reasonList(v.id, wq.id, m, col)}</div>` : '';
+  const rcard = eachQs.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, m, col)}</div>`).join('');
   const qcards = others.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
   const switcher = `<div class="vsw"><span class="lbl">Version</span>${S.variants.map(x => `<button class="vpick" data-act="view" data-id="${x.id}" aria-pressed="${x === v}"><span class="badge c-${vcol(x)}">${x.id}</span>${esc(x.name)}</button>`).join('')}<span class="sp"></span>${S.variants.length > 1 ? '<button class="x" data-act="vstep" data-d="-1" aria-label="Previous version">←</button><button class="x" data-act="vstep" data-d="1" aria-label="Next version">→</button>' : ''}</div>`;
   return `${leaderboard()}
@@ -1206,7 +1206,7 @@ function reasonPanel(r) {
     const leg = v.opts.map((o, i) => `<span><i class="c-${SEG[i % SEG.length]}"></i>${optIcon(v, i) ? svg(optIcon(v, i)) : ''}${esc(o.name)}</span>`).join('');
     return `<div class="wv"><span class="wv-ic" title="${esc(v.name)}">${svg(varIcon(v))}</span><div class="wv-bar" role="img" aria-label="${esc(v.name)}: ${v.opts.map((o, i) => `${o.name} ${Math.round(here[i] * 100)}%`).join(', ')}">${segs}</div><div class="wv-leg">${leg}</div></div>`;
   }).join('');
-  const lift = top ? `<span class="lift" title="${Math.round(top.x * 100)}% of the people giving this reason, against ${Math.round(top.all * 100)}% overall">${optIcon(top.v, top.i) ? svg(optIcon(top.v, top.i)) : ''}${esc(top.v.name)}: ${esc(top.v.opts[top.i].name)} <b>${Math.round(top.x * 100)}%</b><em>vs ${Math.round(top.all * 100)}%</em></span>` : '';
+  const lift = top ? `<span class="over" title="${Math.round(top.x * 100)}% of the people giving this reason, against ${Math.round(top.all * 100)}% overall">${optIcon(top.v, top.i) ? svg(optIcon(top.v, top.i)) : ''}${esc(top.v.name)}: ${esc(top.v.opts[top.i].name)} <b>${Math.round(top.x * 100)}%</b><em>vs ${Math.round(top.all * 100)}%</em></span>` : '';
   const forms = r.forms.length > 1 ? `<p class="forms">Grouped from ${r.forms.map(f => `“${esc(f.short)}” ${f.n}`).join(' · ')}</p>` : '';
   return `<div class="rq"><div class="who-h"><b>${fmt(r.n)} ${r.n === 1 ? 'person' : 'people'}</b>${lift}</div>
     <div class="pict">${tiles.join('')}</div>${per > 1 ? `<p class="forms">1 icon = ${per} people</p>` : ''}
