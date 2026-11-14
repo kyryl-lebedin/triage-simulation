@@ -72,16 +72,6 @@ a.btn.pri{color:#fff}
 /* material */
 .name-in{width:100%;border:0;border-bottom:4px solid var(--ink);background:transparent;font-weight:900;font-stretch:112%;font-size:38px;letter-spacing:-.015em;padding:4px 0 8px;border-radius:0}
 .name-in:focus{outline:0;border-bottom-color:var(--cobalt)}
-.types{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:14px}
-.type{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:22px;height:118px;padding:14px 16px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);text-align:left;font-weight:800;font-size:18px;transition:transform 110ms var(--out)}
-.type svg{width:30px;height:30px}
-.type small{display:block;font-weight:600;font-size:12px;opacity:.75;letter-spacing:.02em}
-.type[aria-pressed=true]{background:var(--cobalt);color:#fff;box-shadow:none;transform:translate(4px,4px)}
-.type:active{transform:translate(4px,4px);box-shadow:none}
-.ctx{display:grid;grid-template-columns:1fr 2fr;gap:14px;margin-top:18px}
-.field{display:flex;flex-direction:column;gap:5px}
-.field span{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.field input{height:46px;padding:0 12px;border:var(--line);border-radius:var(--r);background:var(--paper);font-weight:600}
 .slabs{display:flex;flex-direction:column;gap:12px}
 .slab{display:grid;grid-template-columns:34px 76px 1fr auto;align-items:stretch;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
 .slab.over{outline:3px dashed var(--cobalt);outline-offset:3px}
@@ -93,8 +83,6 @@ a.btn.pri{color:#fff}
 .slab-name{width:100%;border:0;background:transparent;font-weight:900;font-size:22px;font-stretch:110%;padding:0;border-bottom:2px solid transparent}
 .slab-name:hover{border-bottom-color:#17140f33}
 .slab-name:focus{outline:0;border-bottom-color:var(--cobalt)}
-.slab-ex{margin:6px 0 6px;font-size:15px;color:#3b372f;max-width:78ch}
-.slab-meta{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.03em}
 .slab-tools{display:flex;align-items:center;gap:6px;padding:0 14px}
 .drop{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 24px;border:2px dashed var(--ink);border-radius:var(--r);background:transparent}
 .drop.hot{background:var(--mustard)}
@@ -304,20 +292,11 @@ body{font-size:14px}
 
 /* material */
 .name-in{font-size:28px;border-bottom-width:3px}
-.types{gap:10px}
-.type{height:84px;padding:10px 12px;font-size:15px;gap:10px}
-.type svg{width:22px;height:22px}
-.type small{font-size:11px}
-.type[aria-pressed=true],.type:active{transform:translate(3px,3px)}
-.ctx{margin-top:12px;gap:10px}
-.field input{height:36px}
 .slabs{gap:8px}
 .slab{grid-template-columns:28px 56px 1fr auto}
 .letter{font-size:30px}
 .slab-body{padding:9px 14px}
 .slab-name{font-size:17px}
-.slab-ex{font-size:13px;margin:3px 0}
-.slab-meta{font-size:11px}
 .slab-tools{padding:0 10px}
 .drop{padding:14px 16px}
 .drop strong{font-size:16px}
@@ -368,7 +347,6 @@ body{font-size:14px}
 .maintag{top:10px;right:10px;height:20px;font-size:10px}
 .tile.add{height:auto;min-height:96px;padding:10px;gap:8px}
 .tile.add input{height:32px;flex:none}
-.type svg{flex:none}
 
 /* run */
 .sum{gap:10px}
@@ -410,6 +388,118 @@ body{font-size:14px}
 .note h4{font-size:15px}
 .note p{font-size:13px;margin-bottom:8px}
 .note blockquote{font-size:13px;padding:8px 10px;margin-bottom:8px}
+
+/* home */
+a.brand{text-decoration:none;transition:transform 110ms var(--out)}
+a.brand:active{transform:scale(.97)}
+.tag.st-done{background:var(--leaf);color:#fff}
+.tag.st-running{background:var(--mustard);color:var(--ink)}
+.tag.st-draft{background:var(--paper);color:var(--ink)}
+.hname{display:block;font-weight:900;font-stretch:112%;font-size:18px;line-height:1.14}
+.hsub{display:block;margin-top:3px;font-size:12px;font-weight:600;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hmeta{display:block;margin-top:8px;font-size:12px;font-weight:700;color:var(--muted)}
+.hwin{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hscore{margin-left:auto;font-weight:900;font-stretch:125%;font-size:22px;line-height:1;font-variant-numeric:tabular-nums}
+.hprog{flex:1;min-width:40px;height:11px;border:var(--line);border-radius:3px;overflow:hidden;background:var(--paper)}
+.hprog i{display:block;height:100%;background:var(--mustard);border-right:var(--line)}
+.hpc{font-weight:900;font-variant-numeric:tabular-nums}
+.hnext{font-weight:800}
+/* home: rows */
+.hrows{border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
+.hrow{display:grid;grid-template-columns:78px minmax(0,2.4fr) minmax(0,1fr) 62px 88px 76px minmax(0,1.5fr);align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:0;border-bottom:1.5px solid #17140f22;background:transparent;text-align:left;font-size:13px;font-weight:700}
+.hrow:last-child{border-bottom:0}
+@media (hover:hover){button.hrow:hover{background:#17140f0d}}
+button.hrow:active{background:#17140f1f}
+.hrow .tag{justify-self:start}
+.hrow-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hrow-name strong{font-weight:900;font-size:14px}
+.hrow .n{font-variant-numeric:tabular-nums}
+.hrow-out{display:flex;align-items:center;gap:8px;min-width:0}
+.hrow-out .hscore{font-size:16px}
+/* home: featured */
+.hfeat{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);width:100%;padding:0;text-align:left;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden;transition:transform 110ms var(--out)}
+.hfeat:active{transform:translate(3px,3px);box-shadow:none}
+.hfeat-main{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:18px 20px}
+.hfeat-tags{display:flex;align-items:center;gap:6px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--muted)}
+.hfeat-name{font-weight:900;font-stretch:125%;font-size:30px;line-height:1;letter-spacing:-.02em}
+.hfeat-main .hsub{margin-top:8px;font-size:13px;max-width:100%}
+.hfeat-main .hmeta{margin-bottom:18px}
+.hfeat-main .btn{margin-top:auto}
+.hfeat-side{display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:0;padding:18px 20px;border-left:var(--line);background:var(--ground)}
+.hfeat-side .lbl{margin:0}
+.hfeat-side .spread{display:block;margin-top:0}
+.hfeat-side .row{height:34px;font-size:13px}
+.hfeat-side .row:hover{background:transparent}
+.hfeat-side .row .badge{margin-right:7px;vertical-align:middle}
+.hfeat-side .hprog{flex:none;height:14px}
+.hearlier{margin-top:24px}
+
+
+/* material: fields and slots */
+.name-in.title{font-size:clamp(30px,3.2vw,42px);font-stretch:125%;letter-spacing:-.025em;line-height:1.05;padding:0 0 8px}
+.x[disabled]{opacity:.3;cursor:not-allowed}
+.x[disabled]:hover{background:var(--paper);color:var(--ink)}
+.slot{min-width:0;background:var(--paper)}
+.slot textarea{display:block;width:100%;min-height:64px;max-height:220px;padding:8px 10px;border:0;background:transparent;resize:none;font-size:13px;line-height:1.5;font-weight:500;field-sizing:content}
+.slot textarea:focus{outline:0;box-shadow:inset 0 0 0 2px var(--cobalt)}
+.slot.empty{background:repeating-linear-gradient(135deg,transparent 0 9px,#17140f17 9px 11px),var(--paper)}
+.slot.empty textarea::placeholder{color:var(--ink);opacity:.75;font-weight:700}
+.sfile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px 10px;min-height:64px}
+.sfile strong{font-size:13px;font-weight:800}
+.sfile p{margin:0;font-size:12px;line-height:1.45;color:#3b372f;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sfile-top{display:flex;align-items:center;gap:6px;max-width:100%}
+.sfile-top .tag{display:block;max-width:190px;line-height:16px;overflow:hidden;text-overflow:ellipsis;text-transform:none;letter-spacing:0;font-size:11px}
+.sfile-top.full{width:100%}
+.sfile-top .btn{margin-left:auto}
+.sfile small{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+.slotbox{border:var(--line);border-radius:4px;overflow:hidden;min-width:0}
+.slotbox>.lbl{margin:0;padding:4px 10px;background:var(--ground);border-bottom:1.5px solid #17140f33;font-size:10px}
+.fname{flex:1;min-width:50px;border:0;border-bottom:2px solid transparent;background:transparent;font-weight:900;font-stretch:110%;font-size:14px;padding:2px 0}
+.fname:hover{border-bottom-color:#17140f33}
+.fname:focus{outline:0;border-bottom-color:var(--cobalt)}
+.ftype{display:inline-flex;flex:none;border:var(--line);border-radius:4px;overflow:hidden}
+.ftype button{height:20px;padding:0 6px;border:0;background:var(--paper);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.ftype button+button{border-left:var(--line)}
+.ftype button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.ftype+.x,.ftype~.x{width:22px;height:22px;font-size:11px;flex:none}
+.fconfirm{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;min-width:0;font-size:12px;font-weight:800}
+.drop{margin-top:12px}
+.drop-btns{align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.check{margin:18px 0 0}
+.check.ok{background:var(--paper)}
+.sumbox .chips{margin-top:2px}
+.hrow-kind{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:var(--muted)}
+/* material: field tabs */
+.ftabs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:10px}
+.ftabs .pill small{margin-left:7px;font-size:11px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
+.fedit{display:flex;align-items:center;gap:6px;min-height:40px;padding:6px 10px;margin-bottom:10px;border:var(--line);border-radius:var(--r);background:var(--paper)}
+.dbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:12px;font-weight:700;color:var(--muted)}
+.dbar .pill{height:26px;padding:0 9px;font-size:12px;color:var(--ink)}
+.dbar .pill[aria-pressed=true]{background:var(--mustard);color:var(--ink)}
+/* differences: a marked copy of the text sits exactly behind the textarea */
+.slot{position:relative}
+.hl{position:absolute;inset:0;padding:8px 10px;font-size:13px;line-height:1.5;font-weight:500;white-space:pre-wrap;overflow-wrap:break-word;color:transparent;pointer-events:none;overflow:hidden}
+.hl mark{color:transparent;background:var(--mustard);border-radius:2px;box-shadow:0 0 0 1.5px var(--mustard)}
+.slot textarea{position:relative}
+.sfile p mark{background:var(--mustard);color:var(--ink);border-radius:2px;box-shadow:0 0 0 1.5px var(--mustard)}
+.fedit .lbl{margin:0 6px 0 0}
+.fedit .fname{font-size:16px}
+.vcols{display:flex;flex-direction:column;gap:10px}
+.vcol{display:grid;grid-template-columns:230px minmax(0,1fr);min-width:0;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
+.vcol .col-head{display:grid;grid-template-columns:52px minmax(0,1fr);grid-template-rows:auto 1fr;gap:0;margin:0;align-items:start}
+.vcol .col-head .badge{grid-row:1/3;width:auto;height:100%;border:0;border-right:var(--line);border-radius:0;font-size:28px;font-stretch:125%}
+.vcol .col-head .slab-name{padding:10px 10px 0}
+.vcol .col-head .vt{display:flex;gap:4px;padding:6px 10px 10px}
+.vcol .slotbox{border:0!important;border-left:1.5px solid #17140f22!important;border-radius:0}
+.vcol .col-head .slab-name{flex:1;min-width:0;font-size:16px}
+.vcol .col-head .x{width:24px;height:24px;font-size:11px;flex:none}
+.vcol .slot textarea{min-height:68px;max-height:none;overflow:hidden;font-size:14px;line-height:1.6}
+.vcol .hl{font-size:14px;line-height:1.6}
+.vcol .sfile{min-height:68px}
+.vcol .sfile p{-webkit-line-clamp:14;font-size:13px;line-height:1.55}
+.vadd{min-height:44px;border:2px dashed var(--ink);border-radius:var(--r);background:transparent;font-weight:900;font-size:14px;transition:transform 110ms var(--out)}
+@media (hover:hover){.vadd:hover{background:var(--paper)}}
+.vadd:active{transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -433,27 +523,24 @@ const ICON = {
   replay: '<path d="M5 12a7 7 0 1 0 2.2-5.1"/><path d="M5 4v4h4"/>',
   share: '<path d="M13 5l7 6.5-7 6.5v-4c-5 0-7.5 1.500-9 4 .5-5 3-9 9-9z"/>',
   subscribe: '<path d="M6 17v-6a6 6 0 0 1 12 0v6l1.500 2h-15z"/><path d="M10.5 21.500h3"/>',
-  away: '<path d="M10 4H5v16h5"/><path d="M13 8l4 4-4 4M17 12H9"/>', custom: '<path d="M12 4v16M5 8l14 8M19 8L5 16"/>',
-  youtube: '<rect x="3" y="6" width="18" height="12" rx="3"/><path d="M10.5 9.500l4 2.500-4 2.500z"/>',
-  ad: '<path d="M4 10v4h3l8 4V6l-8 4z"/><path d="M18 9.500a4 4 0 0 1 0 5"/>',
-  product: '<path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v8"/>',
-  blank: '<rect x="5" y="4" width="14" height="16" stroke-dasharray="3 3"/>'
-};
-const TYPES = {
-  youtube: { label: 'YouTube video', sub: 'Transcripts, intros, titles', who: 'viewers', fields: [['Channel', 'Slow Miles'], ['Video', 'We hiked 400 miles with a rescue dog']], drop: 'Drop transcripts or intros here', aud: 'YouTube outdoor and travel audiences' },
-  ad: { label: 'Ad copy', sub: 'Headlines, scripts', who: 'readers', fields: [['Brand', ''], ['Campaign', '']], drop: 'Drop ad versions here', aud: 'audiences for this kind of ad' },
-  product: { label: 'Product page', sub: 'Descriptions, pricing', who: 'shoppers', fields: [['Store', ''], ['Product', '']], drop: 'Drop page versions here', aud: 'shoppers for this kind of product' },
-  blank: { label: 'Blank', sub: 'Anything else', who: 'participants', fields: [['Context', ''], ['What is being compared', '']], drop: 'Drop the versions to compare here', aud: 'audiences for this kind of material' }
+  away: '<path d="M10 4H5v16h5"/><path d="M13 8l4 4-4 4M17 12H9"/>', custom: '<path d="M12 4v16M5 8l14 8M19 8L5 16"/>'
 };
 
 const S = {
-  name: 'Which intro keeps viewers?', type: 'youtube',
-  ctx: JSON.parse(JSON.stringify(Object.fromEntries(Object.entries(TYPES).map(([k, t]) => [k, t.fields.map(f => f[1])])))),
+  rid: 'hike', name: 'Which intro keeps viewers?',
+  fields: [{ id: 'f1', name: 'Transcript', type: 'file' }, { id: 'f2', name: 'Video description', type: 'text' }],
   variants: [
-    { id: 'A', name: 'Cold open', meta: 'Transcript · 0:00 to 0:30', ex: 'Wind is hitting forty. Pepper, stay close. Stay. If we are not off this ridge in ten minutes, we are sleeping on it.' },
-    { id: 'B', name: 'Story first', meta: 'Transcript · 0:00 to 0:30', ex: 'Last spring we lost Juno. She was fourteen, and she had walked every trail with us. This is the trip we promised her, and Pepper is coming in her place.' },
-    { id: 'C', name: 'Payoff tease', meta: 'Transcript · 0:00 to 0:30', ex: 'This is the summit. Four hundred miles, thirty-one days, and one rescue dog who had never seen snow. Here is how we got there.' }
+    { id: 'A', name: 'Cold open', vals: {
+      f1: { text: 'Wind is hitting forty. Pepper, stay close. Ten more minutes and nobody gets off this ridge tonight. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'cold-open.srt', words: 36 },
+      f2: { text: 'We hiked 400 miles in 31 days with Pepper, our rescue dog. On day 19 a storm caught us on the ridge with nowhere to camp. Full route, gear list and costs below.', file: '' } } },
+    { id: 'B', name: 'Story first', vals: {
+      f1: { text: 'Last spring Juno died. She was fourteen, and she had walked every trail with us. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'story-first.srt', words: 34 },
+      f2: { text: 'We hiked 400 miles in 31 days with Pepper, our rescue dog. This is the trail we promised Juno, the dog we lost last spring. Full route, gear list and costs below.', file: '' } } },
+    { id: 'C', name: 'Payoff tease', vals: {
+      f1: { text: 'This is the summit. Thirty-one days, and Pepper had never seen snow until this morning. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'payoff-tease.srt', words: 34 },
+      f2: { text: 'We hiked 400 miles in 31 days with Pepper, our rescue dog. It ends at a summit sunrise, and her first ever snow. Full route, gear list and maps below.', file: '' } } }
   ],
+  nextField: 3, tab: 'f1', dropField: 'f1', confirm: null, diff: true,
   count: 500,
   vars: [
     { id: 'gender', key: 'gender', name: 'Gender', opts: [{ name: 'Female', pct: 60, say: 'female' }, { name: 'Male', pct: 36, say: 'male' }, { name: 'Non-binary / other', pct: 4, say: 'non-binary' }] },
@@ -497,24 +584,27 @@ const NOTES = {
   ]
 };
 function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
-function overall(vid, aid) {
-  if (aid === 'away') return 100 - overall(vid, 'keep');
-  const b = BASE[vid] && BASE[vid][aid];
+/* the fixed demo numbers belong to the hiking run; every other run gets its own made-up ones */
+const salt = rid => rid === 'hike' ? '' : rid;
+function ov(rid, vid, aid) {
+  if (aid === 'away') return 100 - ov(rid, vid, 'keep');
+  const b = rid === 'hike' ? (BASE[vid] || {})[aid] : null;
   if (b != null) return b;
-  if (aid === 'keep') return 52 + Math.round(hash(vid + aid) * 16);
-  return 2 + Math.round(hash(vid + '|' + aid) * 14);
+  if (aid === 'keep') return 52 + Math.round(hash(salt(rid) + vid + aid) * 16);
+  return 2 + Math.round(hash(salt(rid) + vid + '|' + aid) * 14);
 }
+const overall = (vid, aid) => ov(S.rid, vid, aid);
 function val(vid, aid, v, i) {
   if (!v) return overall(vid, aid);
   if (aid === 'away') return 100 - val(vid, 'keep', v, i);
-  const o = OVR[vid + '|' + aid + '|' + v.id];
+  const o = S.rid === 'hike' && OVR[vid + '|' + aid + '|' + v.id];
   if (o && o.length === v.opts.length) return o[i];
   const base = overall(vid, aid), spread = Math.max(1.5, base * .14);
-  return Math.max(0, Math.min(100, Math.round(base + (hash([vid, aid, v.id, i].join('|')) * 2 - 1) * spread)));
+  return Math.max(0, Math.min(100, Math.round(base + (hash(salt(S.rid) + [vid, aid, v.id, i].join('|')) * 2 - 1) * spread)));
 }
 
 /* ---------- helpers ---------- */
-const route = () => { const r = location.hash.replace(/^#\/?/, ''); return ROUTES.some(x => x[0] === r) ? r : 'dataset'; };
+const route = () => { const r = location.hash.replace(/^#\/?/, ''); return ROUTES.some(x => x[0] === r) ? r : 'home'; };
 const go = r => { location.hash = '#/' + r; };
 const vcol = v => VCOL['ABCDEFGHIJ'.indexOf(v.id) % VCOL.length] || 'ink';
 const filled = v => v.opts.every(o => o.pct != null);
@@ -532,51 +622,134 @@ function shell(body) {
     const mark = i < idx ? '✓' : i < 3 ? i + 1 : i === 3 ? '▸' : '▦';
     return (i ? `<span class="stage-gap${i === 3 ? ' wide' : ''}"></span>` : '') + `<a class="stage ${cls}" href="#/${k}"${i === idx ? ' aria-current="step"' : ''}><b>${mark}</b>${l}</a>`;
   }).join('');
-  return `<header class="top"><span class="brand">Stand-in</span><nav class="stages" aria-label="Stages">${st}</nav><span class="top-name" id="topName">${esc(S.name)}</span></header><main class="page" id="page">${body}</main>`;
+  return `<header class="top"><a class="brand" href="#/home" aria-label="Stand-in, all scenarios">Stand-in</a>${r === 'home' ? '' : `<nav class="stages" aria-label="Stages">${st}</nav><span class="top-name" id="topName">${esc(S.name)}</span>`}</header><main class="page" id="page">${body}</main>`;
 }
 function foot(back, next, nextLabel, disabled) {
   return `<div class="foot">${back ? `<a class="btn" href="#/${back}">← Back</a>` : '<span></span>'}${next ? `<button class="btn pri" data-act="go" data-to="${next}"${disabled ? ' disabled' : ''}>${nextLabel} →</button>` : ''}</div>`;
 }
 
 /* ---------- 1 material ---------- */
+const fieldOf = id => S.fields.find(f => f.id === id);
+const sv = (v, f) => v.vals[f.id] || (v.vals[f.id] = { text: '', file: '' });
+const has = (v, f) => { const x = sv(v, f); return f.type === 'file' ? !!x.file : !!x.text.trim(); };
+const anyIn = f => S.variants.filter(v => { const x = sv(v, f); return x.file || x.text.trim(); }).length;
+const filledCount = f => S.variants.filter(v => has(v, f)).length;
 function pgDataset() {
-  const t = TYPES[S.type];
-  return `<div class="head"><h1 class="ask">What are you testing?</h1><p class="hint">Name it, say what kind of thing it is, then drop in the versions you want to compare.</p></div>
-  <section class="sec"><label class="lbl" for="scn">Scenario</label><input class="name-in" id="scn" data-bind="name" value="${esc(S.name)}" placeholder="Give it a name"></section>
-  <section class="sec"><span class="lbl">Kind of material</span><div class="types">${Object.entries(TYPES).map(([k, x]) => `<button class="type" data-act="type" data-id="${k}" aria-pressed="${k === S.type}">${svg(ICON[k])}<span>${x.label}<small>${x.sub}</small></span></button>`).join('')}</div>
-    <div class="ctx">${t.fields.map((f, i) => `<label class="field"><span>${f[0]}</span><input data-bind="ctx" data-i="${i}" value="${esc(S.ctx[S.type][i])}" placeholder="Optional"></label>`).join('')}</div></section>
-  <section class="sec"><span class="lbl">Versions to compare · ${S.variants.length}</span><div class="slabs" id="slabs">${S.variants.map(slab).join('')}
-    <div class="drop" id="drop"><div><strong>${t.drop}</strong><p>Text, subtitles or CSV. Each file becomes one version.</p></div><div class="drop-btns"><button class="btn" data-act="pick">Choose files</button><button class="btn flat" data-act="sample">Add a sample version</button></div></div></div></section>
-  ${foot(null, 'profiles', 'Continue to Participants', !S.variants.length)}`;
+  return `<section class="sec"><input class="name-in title" id="scn" data-bind="name" value="${esc(S.name)}" placeholder="Name this scenario" aria-label="Scenario name"></section>
+  ${matTabs()}
+  ${checkBar()}
+  ${foot(null, 'profiles', 'Continue to Participants', !S.variants.length || !S.fields.length)}`;
 }
-function slab(v, i) {
-  return `<article class="slab" data-vid="${v.id}"><span class="grip" draggable="true" title="Drag to reorder" aria-hidden="true"><i></i></span><div class="letter c-${vcol(v)}">${v.id}</div>
-  <div class="slab-body"><input class="slab-name" data-bind="vname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Version name"><p class="slab-ex">${esc(v.ex)}</p><span class="slab-meta">${esc(v.meta)}</span></div>
-  <div class="slab-tools"><button class="x" data-act="vup" data-id="${v.id}" aria-label="Move ${esc(v.name)} up"${i === 0 ? ' disabled' : ''}>↑</button><button class="x" data-act="vdown" data-id="${v.id}" aria-label="Move ${esc(v.name)} down"${i === S.variants.length - 1 ? ' disabled' : ''}>↓</button><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div></article>`;
+function slotHtml(v, f) {
+  const x = sv(v, f), key = `data-id="${v.id}" data-f="${f.id}"`;
+  if (f.type === 'file') return `<div class="slot${x.file ? '' : ' empty'}"><div class="sfile">${x.file
+    ? `<span class="sfile-top full"><span class="tag">${esc(x.file)}</span><small>${fmt(x.words || 0)} words</small><button class="btn sm flat" data-act="sclear" ${key}>Remove</button></span><p data-hl="${v.id}" data-keep="1">${esc(x.text)}</p>`
+    : `<strong>No file yet</strong><button class="btn sm" data-act="spick" ${key}>Choose file</button>`}</div></div>`;
+  return `<div class="slot${x.text.trim() ? '' : ' empty'}"><div class="hl" data-hl="${v.id}" aria-hidden="true"></div><textarea data-bind="slot" ${key} placeholder="Empty. Type or paste the ${esc(f.name.toLowerCase())}." aria-label="${esc(v.name)}: ${esc(f.name)}">${esc(x.text)}</textarea></div>`;
 }
-function addVariant(name, ex, meta) {
+function fieldCtl(f, i) {
+  if (S.confirm === f.id) { const n = anyIn(f); return `<span class="fconfirm">Delete with ${n} ${n === 1 ? 'entry' : 'entries'}?<button class="btn sm pri" data-act="fdelyes" data-id="${f.id}">Delete</button><button class="btn sm" data-act="fdelno">Keep</button></span>`; }
+  return `<input class="fname" data-bind="fname" data-id="${f.id}" value="${esc(f.name)}" aria-label="Field name"><span class="ftype" role="group" aria-label="Field type">${['text', 'file'].map(k => `<button data-act="ftype" data-id="${f.id}" data-t="${k}" aria-pressed="${f.type === k}">${k}</button>`).join('')}</span><button class="x" data-act="fleft" data-id="${f.id}" aria-label="Move ${esc(f.name)} earlier"${i === 0 ? ' disabled' : ''}>←</button><button class="x" data-act="fright" data-id="${f.id}" aria-label="Move ${esc(f.name)} later"${i === S.fields.length - 1 ? ' disabled' : ''}>→</button><button class="x" data-act="fdel" data-id="${f.id}" aria-label="Remove ${esc(f.name)}">✕</button>`;
+}
+const vname = v => `<input class="slab-name" data-bind="vname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Version name">`;
+function dropHtml() {
+  if (!S.fields.length) return '';
+  if (!fieldOf(S.dropField)) S.dropField = S.fields[0].id;
+  return `<div class="drop" id="drop"><div><strong>Drop files here</strong><p>Each file fills the next empty slot, or becomes a new version.</p></div><div class="drop-btns"><span class="lbl" style="margin:0">Fills</span>${S.fields.map(f => `<button class="pill" data-act="dropf" data-id="${f.id}" aria-pressed="${f.id === S.dropField}" data-flabel="${f.id}">${esc(f.name)}</button>`).join('')}<button class="btn" data-act="pick">Choose files</button></div></div>`;
+}
+function checkBar() {
+  let ok = false, h;
+  if (!S.fields.length) h = `<strong>No fields yet.</strong><span>Add a field to say what each participant is given.</span>`;
+  else if (!S.variants.length) h = `<strong>No versions yet.</strong><span>Add at least two to compare.</span>`;
+  else {
+    const rows = S.variants.map(v => [v, S.fields.filter(f => !has(v, f))]).filter(r => r[1].length);
+    if (!rows.length) { ok = true; h = `<strong>Complete.</strong><span>${S.variants.length} ${S.variants.length === 1 ? 'version' : 'versions'} × ${S.fields.length} ${S.fields.length === 1 ? 'field' : 'fields'}, nothing missing.</span>`; }
+    else h = `<strong>Not complete yet:</strong>` + rows.map(([v, fs]) => `<span class="lead"><span class="badge c-${vcol(v)}">${v.id}</span>missing ${esc(fs.map(f => f.name).join(', '))}</span>`).join('');
+  }
+  return ok ? '<div id="check" hidden></div>' : `<div class="gap check" id="check" role="status">${h}</div>`;
+}
+function refreshCheck() {
+  const c = $('#check'); if (c) c.outerHTML = checkBar();
+  $$('[data-fcount]').forEach(e => { const f = fieldOf(e.dataset.fcount); if (f) e.textContent = filledCount(f) + '/' + S.variants.length; });
+}
+function addVariant(name) {
   const id = [...'ABCDEFGHIJ'].find(l => !S.variants.some(v => v.id === l));
-  if (!id) return;
-  S.variants.push({ id, name, ex, meta });
+  if (!id) return null;
+  const v = { id, name, vals: {} }; S.variants.push(v); return v;
+}
+function removeField(id) {
+  S.fields = S.fields.filter(f => f.id !== id);
+  S.variants.forEach(v => delete v.vals[id]);
+  S.confirm = null; render();
+}
+let pendingSlot = null;
+function readText(file, cb) {
+  const fr = new FileReader();
+  fr.onload = () => { const text = String(fr.result).replace(/\s+/g, ' ').trim(); cb({ text: text.slice(0, 600) + (text.length > 600 ? '…' : ''), file: file.name, words: text.split(' ').filter(Boolean).length }); };
+  fr.readAsText(file);
 }
 function readFiles(files) {
-  const list = [...files]; if (!list.length) return;
+  const list = [...files], f = fieldOf(S.dropField) || S.fields[0]; if (!list.length || !f) return;
   let left = list.length;
-  list.forEach(f => {
-    const fr = new FileReader();
-    fr.onload = () => {
-      const text = String(fr.result).replace(/\s+/g, ' ').trim();
-      addVariant(f.name.replace(/\.[^.]+$/, ''), text.slice(0, 220) + (text.length > 220 ? '…' : ''), f.name + ' · ' + fmt(text.split(' ').filter(Boolean).length) + ' words');
-      if (!--left) render();
-    };
-    fr.readAsText(f);
+  list.forEach(file => readText(file, val => {
+    const v = S.variants.find(x => !has(x, f)) || addVariant(file.name.replace(/\.[^.]+$/, ''));
+    if (v) v.vals[f.id] = val;
+    if (!--left) render();
+  }));
+}
+function readInto(slot, file) {
+  if (!file) return;
+  readText(file, val => { const v = S.variants.find(x => x.id === slot.vid); if (v && fieldOf(slot.fid)) { v.vals[slot.fid] = val; render(); } });
+}
+/* differences between the versions of one field, word by word */
+const words = s => s.split(/(\s+)/);
+const norm = w => w.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+function lcs(a, b) {
+  const n = a.length, m = b.length, d = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) d[i][j] = a[i] === b[j] ? d[i + 1][j + 1] + 1 : Math.max(d[i + 1][j], d[i][j + 1]);
+  const out = []; let i = 0, j = 0;
+  while (i < n && j < m) { if (a[i] === b[j]) { out.push(a[i]); i++; j++; } else if (d[i + 1][j] >= d[i][j + 1]) i++; else j++; }
+  return out;
+}
+function diffInfo(f) {
+  const lists = S.variants.map(v => sv(v, f)).filter(x => has({ vals: { [f.id]: x } }, f) && x.text.trim()).map(x => words(x.text).map(norm).filter(Boolean));
+  if (lists.length < 2) return { on: false, why: 'Needs two versions with content.' };
+  const common = lists.slice(1).reduce((c, l) => lcs(c, l), lists[0]), longest = Math.max(...lists.map(l => l.length));
+  if (lists.every(l => l.length === common.length)) return { on: false, why: 'Every version is the same.' };
+  if (common.length < longest * .5) return { on: false, why: 'These versions are too different to line up.' };
+  return { on: true, common, why: `${common.length} words are shared. What changes in each version is marked.` };
+}
+function markDiff(text, common) {
+  let k = 0;
+  const tk = words(text), flag = tk.map(w => { if (!w.trim()) return null; const nw = norm(w); if (!nw || nw === common[k]) { if (nw) k++; return false; } return true; });
+  flag.forEach((x, i) => { if (x === null) flag[i] = flag[i - 1] === true && flag[i + 1] === true; });
+  return tk.map((w, i) => (flag[i] && !flag[i - 1] ? '<mark>' : '') + esc(w) + (flag[i] && !flag[i + 1] ? '</mark>' : '')).join('');
+}
+function refreshDiff() {
+  const f = fieldOf(S.tab); if (!f) return;
+  const d = S.diff ? diffInfo(f) : { on: false, why: '' };
+  S.variants.forEach(v => {
+    const el = $(`[data-hl="${v.id}"]`); if (!el) return;
+    const x = sv(v, f).text;
+    el.innerHTML = d.on && x.trim() ? markDiff(x, d.common) : el.dataset.keep ? esc(x) : '';
   });
+  const n = $('#diffnote'); if (n) n.textContent = d.why;
+}
+function matTabs() {
+  if (!fieldOf(S.tab)) S.tab = (S.fields[0] || {}).id;
+  const f = fieldOf(S.tab), i = S.fields.indexOf(f);
+  const tabs = `<nav class="ftabs" aria-label="Fields">${S.fields.map(x => `<button class="pill" data-act="ftab" data-id="${x.id}" aria-pressed="${x === f}"><span data-flabel="${x.id}">${esc(x.name)}</span><small data-fcount="${x.id}">${filledCount(x)}/${S.variants.length}</small></button>`).join('')}<button class="btn sm flat" data-act="fadd">+ Field</button></nav>`;
+  if (!f) return `<section class="sec">${tabs}<p class="hint">Add a field to say what each participant is given, such as a transcript or a description.</p></section>`;
+  S.dropField = f.id;
+  return `<section class="sec">${tabs}<div class="fedit"><span class="lbl">Field</span>${fieldCtl(f, i)}</div>
+  <div class="dbar"><button class="pill" data-act="diff" aria-pressed="${!!S.diff}">Highlight differences</button><span id="diffnote"></span></div>
+  <div class="vcols">${S.variants.map((v, j) => `<div class="vcol"><div class="col-head"><span class="badge c-${vcol(v)}">${v.id}</span>${vname(v)}<span class="vt"><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></span></div><div class="slotbox" style="border-left:6px solid var(--${vcol(v)})">${slotHtml(v, f)}</div></div>`).join('')}<button class="vadd" data-act="vadd">+ Add a version</button></div>${dropHtml()}</section>`;
 }
 
 /* ---------- 2 participants ---------- */
 function pgProfiles() {
   return `<div class="head"><h1 class="ask">Who is watching?</h1><p class="hint">Drag the dividers to set each split. If you don't know a split, leave it empty and let AI estimate it.</p></div>
-  <section class="sec"><span class="lbl">How many participants</span><div class="count"><button class="step" data-act="count" data-d="-50" aria-label="50 fewer">−</button><input type="number" id="count" data-bind="count" value="${S.count}" min="10" max="5000" aria-label="Participants"><button class="step" data-act="count" data-d="50" aria-label="50 more">+</button><em>synthetic ${TYPES[S.type].who}, each reacts to every version</em></div></section>
+  <section class="sec"><span class="lbl">How many participants</span><div class="count"><button class="step" data-act="count" data-d="-50" aria-label="50 fewer">−</button><input type="number" id="count" data-bind="count" value="${S.count}" min="10" max="5000" aria-label="Participants"><button class="step" data-act="count" data-d="50" aria-label="50 more">+</button><em>synthetic participants, each reacts to every version</em></div></section>
   <section class="sec"><span class="lbl">Split the crowd</span><div id="vars">${S.vars.map(varHtml).join('')}</div><button class="addvar" data-act="addvar">+ Add a variable</button></section>
   <section class="sec"><span class="lbl">What each participant is told</span><div class="brief"><div><div class="strip" id="strip" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Participant prompt">${tplHtml()}</div><div class="palette" id="palette">${paletteHtml()}</div></div>
     <aside class="who" id="who">${whoHtml()}</aside></div></section>
@@ -585,11 +758,11 @@ function pgProfiles() {
 function varHtml(v) {
   const head = `<div class="var-head"><input class="var-name" data-bind="varname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Variable name">${v.ai ? `<span class="tag ai">${v.ai === 'edited' ? 'AI estimate, edited' : 'AI estimate'}</span>` : ''}<span class="sp"></span>${filled(v) && !v.loading ? `<button class="btn sm flat" data-act="aifill" data-id="${v.id}">Estimate with AI</button>` : ''}<button class="x" data-act="delvar" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div>`;
   let bar;
-  if (v.loading) bar = `<div class="bar wait"><p>Estimating from ${TYPES[S.type].aud}…</p></div>`;
+  if (v.loading) bar = `<div class="bar wait"><p>Estimating from typical audiences…</p></div>`;
   else if (!filled(v)) bar = `<div class="bar empty"><p>No split yet</p><div class="btns"><button class="btn blue" data-act="aifill" data-id="${v.id}">Fill with AI</button><button class="btn" data-act="even" data-id="${v.id}">Split evenly</button></div></div>`;
   else bar = `<div class="bar${v.fresh ? ' fresh' : ''}" data-bar="${v.id}"><div class="bar-in">${v.opts.map((o, i) => `<div class="seg c-${SEG[i % SEG.length]}" data-seg="${i}"><b></b><span></span></div>`).join('')}</div>${v.opts.slice(0, -1).map((o, i) => `<button class="hand" data-hand="${i}" role="slider" aria-label="Divider between ${esc(o.name)} and ${esc(v.opts[i + 1].name)}" aria-valuemin="1"></button>`).join('')}</div>`;
   const leg = `<div class="legend">${v.opts.map((o, i) => `<span class="opt"><i class="c-${SEG[i % SEG.length]}"></i><input data-bind="optname" data-id="${v.id}" data-i="${i}" value="${esc(o.name)}" aria-label="Option name"><b data-pct="${i}">${o.pct == null ? '' : o.pct + '%'}</b>${v.opts.length > 2 ? `<button data-act="delopt" data-id="${v.id}" data-i="${i}" aria-label="Remove ${esc(o.name)}">✕</button>` : ''}</span>`).join('')}<button class="btn sm flat" data-act="addopt" data-id="${v.id}">+ Option</button></div>`;
-  const note = v.ai && !v.loading ? `<p class="ai-note">Estimated from typical ${TYPES[S.type].aud}. Drag to correct it.</p>` : '';
+  const note = v.ai && !v.loading ? `<p class="ai-note">Estimated from typical audiences for this material. Drag to correct it.</p>` : '';
   v.fresh = false;
   return `<div class="var" data-var="${v.id}">${head}${bar}${leg}${note}</div>`;
 }
@@ -693,8 +866,8 @@ function pgRun() {
   const acts = onActs();
   return `<div class="head"><h1 class="ask">Ready to run?</h1><p class="hint">Check the setup. Each participant sees every version and reacts on their own.</p></div>
   <section class="sec"><div class="sum">
-    <div class="sumbox"><header><h3>Material</h3><a class="btn sm flat" href="#/dataset">Edit</a></header><div class="big">${S.variants.length}<small>${S.variants.length === 1 ? 'version' : 'versions'}</small></div><ul class="vlist">${S.variants.map(v => `<li><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</li>`).join('')}</ul></div>
-    <div class="sumbox"><header><h3>Participants</h3><a class="btn sm flat" href="#/profiles">Edit</a></header><div class="big">${fmt(S.count)}<small>${TYPES[S.type].who}</small></div><ul class="vlist">${S.vars.map(v => `<li><span class="nm">${esc(v.name)}</span>${filled(v) ? `<span class="mini">${v.opts.map((o, i) => `<i class="c-${SEG[i % SEG.length]}" style="width:${o.pct}%"></i>`).join('')}</span>` : '<span class="mini none" title="Not set, will be skipped"></span>'}</li>`).join('')}</ul></div>
+    <div class="sumbox"><header><h3>Material</h3><a class="btn sm flat" href="#/dataset">Edit</a></header><div class="big">${S.variants.length}<small>${S.variants.length === 1 ? 'version' : 'versions'}</small></div><ul class="vlist">${S.variants.map(v => `<li><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</li>`).join('')}</ul><div class="chips">${S.fields.map(f => `<span>${esc(f.name)}</span>`).join('')}</div></div>
+    <div class="sumbox"><header><h3>Participants</h3><a class="btn sm flat" href="#/profiles">Edit</a></header><div class="big">${fmt(S.count)}<small>participants</small></div><ul class="vlist">${S.vars.map(v => `<li><span class="nm">${esc(v.name)}</span>${filled(v) ? `<span class="mini">${v.opts.map((o, i) => `<i class="c-${SEG[i % SEG.length]}" style="width:${o.pct}%"></i>`).join('')}</span>` : '<span class="mini none" title="Not set, will be skipped"></span>'}</li>`).join('')}</ul></div>
     <div class="sumbox"><header><h3>Actions</h3><a class="btn sm flat" href="#/actions">Edit</a></header><div class="big">${acts.length}<small>allowed</small></div><div class="chips">${acts.map(a => `<span class="${a.id === S.main ? 'm' : ''}">${esc(a.name)}${a.id === S.main ? ' · main' : ''}</span>`).join('')}</div></div>
   </div>
   <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run">Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions = ${fmt(S.count * S.variants.length)} reactions. Takes a few seconds.</p></div>` : `<div class="go"><p>Add at least one version in Material before running.</p></div>`}</div></section>
@@ -717,7 +890,7 @@ function startRun() {
       const age = S.vars.find(x => x.id === 'age'), bits = [p.name]; if (age && p.pick.age != null) bits.push(sayOpt(age, p.pick.age, seed));
       $('#tick').innerHTML = `${esc(bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> ${esc(a ? a.name.toLowerCase() : 'reacted')}`;
     }
-    if (k >= 1) { clearInterval(runTimer); runTimer = null; setTimeout(() => { if (route() === 'run') go('results'); }, 250); }
+    if (k >= 1) { clearInterval(runTimer); runTimer = null; setStatus('done'); setTimeout(() => { if (route() === 'run') go('results'); }, 250); }
   }, 40);
 }
 
@@ -753,7 +926,7 @@ function board(mainId) {
   const cols = S.variants.map(v => {
     const col = vcol(v), o = overall(v.id, m);
     const track = sv ? `<div class="track split">${sv.opts.map((op, i) => `<div class="sub">${lift(val(v.id, m, sv, i), col)}</div>`).join('')}</div><div class="optrow">${sv.opts.map(op => `<span title="${esc(op.name)}">${esc(op.name)}</span>`).join('')}</div>` : `<div class="track"><div class="sub">${lift(o, col)}</div></div>`;
-    const notes = NOTES[v.id] || [{ t: 'No strong pattern yet', p: `Reactions to this version were spread evenly across groups. Try splitting by a variable to look for differences.`, q: '', by: '', m: mainId, s: 'none' }];
+    const notes = (S.rid === 'hike' && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: `Reactions to this version were spread evenly across groups. Try splitting by a variable to look for differences.`, q: '', by: '', m: mainId, s: 'none' }];
     return `<section class="col"><div class="col-head"><span class="badge c-${col}">${v.id}</span><h3>${esc(v.name)}</h3>${o === best ? '<span class="tag win">Highest</span>' : ''}</div>${track}<p class="cap">${esc(actName(m))}${sv ? ' by ' + esc(sv.name.toLowerCase()) + ` · ${o}% overall` : ''} · scale 0 to ${max}%</p>
       <div class="spread">${acts.map(a => `<button class="row" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === m}"><span>${esc(a.name)}</span><i class="rb c-${col}" style="transform:scaleX(${Math.max(.015, overall(v.id, a.id) / rowMax).toFixed(3)})"></i><b>${overall(v.id, a.id)}%</b></button>`).join('')}</div>
       <div class="why"><span class="lbl" style="margin:0">Why</span>${notes.map((n, i) => `<article class="note" style="border-top-color:var(--${col})"><h4>${esc(n.t)}</h4><p>${esc(n.p)}</p>${n.q ? `<blockquote>“${esc(n.q)}”<cite>${esc(n.by)}</cite></blockquote>` : ''}<footer><span>${esc(actName(n.m))}${n.s !== 'none' ? ' × ' + esc((S.vars.find(x => x.id === n.s) || { name: n.s }).name) : ''}</span>${S.actions.some(a => a.id === n.m && a.on) ? `<button class="btn sm" data-act="see" data-m="${n.m}" data-s="${n.s}">Show me</button>` : ''}</footer></article>`).join('')}</div></section>`;
@@ -768,25 +941,132 @@ function refreshBoard() {
 }
 
 /* ---------- render + events ---------- */
-const PAGES = { dataset: pgDataset, profiles: pgProfiles, actions: pgActions, run: pgRun, results: pgResults };
+/* ---------- home: scenario runs (fake) ---------- */
+const clone = o => JSON.parse(JSON.stringify(o));
+const DEMO = clone(S);
+const STAGE = Object.fromEntries(ROUTES);
+function scenario(o) {
+  const s = clone(DEMO), empty = o.empty || [];
+  Object.assign(s, { rid: o.id, name: o.name, count: o.count, metric: null, split: 'none', confirm: null, seed: 1 + Math.floor(hash(o.id) * o.count) });
+  s.fields = o.fields.map((name, i) => ({ id: 'f' + (i + 1), name, type: 'text' }));
+  s.nextField = s.fields.length + 1; s.tab = s.dropField = (s.fields[0] || {}).id;
+  s.variants = (o.variants || []).map(([name, vals], i) => ({ id: 'ABCDEFGHIJ'[i], name, vals: Object.fromEntries(s.fields.map((f, j) => [f.id, { text: (vals || [])[j] || '', file: '' }])) }));
+  s.vars = s.vars.filter(v => v.id !== 'pet');
+  s.vars.forEach(v => v.opts.forEach((op, i) => { op.pct = empty.includes(v.id) ? null : AI[v.id][i]; }));
+  s.prompt = 'You are {name}, a {age}-year-old {gender} participant in {region}. You will be shown one version at a time. React the way you honestly would.';
+  s.actions = o.actions.map(([id, name, on = true]) => ({ id, name, on }));
+  s.main = o.actions[0][0];
+  return s;
+}
+const RUNS = [
+  { id: 'hike', status: 'done', date: 'Today', s: clone(S) },
+  { id: 'planter', status: 'running', prog: 62, date: 'Today', s: scenario({ id: 'planter', name: 'Does free shipping beat 10% off?', count: 300, fields: ['Offer banner', 'Product description'],
+    variants: [['Free shipping', ['Free delivery on this set. No minimum, no code.', 'Three glazed planters in sage, sand and slate. Drainage holes and saucers included.']], ['10% off', ['Take 10% off your first planter set with code FERN10.', 'Three glazed planters in sage, sand and slate. Drainage holes and saucers included.']]],
+    actions: [['buy', 'Add to basket'], ['save', 'Save for later'], ['share', 'Share'], ['away', 'Leave the page']] }) },
+  { id: 'trial', status: 'done', date: 'Yesterday', s: scenario({ id: 'trial', name: 'Which headline sells the trial?', count: 800, fields: ['Headline', 'Body copy'],
+    variants: [['Plain offer', ['Fresh tea every month. First box free.', 'Six loose-leaf teas, chosen by season. Skip or cancel any time.']], ['Question', ['When did you last drink a cup of tea you actually remembered?', 'Kettle & Co sends six small-batch teas a month. Your first box is on us.']], ['Social proof', ['40,000 kitchens already get the Kettle & Co box.', 'Join them with a free first box. Six teas, one new favourite.']], ['Urgency', ['First box free, this week only.', 'Six loose-leaf teas at your door by Friday. Offer ends Sunday.']]],
+    actions: [['click', 'Click through'], ['like', 'Like'], ['share', 'Share'], ['save', 'Save'], ['away', 'Scroll past']] }) },
+  { id: 'subject', status: 'draft', stage: 'profiles', date: '12 Nov', s: scenario({ id: 'subject', name: 'Which subject line gets opened?', count: 1000, fields: ['Subject line', 'Preview text'], empty: ['region'],
+    variants: [['Straight', ['Your November reading list', 'Five books our editors finished this month.']], ['Curiosity', ['The book we could not put down', 'It is 180 pages and it cost one of us a night of sleep.']], ['Personal', ['Picked for you: five short reads', '']]],
+    actions: [['open', 'Open the email'], ['click', 'Click a link'], ['away', 'Delete it'], ['unsub', 'Unsubscribe', false]] }) },
+  { id: 'thumb', status: 'done', date: '10 Nov', s: scenario({ id: 'thumb', name: 'Thumbnail text: question or number?', count: 250, fields: ['Thumbnail text', 'Video title'],
+    variants: [['Question', ['Can you hike a month on £600?', 'How much does a month on trail really cost?']], ['Number', ['£612 · 31 days', 'How much does a month on trail really cost?']]],
+    actions: [['click', 'Click the video'], ['like', 'Like'], ['save', 'Save'], ['away', 'Scroll past']] }) }
+];
+const curRun = () => RUNS.find(x => x.id === S.rid);
+function loadS(o) { Object.keys(S).forEach(k => delete S[k]); Object.assign(S, clone(o)); }
+function setStatus(st) { const c = curRun(); if (c) { c.status = st; if (st === 'running' && !c.prog) c.prog = 35; } }
+let autoRun = false, runSeq = 1;
+function openRun(id) {
+  const run = RUNS.find(x => x.id === id); if (!run) return;
+  if (S.rid !== id) loadS(run.s);
+  autoRun = run.status === 'running';
+  go(run.status === 'done' ? 'results' : run.status === 'running' ? 'run' : run.stage || 'dataset');
+}
+function newRun() {
+  const id = 'new' + runSeq++;
+  const s = scenario({ id, name: '', count: 500, fields: ['Text'], variants: [['First version', []], ['Second version', []]], empty: ['gender', 'age', 'region'], actions: [['like', 'Like'], ['dislike', 'Dislike'], ['comment', 'Comment'], ['share', 'Share'], ['away', 'Walk away']] });
+  RUNS.unshift({ id, status: 'draft', stage: 'dataset', date: 'Just now', s });
+  loadS(s); go('dataset');
+}
+function winner(run) {
+  const s = run.s, a = s.actions.filter(x => x.on), m = a.find(x => x.id === s.main) || a[0];
+  if (!m || !s.variants.length) return null;
+  const rank = [...s.variants].sort((x, y) => ov(run.id, y.id, m.id) - ov(run.id, x.id, m.id));
+  return { v: rank[0], pct: ov(run.id, rank[0].id, m.id), metric: m.name, mid: m.id, rank };
+}
+const runName = s => s.name.trim() || 'Untitled scenario';
+const runSub = s => s.fields.map(f => f.name).join(' · ');
+const counts = s => `${s.variants.length} ${s.variants.length === 1 ? 'version' : 'versions'} · ${fmt(s.count)} participants`;
+const stTag = run => `<span class="tag st-${run.status}">${{ done: 'Done', running: 'Running', draft: 'Draft' }[run.status]}</span>`;
+function outcome(run) {
+  if (run.status === 'done') { const w = winner(run); return w ? `<span class="badge c-${vcol(w.v)}">${w.v.id}</span><span class="hwin">${esc(w.v.name)}</span><b class="hscore">${w.pct}%</b>` : ''; }
+  if (run.status === 'running') return `<span class="hprog"><i style="width:${run.prog}%"></i></span><b class="hpc">${run.prog}%</b>`;
+  return `<span class="hnext">Continue at ${STAGE[run.stage || 'dataset']} →</span>`;
+}
+function rowHtml(run) {
+  const s = run.s;
+  return `<button class="hrow" data-act="open" data-id="${run.id}">${stTag(run)}<span class="hrow-name"><strong>${esc(runName(s))}</strong></span><span class="hrow-kind">${esc(runSub(s))}</span><span class="n">${s.variants.length}</span><span class="n">${fmt(s.count)}</span><span>${run.date}</span><span class="hrow-out">${outcome(run)}</span></button>`;
+}
+function homeFeatured() {
+  const [f, ...rest] = RUNS, s = f.s, w = f.status === 'done' ? winner(f) : null;
+  let side, cta;
+  if (w) {
+    const max = Math.max(...w.rank.map(v => ov(f.id, v.id, w.mid)), 1);
+    side = `<span class="lbl">${esc(w.metric)}</span><span class="spread">${w.rank.map(v => `<span class="row"><span><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</span><i class="rb c-${vcol(v)}" style="transform:scaleX(${Math.max(.015, ov(f.id, v.id, w.mid) / max).toFixed(3)})"></i><b>${ov(f.id, v.id, w.mid)}%</b></span>`).join('')}</span>`;
+    cta = 'Open results';
+  } else if (f.status === 'running') {
+    side = `<span class="lbl">Responding now</span><span class="big">${f.prog}%<small>of ${fmt(s.count)} participants</small></span><span class="hprog"><i style="width:${f.prog}%"></i></span>`;
+    cta = 'Watch the run';
+  } else {
+    side = `<span class="lbl">Left off at</span><span class="chips">${ROUTES.slice(0, 4).map(([k, l]) => `<span class="${k === (f.stage || 'dataset') ? 'm' : ''}">${l}</span>`).join('')}</span>`;
+    cta = 'Continue at ' + STAGE[f.stage || 'dataset'];
+  }
+  return `<button class="hfeat" data-act="open" data-id="${f.id}"><span class="hfeat-main"><span class="hfeat-tags">${stTag(f)}<span>${f.date}</span></span><strong class="hfeat-name">${esc(runName(s))}</strong><span class="hsub">${esc(runSub(s))}</span><span class="hmeta">${counts(s)}</span><span class="btn blue">${cta} →</span></span><span class="hfeat-side">${side}</span></button>
+  ${rest.length ? `<section class="hearlier"><span class="lbl">Earlier</span><div class="hrows">${rest.map(rowHtml).join('')}</div></section>` : ''}`;
+}
+function pgHome() {
+  return `<div class="res-head"><div><h1 class="ask">Pick up where you left off</h1><p class="hint">Open a run to jump back to its stage, or start a new one.</p></div><div class="res-tools"><button class="btn pri" data-act="new">+ New scenario</button></div></div>
+  ${homeFeatured()}`;
+}
+
+/* ---------- render + events ---------- */
+const PAGES = { home: pgHome, dataset: pgDataset, profiles: pgProfiles, actions: pgActions, run: pgRun, results: pgResults };
 let lastRoute = null;
 function render() {
   const r = route(), y = r === lastRoute ? scrollY : 0;
   if (r !== 'run' && runTimer) { clearInterval(runTimer); runTimer = null; }
+  const cur = curRun();
+  if (cur) { if (r === 'home') cur.s = clone(S); else if (cur.status === 'draft' && r !== 'results') cur.stage = r; }
   $('#app').innerHTML = shell(PAGES[r]());
   if (r === 'profiles') S.vars.forEach(paintVar);
+  if (r === 'dataset') refreshDiff();
   if (r === lastRoute) { $$('#page>*').forEach(e => e.style.animation = 'none'); }
   scrollTo(0, y); lastRoute = r;
+  if (r === 'run' && autoRun && S.variants.length) { setStatus('running'); startRun(); }
+  autoRun = false;
 }
 addEventListener('hashchange', render);
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, id = b.dataset.id, V = () => S.vars.find(v => v.id === id);
-  if (a === 'go') go(b.dataset.to);
-  else if (a === 'type') { S.type = id; render(); }
-  else if (a === 'pick') $('#file').click();
-  else if (a === 'sample') { addVariant('Question hook', 'What would you do if a shelter told you a dog had been returned four times? We said yes. Then we looked at a map.', 'Sample transcript · 0:00 to 0:30'); render(); }
+  if (a === 'new') newRun();
+  else if (a === 'open') openRun(id);
+  else if (a === 'go') go(b.dataset.to);
+  else if (a === 'pick') { pendingSlot = null; $('#file').multiple = true; $('#file').click(); }
+  else if (a === 'spick') { pendingSlot = { vid: id, fid: b.dataset.f }; $('#file').multiple = false; $('#file').click(); }
+  else if (a === 'sclear') { S.variants.find(v => v.id === id).vals[b.dataset.f] = { text: '', file: '' }; render(); }
+  else if (a === 'vadd') { const v = addVariant('New version'); render(); if (v) { const inp = $(`[data-bind="vname"][data-id="${v.id}"]`); inp.focus(); inp.select(); } }
+  else if (a === 'fadd') { const f = { id: 'f' + S.nextField++, name: 'New field', type: 'text' }; S.fields.push(f); S.tab = f.id; S.confirm = null; render(); const inp = $(`.fname[data-id="${f.id}"]`); if (inp) { inp.focus(); inp.select(); } }
+  else if (a === 'ftype') { fieldOf(id).type = b.dataset.t; render(); }
+  else if (a === 'fleft' || a === 'fright') { const i = S.fields.findIndex(f => f.id === id), j = i + (a === 'fleft' ? -1 : 1); if (S.fields[j]) { [S.fields[i], S.fields[j]] = [S.fields[j], S.fields[i]]; render(); } }
+  else if (a === 'fdel') { if (anyIn(fieldOf(id))) { S.confirm = id; render(); } else removeField(id); }
+  else if (a === 'fdelyes') removeField(id);
+  else if (a === 'fdelno') { S.confirm = null; render(); }
+  else if (a === 'ftab') { S.tab = id; S.confirm = null; render(); }
+  else if (a === 'dropf') { S.dropField = id; render(); }
+  else if (a === 'diff') { S.diff = !S.diff; b.setAttribute('aria-pressed', S.diff); refreshDiff(); }
   else if (a === 'vdel') { S.variants = S.variants.filter(v => v.id !== id); render(); }
   else if (a === 'vup' || a === 'vdown') { const i = S.variants.findIndex(v => v.id === id), j = i + (a === 'vup' ? -1 : 1); if (S.variants[j]) { [S.variants[i], S.variants[j]] = [S.variants[j], S.variants[i]]; render(); } }
   else if (a === 'count') { S.count = Math.max(50, Math.min(5000, S.count + +b.dataset.d)); $('#count').value = S.count; refreshWho(); }
@@ -801,7 +1081,7 @@ document.addEventListener('click', e => {
   else if (a === 'toggle') { const x = S.actions.find(q => q.id === id); if (x.id === S.main) return; x.on = !x.on; render(); }
   else if (a === 'main') { S.main = id; render(); }
   else if (a === 'delact') { S.actions = S.actions.filter(q => q.id !== id); if (S.main === id) S.main = (S.actions.find(q => q.on) || {}).id; render(); }
-  else if (a === 'run') startRun();
+  else if (a === 'run') { setStatus('running'); startRun(); }
   else if (a === 'metric') { S.metric = id; refreshBoard(); }
   else if (a === 'split') { S.split = id; refreshBoard(); }
   else if (a === 'see') { S.metric = b.dataset.m; S.split = S.vars.some(v => v.id === b.dataset.s) ? b.dataset.s : 'none'; refreshBoard(); $('.ctrl').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
@@ -811,7 +1091,8 @@ document.addEventListener('input', e => {
   if (t.id === 'strip') { readStrip(); refreshWho(); return; }
   if (!b) return;
   if (b === 'name') { S.name = t.value; $('#topName').textContent = t.value; }
-  else if (b === 'ctx') S.ctx[S.type][+t.dataset.i] = t.value;
+  else if (b === 'slot') { const v = S.variants.find(x => x.id === t.dataset.id), f = fieldOf(t.dataset.f); sv(v, f).text = t.value; t.closest('.slot').classList.toggle('empty', !t.value.trim()); refreshCheck(); refreshDiff(); }
+  else if (b === 'fname') { fieldOf(t.dataset.id).name = t.value; $$(`[data-flabel="${t.dataset.id}"]`).forEach(e => e.textContent = t.value); refreshCheck(); }
   else if (b === 'vname') S.variants.find(v => v.id === t.dataset.id).name = t.value;
   else if (b === 'count') { const n = parseInt(t.value, 10); if (n > 0) { S.count = Math.min(5000, n); refreshWho(); } }
   else if (b === 'optname') { const v = S.vars.find(x => x.id === t.dataset.id), o = v.opts[+t.dataset.i]; o.name = t.value; delete o.say; if (filled(v)) paintVar(v); refreshWho(); }
@@ -819,7 +1100,8 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
-  if (t.id === 'file') { readFiles(t.files); t.value = ''; }
+  if (t.id === 'file') { if (pendingSlot) readInto(pendingSlot, t.files[0]); else readFiles(t.files); pendingSlot = null; t.value = ''; }
+  else if (t.dataset.bind === 'fname') { const f = fieldOf(t.dataset.id); if (f && !f.name.trim()) { f.name = 'Field'; render(); } }
   else if (t.dataset.bind === 'count') { S.count = Math.max(10, Math.min(5000, parseInt(t.value, 10) || 500)); t.value = S.count; refreshWho(); }
   else if (t.dataset.bind === 'varname') {
     const v = S.vars.find(x => x.id === t.dataset.id); if (!v.name.trim()) { v.name = 'Variable'; t.value = v.name; }
@@ -878,7 +1160,7 @@ document.addEventListener('drop', e => {
   else if (e.dataTransfer.files.length && e.target.closest('#drop')) { e.preventDefault(); readFiles(e.dataTransfer.files); }
 });
 
-if (!location.hash) history.replaceState(null, '', '#/dataset');
+if (!location.hash) history.replaceState(null, '', '#/home');
 render();
 </script>
 </body>
