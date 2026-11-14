@@ -544,7 +544,7 @@ a.brand:active{transform:scale(.97)}
 .hnext{font-weight:800}
 /* home: rows */
 .hrows{border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
-.hrow{display:grid;grid-template-columns:78px minmax(0,2.4fr) minmax(0,1fr) 62px 88px 76px minmax(0,1.5fr);align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:0;border-bottom:1.5px solid #17140f22;background:transparent;text-align:left;font-size:13px;font-weight:700}
+.hrow{display:grid;grid-template-columns:78px minmax(0,2.4fr) minmax(0,1.5fr);align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:0;border-bottom:1.5px solid #17140f22;background:transparent;text-align:left;font-size:13px;font-weight:700}
 .hrow:last-child{border-bottom:0}
 @media (hover:hover){button.hrow:hover{background:#17140f0d}}
 button.hrow:active{background:#17140f1f}
@@ -574,6 +574,9 @@ button.hrow:active{background:#17140f1f}
 
 
 /* material: fields and slots */
+.mtop{display:flex;align-items:flex-end;gap:16px}
+.mtop .name-in{flex:1;min-width:0}
+.mtop .btn{flex:none;margin-bottom:6px}
 .name-in.title{font-size:clamp(30px,3.2vw,42px);font-stretch:125%;letter-spacing:-.025em;line-height:1.05;padding:0 0 8px}
 .x[disabled]{opacity:.3;cursor:not-allowed}
 .x[disabled]:hover{background:var(--paper);color:var(--ink)}
@@ -606,7 +609,6 @@ button.hrow:active{background:#17140f1f}
 .check{margin:18px 0 0}
 .check.ok{background:var(--paper)}
 .sumbox .chips{margin-top:2px}
-.hrow-kind{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:var(--muted)}
 /* material: field tabs */
 .ftabs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:10px}
 .ftabs .pill small{margin-left:7px;font-size:11px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
@@ -748,10 +750,12 @@ const NOTES = {
 };
 function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
 /* the fixed demo numbers belong to the hiking run; every other run gets its own made-up ones */
-const salt = rid => rid === 'hike' ? '' : rid;
+/* runs that show the fixed demo numbers: the hiking run, plus any scenario filled by "Upload dataset" */
+const DEMO_IDS = new Set(['hike']), isDemo = rid => DEMO_IDS.has(rid);
+const salt = rid => isDemo(rid) ? '' : rid;
 function ov(rid, vid, aid) {
   if (aid === 'away') return 100 - ov(rid, vid, 'keep');
-  const b = rid === 'hike' ? (BASE[vid] || {})[aid] : null;
+  const b = isDemo(rid) ? (BASE[vid] || {})[aid] : null;
   if (b != null) return b;
   if (aid === 'keep') return 52 + Math.round(hash(salt(rid) + vid + aid) * 16);
   return 2 + Math.round(hash(salt(rid) + vid + '|' + aid) * 14);
@@ -937,8 +941,8 @@ const ASK = {
   }
 };
 const ASK_ANY = [[['Nothing stands out', 'Nothing'], 35, ['Honestly, nothing jumps out at me.']], [['Too long', 'Way too long'], 25, ['It could be shorter.']], [['Needs more context', 'More context'], 20, ['I would want to know more before deciding.']], [['Unclear point', 'Point unclear'], 20, ['I am not sure what it is trying to say.']]];
-const whyPool = (vid, a) => (S.rid === 'hike' && WHY[vid] && WHY[vid][a.id]) || WHY_ANY[a.id] || WHY_ANY.other;
-const askPool = (vid, q) => (S.rid === 'hike' && ASK[q.id] && ASK[q.id][vid]) || ASK_ANY;
+const whyPool = (vid, a) => (isDemo(S.rid) && WHY[vid] && WHY[vid][a.id]) || WHY_ANY[a.id] || WHY_ANY.other;
+const askPool = (vid, q) => (isDemo(S.rid) && ASK[q.id] && ASK[q.id][vid]) || ASK_ANY;
 /* split n into whole numbers in proportion to the weights */
 function shares(n, w) {
   const t = w.reduce((a, b) => a + b, 0) || 1, raw = w.map(x => x / t * n), out = raw.map(Math.floor);
@@ -1028,7 +1032,7 @@ const has = (v, f) => { const x = sv(v, f); return f.type === 'file' ? !!x.file 
 const anyIn = f => S.variants.filter(v => { const x = sv(v, f); return x.file || x.text.trim(); }).length;
 const filledCount = f => S.variants.filter(v => has(v, f)).length;
 function pgDataset() {
-  return `<section class="sec"><input class="name-in title" id="scn" data-bind="name" value="${esc(S.name)}" placeholder="Name this scenario" aria-label="Scenario name"></section>
+  return `<section class="sec mtop"><input class="name-in title" id="scn" data-bind="name" value="${esc(S.name)}" placeholder="Name this scenario" aria-label="Scenario name">${isDemo(S.rid) ? '' : '<button class="btn blue" data-act="demo">Upload dataset</button>'}</section>
   ${matTabs()}
   ${checkBar()}
   ${foot(null, 'profiles', 'Continue to Participants', !S.variants.length || !S.fields.length)}`;
@@ -1320,7 +1324,7 @@ function versionView(vid, mainId) {
   const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id))), 1);
   const eachQs = S.questions.filter(q => q.each), others = S.questions.filter(q => !q.each);
   const lift = `<div class="lift${o / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - o / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${o}<small>%</small></span></div>`;
-  const notes = (S.rid === 'hike' && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
+  const notes = (isDemo(S.rid) && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
   const rcard = eachQs.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, m, col)}</div>`).join('');
   const qcards = others.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
   return `<section class="vd" id="vd">
@@ -1440,19 +1444,7 @@ function scenario(o) {
   return s;
 }
 const RUNS = [
-  { id: 'hike', status: 'done', date: 'Today', s: clone(S) },
-  { id: 'planter', status: 'running', prog: 62, date: 'Today', s: scenario({ id: 'planter', name: 'Does free shipping beat 10% off?', count: 300, fields: ['Offer banner', 'Product description'],
-    variants: [['Free shipping', ['Free delivery on this set. No minimum, no code.', 'Three glazed planters in sage, sand and slate. Drainage holes and saucers included.']], ['10% off', ['Take 10% off your first planter set with code FERN10.', 'Three glazed planters in sage, sand and slate. Drainage holes and saucers included.']]],
-    actions: [['buy', 'Add to basket'], ['save', 'Save for later'], ['share', 'Share'], ['away', 'Leave the page']] }) },
-  { id: 'trial', status: 'done', date: 'Yesterday', s: scenario({ id: 'trial', name: 'Which headline sells the trial?', count: 800, fields: ['Headline', 'Body copy'],
-    variants: [['Plain offer', ['Fresh tea every month. First box free.', 'Six loose-leaf teas, chosen by season. Skip or cancel any time.']], ['Question', ['When did you last drink a cup of tea you actually remembered?', 'Kettle & Co sends six small-batch teas a month. Your first box is on us.']], ['Social proof', ['40,000 kitchens already get the Kettle & Co box.', 'Join them with a free first box. Six teas, one new favourite.']], ['Urgency', ['First box free, this week only.', 'Six loose-leaf teas at your door by Friday. Offer ends Sunday.']]],
-    actions: [['click', 'Click through'], ['like', 'Like'], ['share', 'Share'], ['save', 'Save'], ['away', 'Scroll past']] }) },
-  { id: 'subject', status: 'draft', stage: 'profiles', date: '12 Nov', s: scenario({ id: 'subject', name: 'Which subject line gets opened?', count: 1000, fields: ['Subject line', 'Preview text'], empty: ['region'],
-    variants: [['Straight', ['Your November reading list', 'Five books our editors finished this month.']], ['Curiosity', ['The book we could not put down', 'It is 180 pages and it cost one of us a night of sleep.']], ['Personal', ['Picked for you: five short reads', '']]],
-    actions: [['open', 'Open the email'], ['click', 'Click a link'], ['away', 'Delete it'], ['unsub', 'Unsubscribe', false]] }) },
-  { id: 'thumb', status: 'done', date: '10 Nov', s: scenario({ id: 'thumb', name: 'Thumbnail text: question or number?', count: 250, fields: ['Thumbnail text', 'Video title'],
-    variants: [['Question', ['Can you hike a month on £600?', 'How much does a month on trail really cost?']], ['Number', ['£612 · 31 days', 'How much does a month on trail really cost?']]],
-    actions: [['click', 'Click the video'], ['like', 'Like'], ['save', 'Save'], ['away', 'Scroll past']] }) }
+  { id: 'hike', status: 'done', date: 'Today', s: clone(S) }
 ];
 const curRun = () => RUNS.find(x => x.id === S.rid);
 function loadS(o) { Object.keys(S).forEach(k => delete S[k]); Object.assign(S, clone(o)); }
@@ -1487,7 +1479,7 @@ function outcome(run) {
 }
 function rowHtml(run) {
   const s = run.s;
-  return `<button class="hrow" data-act="open" data-id="${run.id}">${stTag(run)}<span class="hrow-name"><strong>${esc(runName(s))}</strong></span><span class="hrow-kind">${esc(runSub(s))}</span><span class="n">${s.variants.length}</span><span class="n">${fmt(s.count)}</span><span>${run.date}</span><span class="hrow-out">${outcome(run)}</span></button>`;
+  return `<button class="hrow" data-act="open" data-id="${run.id}">${stTag(run)}<span class="hrow-name"><strong>${esc(runName(s))}</strong></span><span class="hrow-out">${outcome(run)}</span></button>`;
 }
 function homeFeatured() {
   const [f, ...rest] = RUNS, s = f.s, w = f.status === 'done' ? winner(f) : null;
@@ -1534,6 +1526,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, id = b.dataset.id, V = () => S.vars.find(v => v.id === id);
   if (a === 'new') newRun();
+  else if (a === 'demo') { DEMO_IDS.add(S.rid); loadS({ ...DEMO, rid: S.rid }); render(); }
   else if (a === 'open') openRun(id);
   else if (a === 'go') go(b.dataset.to);
   else if (a === 'pick') { pendingSlot = null; $('#file').multiple = true; $('#file').click(); }
