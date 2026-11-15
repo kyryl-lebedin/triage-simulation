@@ -668,7 +668,7 @@ button.hrow:active{background:#17140f1f}
 .tdesc::placeholder{color:currentColor;opacity:.65}
 .tdesc:focus{outline:0;box-shadow:0 0 0 2px var(--mustard)}
 /* prompt page: settings in a row, then one column of chat-style messages */
-.llm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.llm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lf{display:flex;flex-direction:column;min-width:0}
 .sel{height:40px;min-width:0;padding:0 10px;border:var(--line);border-radius:var(--r);background:var(--paper);color:var(--ink);font:inherit;font-weight:800;font-size:14px;box-shadow:2px 2px 0 var(--ink)}
 .sel[disabled]{opacity:.45;box-shadow:none}
@@ -757,6 +757,8 @@ button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shad
 .hrow-name{margin-left:4px}
 .hfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:56px;padding-top:14px;border-top:1.5px solid #17140f22;font-size:12px;font-weight:700;color:var(--muted)}
 .hfoot .pill[aria-pressed=true]{background:var(--sky);color:var(--ink)}
+.htools{margin-bottom:18px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 /* results: a note under the heading, clamped version blurb, tighter ranking when there are many versions */
 .caveat{display:flex;align-items:baseline;gap:8px;max-width:100ch;margin:10px 0 14px}
 .caveat .tag{flex:none;align-self:center}
@@ -1262,7 +1264,7 @@ const vname = v => `<input class="slab-name" data-bind="vname" data-id="${v.id}"
 function dropHtml() {
   if (!S.fields.length) return '';
   if (!fieldOf(S.dropField)) S.dropField = S.fields[0].id;
-  return `<div class="drop" id="drop"><div><strong>Drop files here</strong><p>${S.split ? 'Each file becomes a new version of the chosen type.' : 'Each file fills the next empty slot, or becomes a new version.'}</p></div><div class="drop-btns"><span class="lbl" style="margin:0">Fills</span>${S.fields.map(f => `<button class="pill" data-act="dropf" data-id="${f.id}" aria-pressed="${f.id === S.dropField}" data-flabel="${f.id}">${esc(f.name)}</button>`).join('')}<button class="btn" data-act="pick">Choose files</button></div></div>`;
+  return `<div class="drop" id="drop"><div><strong>Drop files here</strong></div><div class="drop-btns"><span class="lbl" style="margin:0">Fills</span>${S.fields.map(f => `<button class="pill" data-act="dropf" data-id="${f.id}" aria-pressed="${f.id === S.dropField}" data-flabel="${f.id}">${esc(f.name)}</button>`).join('')}<button class="btn" data-act="pick">Choose files</button></div></div>`;
 }
 function checkBar() {
   let ok = false, h;
@@ -1326,7 +1328,7 @@ function diffInfo(f) {
   const common = lists.slice(1).reduce((c, l) => lcs(c, l), lists[0]), longest = Math.max(...lists.map(l => l.length));
   if (lists.every(l => l.length === common.length)) return { on: false, why: 'Every version is the same.' };
   if (common.length < longest * .5) return { on: false, why: 'These versions are too different to line up.' };
-  return { on: true, common, why: `${common.length} words are shared. What changes in each version is marked.` };
+  return { on: true, common, why: '' };
 }
 function markDiff(text, common) {
   let k = 0;
@@ -1358,10 +1360,10 @@ function matTabs() {
 /* the visualisation: an HTML file the researcher made, run in a sandboxed frame and sent the selected version.
    The file listens for { standin: { name, type, text, file } } and may answer { standinHeight } to size its frame. */
 function vizHtml(f, v) {
-  if (!f.viz) return `<div class="viz none"><p><strong>No visualisation for ${esc(f.name)}.</strong> Add an HTML file of your own that draws a version, so it is clear what a participant gets. It is sent the selected version's text.</p><button class="btn sm" data-act="vizpick" data-id="${f.id}">Add file</button></div>`;
+  if (!f.viz) return `<div class="viz none"><p><strong>No visualisation for ${esc(f.name)}.</strong></p><button class="btn sm" data-act="vizpick" data-id="${f.id}">Add file</button></div>`;
   if (!v) return '';
   const src = f.viz.html != null ? `srcdoc="${esc(f.viz.html)}"` : `src="${esc(f.viz.src)}"`;
-  return `<section class="viz"><header><span class="lbl">Visualisation</span><span class="badge c-${vcol(v)}">${v.id}</span><strong>${esc(v.name)}</strong><small>${esc(f.viz.name)} · made by the researcher, not shown to participants</small></header><iframe id="vizf" title="Visualisation of ${esc(v.name)}" sandbox="allow-scripts" ${src}></iframe></section>`;
+  return `<section class="viz"><header><span class="lbl">Visualisation</span><span class="badge c-${vcol(v)}">${v.id}</span><strong>${esc(v.name)}</strong><small>${esc(f.viz.name)}</small></header><iframe id="vizf" title="Visualisation of ${esc(v.name)}" sandbox="allow-scripts" ${src}></iframe></section>`;
 }
 function vizSend() {
   const fr = $('#vizf'), f = fieldOf(S.tab), v = f && (mine(f).find(x => x.id === S.vsel) || mine(f)[0]);
@@ -1382,8 +1384,8 @@ function readViz(fid, file) {
 /* ---------- 2 participants ---------- */
 function pgProfiles() {
   const cp = S.copy || {};
-  return `<div class="head mtop"><div class="mhead"><h1 class="ask">${esc(cp.who || 'Who is watching?')}</h1><p class="hint">${esc(cp.whoHint || "Drag the dividers to set each split. If you don't know a split, leave it empty and let AI estimate it.")}</p></div>${upBtnHtml('profiles')}</div>
-  <section class="sec"><span class="lbl">How many participants</span><div class="count"><button class="step" data-act="count" data-d="-50" aria-label="50 fewer">−</button><input type="number" id="count" data-bind="count" value="${S.count}" min="10" max="5000" aria-label="Participants"><button class="step" data-act="count" data-d="50" aria-label="50 more">+</button><em>synthetic participants, each reacts to every version</em></div></section>
+  return `<div class="head mtop"><div class="mhead"><h1 class="ask">${esc(cp.who || 'Who is watching?')}</h1></div>${upBtnHtml('profiles')}</div>
+  <section class="sec"><span class="lbl">How many participants</span><div class="count"><button class="step" data-act="count" data-d="-50" aria-label="50 fewer">−</button><input type="number" id="count" data-bind="count" value="${S.count}" min="10" max="5000" aria-label="Participants"><button class="step" data-act="count" data-d="50" aria-label="50 more">+</button></div></section>
   <section class="sec"><span class="lbl">Split the crowd</span><div id="vars">${S.vars.map(varHtml).join('')}</div><div class="addrow"><button class="addvar" data-act="addvar">+ Add a variable</button><button class="addvar" data-act="impvar" title="A CSV with rows of: variable, option, percent">Import splits (CSV)</button></div></section>
   ${foot('dataset', 'actions', 'Continue to Actions')}`;
 }
@@ -1397,7 +1399,7 @@ function varHtml(v) {
   else if (!filled(v)) bar = `<div class="bar empty"><p>No split yet</p><div class="btns"><button class="btn blue" data-act="aifill" data-id="${v.id}">${v.ref ? 'Use real-world split' : 'Fill with AI'}</button><button class="btn" data-act="even" data-id="${v.id}">Split evenly</button></div></div>`;
   else bar = `<div class="bar${v.fresh ? ' fresh' : ''}" data-bar="${v.id}"><div class="bar-in">${v.opts.map((o, i) => `<div class="seg c-${SEG[i % SEG.length]}" data-seg="${i}"><b></b><span></span></div>`).join('')}</div>${v.opts.slice(0, -1).map((o, i) => `<button class="hand" data-hand="${i}" role="slider" aria-label="Divider between ${esc(o.name)} and ${esc(v.opts[i + 1].name)}" aria-valuemin="1"></button>`).join('')}</div>`;
   const leg = `<div class="legend">${v.opts.map((o, i) => `<span class="opt"${o.needs ? ` title="${esc(needsText(o))}"` : ''}><i class="c-${SEG[i % SEG.length]}"></i><input data-bind="optname" data-id="${v.id}" data-i="${i}" value="${esc(o.name)}" aria-label="Option name"><b data-pct="${i}">${o.pct == null ? '' : o.pct + '%'}</b>${v.opts.length > 2 ? `<button data-act="delopt" data-id="${v.id}" data-i="${i}" aria-label="Remove ${esc(o.name)}">✕</button>` : ''}</span>`).join('')}<button class="btn sm flat" data-act="addopt" data-id="${v.id}">+ Option</button></div>`;
-  const note = (v.aiErr ? `<p class="ai-note">Could not estimate: ${esc(v.aiErr)}</p>` : '') + (v.ref ? `<p class="ai-note">Real-world figures: ${esc(v.ref.src)}.${v.ref.url ? ` <a href="${esc(v.ref.url)}" target="_blank" rel="noopener">Source</a>` : ''}</p>` : v.ai && !v.loading ? `<p class="ai-note">Estimated from typical audiences for this material. Drag to correct it.</p>` : '') + (v.note ? `<p class="ai-note">${esc(v.note)}</p>` : '');
+  const note = (v.aiErr ? `<p class="ai-note">Could not estimate: ${esc(v.aiErr)}</p>` : '') + (v.ref ? `<p class="ai-note">Real-world figures: ${esc(v.ref.src)}.${v.ref.url ? ` <a href="${esc(v.ref.url)}" target="_blank" rel="noopener">Source</a>` : ''}</p>` : '') + (v.note && !v.ref ? `<p class="ai-note">${esc(v.note)}</p>` : '');
   v.fresh = false;
   return `<div class="var" data-var="${v.id}">${head}${bar}${leg}${note}</div>`;
 }
@@ -1483,7 +1485,7 @@ function phInner(k) {
   return { bad, html: `<i>${esc(k)}</i>${esc(val)}` };
 }
 function tplHtml() { return S.prompt.split(/(\{[a-z0-9_]+\})/i).map(p => { const m = /^\{([a-z0-9_]+)\}$/i.exec(p); if (!m) return esc(p); const x = phInner(m[1]); return `<span class="ph${x.bad ? ' bad' : ''}" contenteditable="false" data-ph="${m[1]}">${x.html}</span>`; }).join(''); }
-function paletteHtml() { return `<span>Drag a field up into the prompt, or click it</span>` + phKeys().map(k => `<button draggable="true" data-act="ph" data-ph="${k}">${k}</button>`).join(''); }
+function paletteHtml() { return `<span>Fields</span>` + phKeys().map(k => `<button draggable="true" data-act="ph" data-ph="${k}">${k}</button>`).join(''); }
 function readStrip() { let s = ''; $('#strip').childNodes.forEach(n => { s += n.nodeType === 3 ? n.textContent : n.dataset && n.dataset.ph ? `{${n.dataset.ph}}` : n.tagName === 'BR' ? ' ' : n.textContent; }); S.prompt = s.replace(/ /g, ' '); }
 let savedRange = null;
 document.addEventListener('selectionchange', () => { const st = $('#strip'), sel = getSelection(); if (st && sel.rangeCount && st.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange(); });
@@ -1529,14 +1531,14 @@ function actTile(a) {
 }
 function actGroup(label, list, fid) {
   const acts = [...list].sort((a, b) => (b.id === S.main) - (a.id === S.main));
-  return `<section class="sec"><span class="lbl">${esc(label)}${acts.length ? '' : ' · no actions yet'}</span><div class="tiles">${acts.map(actTile).join('')}<form class="tile add" data-addact="${fid}"><span class="lbl" style="margin:0">Your own action</span><input placeholder="e.g. Turn on notifications" maxlength="40" autocomplete="off" aria-label="New action for ${esc(label)}"><button class="btn sm" type="submit">+ Add action</button></form></div></section>`;
+  return `<section class="sec"><span class="lbl">${esc(label)}${acts.length ? '' : ' · no actions yet'}</span><div class="tiles">${acts.map(actTile).join('')}<form class="tile add" data-addact="${fid}"><span class="lbl" style="margin:0">Your own action</span><input placeholder="Action name" maxlength="40" autocomplete="off" aria-label="New action for ${esc(label)}"><button class="btn sm" type="submit">+ Add action</button></form></div></section>`;
 }
 function pgActions() {
   const cp = S.copy || {}, ids = S.fields.map(f => f.id);
   const shared = S.actions.filter(a => !a.fields || !a.fields.some(x => ids.includes(x)));
   const groups = S.fields.length < 2 ? actGroup((S.fields[0] || { name: 'Actions' }).name, S.actions, '')
     : (shared.length ? actGroup(`Every ${fw()}`, shared, '') : '') + S.fields.map(f => actGroup(f.name, S.actions.filter(a => a.fields && a.fields.includes(f.id)), f.id)).join('');
-  return `<div class="head mtop"><div class="mhead"><h1 class="ask">${esc(cp.acts || 'What can they do?')}</h1><p class="hint">${esc(cp.actsHint || `Each ${fw()} from Treatments gets its own actions. Add them, press in the ones a participant may take, and pick one as the main metric: it decides the winner.`)}</p></div>${upBtnHtml('actions')}</div>
+  return `<div class="head mtop"><div class="mhead"><h1 class="ask">${esc(cp.acts || 'What can they do?')}</h1></div>${upBtnHtml('actions')}</div>
   ${groups}
   ${judgeHtml()}
   ${foot('profiles', 'audit', 'Continue to Audit')}`;
@@ -1552,7 +1554,7 @@ function judgeHtml() {
 
 /* ---------- 4 audit ---------- */
 function pgAudit() {
-  return `<div class="head mtop"><div class="mhead"><h1 class="ask">What do you ask them after?</h1><p class="hint">Once a participant has acted, a second prompt asks them about it. Asking separately stops the questions from steering what they do. “Per action” asks the question once for every action they took.</p></div>${upBtnHtml('audit')}</div>
+  return `<div class="head mtop"><div class="mhead"><h1 class="ask">What do you ask them after?</h1></div>${upBtnHtml('audit')}</div>
   <section class="sec"><span class="lbl">Questions</span><div class="qs">${S.questions.map(q => `<div class="q"><span class="q-mark">?</span><input class="q-text" data-bind="qtext" data-id="${q.id}" value="${esc(q.text)}" maxlength="160" aria-label="Question"><button class="each" data-act="qeach" data-id="${q.id}" aria-pressed="${q.each}" title="Ask once for every action they took">Per action</button><button class="x" data-act="qdel" data-id="${q.id}" aria-label="Remove question">✕</button></div>`).join('')}
     <form class="q add" id="addq"><span class="q-mark">+</span><input class="q-text" id="newq" placeholder="e.g. What would you not like about this?" maxlength="160" autocomplete="off"><button class="btn sm" type="submit">Add question</button></form></div></section>
   ${foot('actions', 'prompt', 'Continue to Prompt')}`;
@@ -1571,31 +1573,30 @@ function pgPrompt() {
   /* the prompt is a template until "Preview" fills it in for one random participant and one version */
   const L = llm(), m = llmModel(), p = person(S.seed), on = !!S.pfill, v = on ? S.variants.find(x => x.id === S.pv) || S.variants[0] : null;
   const opt = (val, label, cur) => `<option value="${val}"${String(val) === String(cur) ? ' selected' : ''}>${label}</option>`;
-  const limits = [m.effort ? '' : `${m.name} has no effort setting.`, 'The Claude API no longer accepts a temperature on any model; variation comes from repeated runs.'].filter(Boolean).join(' ');
+  const limits = m.effort ? '' : `${m.name} has no effort setting.`;
   const settings = `<div class="llm">
     <label class="lf"><span class="lbl">Model</span><select class="sel" data-bind="llm-model">${LLMS.map(x => opt(x.id, x.name, m.id)).join('')}</select></label>
     <label class="lf"><span class="lbl">Effort</span><select class="sel" data-bind="llm-effort"${m.effort ? '' : ' disabled'}>${m.effort ? EFFORTS.map(e => opt(e, e, L.effort)).join('') : '<option>Not available</option>'}</select></label>
-    <label class="lf"><span class="lbl">Temperature</span><select class="sel" data-bind="llm-temp"${m.temp ? '' : ' disabled'}>${m.temp ? Array.from({ length: 11 }, (_, i) => opt(i / 10, (i / 10).toFixed(1), L.temp)).join('') : '<option>Not accepted</option>'}</select></label>
     <label class="lf"><span class="lbl">Runs per participant</span><select class="sel" data-bind="llm-runs">${Array.from({ length: 10 }, (_, i) => opt(i + 1, i ? `${i + 1} runs, averaged` : '1 run', L.runs)).join('')}</select></label>
   </div>${limits ? `<p class="lnote">${esc(limits)}</p>` : ''}`;
   /* the first prompt, split around its fill-in parts */
   const rest = systemPrompt(p, v).slice(personaText(p).length).trim().split('\n'), i0 = rest.findIndex(l => l.startsWith('- ')), acts = rest.filter(l => l.startsWith('- '));
   const fill = (label, text) => `<div class="fillin"><i>${esc(label)}</i>${esc(text)}</div>`;
   const mat = v ? shown(v).map(f => { const x = sv(v, f).text.trim(); return x ? fill(f.name, x) : ''; }).join('') : '';
-  const first = `<article class="msg"><header class="msg-h"><b>1</b>Prompt to the participant<span>click the first paragraph to edit it</span></header>
+  const first = `<article class="msg"><header class="msg-h"><b>1</b>Prompt to the participant</header>
     <div class="strip" id="strip" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Participant prompt">${tplHtml()}</div>
     <pre>${esc((i0 < 0 ? rest : rest.slice(0, i0)).join('\n'))}</pre>${acts.length ? fill('actions', acts.join('\n')) + `<pre>${esc(rest.slice(i0 + acts.length).join('\n'))}</pre>` : ''}
     ${v ? (mat || fill('treatment', '(empty)'))
       : `<div class="rawmat">${S.split ? `<span class="ph">${esc(S.fields.map(f => f.name.toLowerCase()).join(' / '))}</span>` : S.fields.map(f => `${esc(f.name)}: <span class="ph">${esc(f.name.toLowerCase())}</span>`).join('<br>')}</div>`}</article>`;
   /* the follow-up: the chat forks, one branch per question, all asked in parallel */
   const cols = Math.min(S.questions.length, 3);
-  const second = S.questions.length ? `<details class="sys"><summary><b>2</b>Instructions sent with each follow-up: how to answer<span></span></summary><pre>${esc(auditSystem())}</pre></details>
-    <div class="forknote">${S.questions.length > 1 ? `The chat branches here: ${S.questions.length} follow-ups asked in parallel, each in its own copy of the chat` : 'One follow-up, asked in its own copy of the chat'}</div>
+  const second = S.questions.length ? `<details class="sys"><summary><b>2</b>Follow-up instructions<span></span></summary><pre>${esc(auditSystem())}</pre></details>
+    
     ${cols > 1 ? `<div class="fork" style="--n:${cols}"></div>` : ''}
     <div class="branches" style="--n:${cols}">${S.questions.map((q, i) => `<div class="branch"><article class="msg"><header class="msg-h"><b>2${'abcdefghij'[i] || ''}</b>Follow-up</header>${fill(q.each ? 'question · for each action' : 'question', q.text)}</article></div>`).join('')}</div>` : '';
   const judge = S.judge ? `<article class="msg"><header class="msg-h"><b>${S.questions.length ? 3 : 2}</b>To the judge, with the record of the first chat</header><pre>${esc(S.judge.text)}</pre></article>` : '';
   const pick = on && S.variants.length > 1 ? `<span class="pvs"><span class="lbl">Version</span>${S.variants.map(x => `<button class="pv" data-act="pv" data-id="${x.id}" aria-pressed="${x === v}" title="${esc(x.name)}" aria-label="Show ${esc(x.name)}">${x.id}</button>`).join('')}</span>` : '';
-  return `<div class="head"><h1 class="ask">What are they told?</h1><p class="hint">Choose the model that plays the participants, then check the prompt they are sent. The chips are filled in for each participant and version; preview a random one to read it as sent.</p></div>
+  return `<div class="head"><h1 class="ask">What are they told?</h1></div>
   <section class="sec"><span class="lbl">Who plays them</span>${settings}</section>
   <section class="sec chat${on ? ' filled' : ''}">
     <div class="chat-top">${on ? `<strong>Participant ${p.n} of ${fmt(S.count)}</strong><button class="btn sm" data-act="shuffle">Another random one</button><button class="btn sm flat" data-act="praw">Back to placeholders</button>${pick}` : `<strong>Template</strong><button class="btn sm blue" data-act="shuffle">Preview a random participant</button>`}</div>
@@ -1609,7 +1610,7 @@ function pgPrompt() {
 let runTimer = null;
 function pgRun() {
   const acts = onActs(), L = llm(), lm = llmModel(), cur = curRun(), real = isReal(S.rid);
-  return `<div class="head"><h1 class="ask">Ready to run?</h1><p class="hint">Check the setup. Each participant sees every version and reacts on their own.</p></div>
+  return `<div class="head"><h1 class="ask">Ready to run?</h1></div>
   <section class="sec"><div class="sum" style="grid-template-columns:repeat(5,minmax(0,1fr))">
     <div class="sumbox"><header><h3>Treatments</h3><a class="btn sm flat" href="#/dataset">Edit</a></header><div class="big">${S.variants.length}<small>${S.variants.length === 1 ? 'version' : 'versions'}</small></div><ul class="vlist">${S.variants.map(v => `<li><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</li>`).join('')}</ul><div class="chips">${S.fields.map(f => `<span>${esc(f.name)}</span>`).join('')}</div></div>
     <div class="sumbox"><header><h3>Participants</h3><a class="btn sm flat" href="#/profiles">Edit</a></header><div class="big">${fmt(S.count)}<small>participants</small></div><ul class="vlist">${S.vars.map(v => `<li><span class="nm">${esc(v.name)}</span>${filled(v) ? `<span class="mini">${v.opts.map((o, i) => `<i class="c-${SEG[i % SEG.length]}" style="width:${o.pct}%"></i>`).join('')}</span>` : '<span class="mini none" title="Not set, will be skipped"></span>'}</li>`).join('')}</ul></div>
@@ -1618,7 +1619,7 @@ function pgRun() {
     <div class="sumbox"><header><h3>Prompt</h3><a class="btn sm flat" href="#/prompt">Edit</a></header><div class="big">${L.runs}<small>${L.runs === 1 ? 'run' : 'runs'} each</small></div><div class="chips"><span class="m">${esc(lm.name)}</span>${lm.effort ? `<span>effort ${L.effort}</span>` : ''}</div></div>
   </div>
   ${real ? apiHtml() : ''}${cur && cur.err ? `<div class="gap check" role="alert"><strong>Last run:</strong><span>${esc(cur.err)}</span></div>` : ''}
-  <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run"${real && !(API && API.ready) ? ' disabled' : ''}>Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions${L.runs > 1 ? ` × ${L.runs} runs` : ''} = ${fmt(S.count * S.variants.length * L.runs)} reactions${real ? `, up to ${fmt(S.count * S.variants.length * L.runs * (1 + S.questions.length))} calls to ${esc(lm.name)}` : ''}. It runs in the background; you will find it on the home page.</p></div>` : `<div class="go"><p>Add at least one version in Treatments before running.</p></div>`}</div></section>
+  <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run"${real && !(API && API.ready) ? ' disabled' : ''}>Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions${L.runs > 1 ? ` × ${L.runs} runs` : ''} = ${fmt(S.count * S.variants.length * L.runs)} reactions${real ? `, up to ${fmt(S.count * S.variants.length * L.runs * (1 + S.questions.length))} calls to ${esc(lm.name)}` : ''}.</p></div>` : `<div class="go"><p>Add at least one version in Treatments before running.</p></div>`}</div></section>
   ${foot('prompt', null)}`;
 }
 /* ---------- real runs: every participant and version goes to the model through the local server ---------- */
@@ -1784,7 +1785,7 @@ function leaderboard() {
       <span class="lb-delta">${i === 0 ? '—' : d === 0 ? '0' : (d > 0 ? '+' : '−') + Math.abs(d)}<small>${i === 0 ? 'leader' : 'pts'}</small></span>
       <span class="lb-go" aria-hidden="true">→</span></li>`;
   }).join('');
-  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span><span class="lb-tip">${order.length < stageVariants().length ? `Applies to ${order.length} of ${stageVariants().length} versions. ` : ''}Click a version for the details</span></div><ol class="lb${order.length > 5 ? ' many' : ''}" style="--n:${order.length}">${rows}</ol></section>`;
+  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span><span class="lb-tip">${order.length < stageVariants().length ? `Applies to ${order.length} of ${stageVariants().length} versions` : ''}</span></div><ol class="lb${order.length > 5 ? ' many' : ''}" style="--n:${order.length}">${rows}</ol></section>`;
 }
 /* ---------- who gave a reason: profile icons ---------- */
 const isGender = v => v.id === 'gender' || /gender|sex/i.test(v.name);
@@ -1826,7 +1827,7 @@ function reasonPanel(r) {
     return `<div class="wv"><span class="wv-ic" title="${esc(v.name)}">${svg(varIcon(v))}</span><div class="wv-bar" role="img" aria-label="${esc(v.name)}: ${v.opts.map((o, i) => `${o.name} ${Math.round(here[i] * 100)}%`).join(', ')}">${segs}</div><div class="wv-leg">${leg}</div></div>`;
   }).join('');
   const lift = top ? `<span class="over" title="${Math.round(top.x * 100)}% of the people giving this reason, against ${Math.round(top.all * 100)}% overall">${optIcon(top.v, top.i) ? svg(optIcon(top.v, top.i)) : ''}${esc(top.v.name)}: ${esc(top.v.opts[top.i].name)} <b>${Math.round(top.x * 100)}%</b><em>vs ${Math.round(top.all * 100)}%</em></span>` : '';
-  const forms = r.forms.length > 1 ? `<p class="forms">Grouped from ${r.forms.map(f => `“${esc(f.short)}” ${f.n}`).join(' · ')}</p>` : '';
+  const forms = '';
   return `<div class="rq"><div class="who-h"><b>${fmt(r.n)} ${r.n === 1 ? 'person' : 'people'}</b>${lift}</div>
     <div class="pict">${tiles.join('')}</div>${per > 1 ? `<p class="forms">1 icon = ${per} people</p>` : ''}
     ${rows}${forms}${r.quotes.map(q => `<blockquote>“${esc(q.full)}”<cite>${esc(q.by)}</cite></blockquote>`).join('')}</div>`;
@@ -1960,9 +1961,9 @@ function homeFeatured() {
   ${rest.length ? `<section class="hearlier"><span class="lbl">Earlier</span><div class="hrows">${rest.map(rowHtml).join('')}</div></section>` : ''}`;
 }
 function pgHome() {
-  return `<div class="res-head"><div><h1 class="ask">Pick up where you left off</h1><p class="hint">Open a run to jump back to its stage, or start a new one.</p></div><div class="res-tools"><button class="btn" data-act="newdemo">+ Demo</button><button class="btn pri" data-act="new">+ New scenario</button></div></div>
+  return `<h1 class="sr-only">Scenarios</h1><div class="res-tools htools"><button class="btn pri" data-act="new">+ New scenario</button><button class="btn" data-act="newdemo">+ Demo</button></div>
   <div class="hrows">${RUNS.map(rowHtml).join('')}</div>
-  <div class="hfoot"><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button>${TOGGLES.map(m => `<button class="pill" data-act="imprun" data-id="${m.id}" aria-pressed="${RUNS.some(r => r.id === m.id)}">Show ${esc((m.label || m.id).split(':')[0].toLowerCase())} run</button>`).join('')}<span>Finished runs, with setup and results already filled in.</span></div>`;
+  <div class="hfoot"><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button>${TOGGLES.map(m => `<button class="pill" data-act="imprun" data-id="${m.id}" aria-pressed="${RUNS.some(r => r.id === m.id)}">Show ${esc((m.label || m.id).split(':')[0].toLowerCase())} run</button>`).join('')}</div>`;
 }
 /* the switch at the bottom of the home page: puts the finished YouTube demo on the list, or takes it off again,
    so it can be shown without going through + Demo and the Upload dataset buttons */
