@@ -685,7 +685,7 @@ Assumptions when this nurse is used as the control:
     by_level = {kk: sum(1 for c in cases if c["real"]["ktas_expert"] == kk) for kk in (1, 2, 3, 4, 5)}
     s = {
         "name": "Which 111 substitute triages best?",
-        "fields": MAIN_FIELDS + [{"id": "real", "name": "Real control", "type": "file"}, {"id": "msg", "name": "Closing message", "type": "file"}], "split": True,
+        "fields": MAIN_FIELDS + [{"id": "real", "name": "Real control", "type": "file"}, {"id": "msg", "name": "Closing message", "type": "file", "viz": {"name": "message.html", "src": "viz/message.html"}}], "split": True,
         # the results come in two stages, each with its own versions, its own main score and its own number of patients
         "stages": [{"id": "triage", "name": "Triage", "ask": "Which substitute gives patients the right urgency level?", "main": "right", "types": ["form", "chat", "real"]},
                    {"id": "msg", "name": "Closing message", "ask": "Told to go to emergency care: which message gets them to go?", "main": "proceed", "types": ["msg"]}],

@@ -766,9 +766,12 @@ button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shad
 .viz>header .lbl{margin:0}
 .viz>header strong{font-weight:900;font-size:15px}
 .viz>header small{margin-left:auto;font-size:11px;font-weight:700;color:var(--muted)}
+.viz>header .btn{flex:none}
 .viz iframe{display:block;width:100%;height:560px;border:0;background:#fff}
-.viz.none{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:14px 16px;border-style:dashed;box-shadow:none;background:transparent}
-.viz.none p{margin:0;flex:1;min-width:260px;font-size:13px;font-weight:600;color:var(--muted)}
+.viz>header .x{width:26px;height:26px;font-size:12px;flex:none}
+.viz{scroll-margin-top:70px}
+.slot.shut{padding:10px 12px;background:var(--paper)}
+.slot-top{display:flex;justify-content:flex-end;padding:6px 10px 0}
 .hrow-name{margin-left:4px}
 .hfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:56px;padding-top:14px;border-top:1.5px solid #17140f22;font-size:12px;font-weight:700;color:var(--muted)}
 .hfoot .pill[aria-pressed=true]{background:var(--sky);color:var(--ink)}
@@ -779,6 +782,31 @@ button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shad
 .page.home .hrows{margin-bottom:56px}
 .page.home .hfoot{margin-top:auto}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* the guide: a ring on the next thing to press. On first open it also dims the page and says where to start */
+#gdim{position:fixed;inset:0;z-index:58;background:#17140fb8;pointer-events:none;opacity:0;transition:opacity 450ms}
+#gdim.on{opacity:1}
+#gring{position:fixed;z-index:59;display:none;border:4px solid var(--mustard);border-radius:11px;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink);pointer-events:none}
+#gring.on{display:block;animation:gin 520ms var(--out) both,gglow 1s ease-in-out 520ms infinite alternate}
+#gring::before,#gring::after{content:"";position:absolute;inset:-4px;border:3px solid var(--mustard);border-radius:16px;opacity:0;animation:gwave 1.8s linear 400ms infinite}
+#gring::after{animation-delay:1.3s}
+#gring span{position:absolute;top:calc(100% + 15px);right:0;padding:5px 10px;border:var(--line);border-radius:6px;background:var(--mustard);color:var(--ink);font-size:13px;font-weight:800;white-space:nowrap;box-shadow:2px 2px 0 var(--ink)}
+#gring span::before{content:"";position:absolute;bottom:100%;right:24px;border:8px solid transparent;border-bottom-color:var(--ink)}
+#gring span:empty{display:none}
+#gjump{position:fixed;left:50%;z-index:59;display:none;width:40px;height:40px;margin-left:-20px;padding:0;border:var(--line);border-radius:50%;background:var(--mustard);color:var(--ink);font-size:18px;font-weight:900;box-shadow:2px 2px 0 var(--ink);cursor:pointer;animation:gbob .9s ease-in-out infinite alternate}
+#gjump.down{display:block;bottom:18px}
+#gjump.up{display:block;top:78px}
+@keyframes gin{from{opacity:0;transform:scale(1.4)}to{opacity:1;transform:scale(1)}}
+@keyframes gglow{from{background:#f2b52b00;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink),0 0 0 10px #f2b52b00}to{background:#f2b52b59;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink),0 0 0 10px #f2b52b99}}
+@keyframes gjglow{from{box-shadow:2px 2px 0 var(--ink),0 0 0 10px #f2b52b00}to{box-shadow:2px 2px 0 var(--ink),0 0 0 10px #f2b52b99}}
+@keyframes gwave{0%{inset:-4px;opacity:1}55%{inset:-22px;opacity:.6}100%{inset:-34px;opacity:0}}
+@keyframes gbob{to{transform:translateY(5px)}}
+/* with reduced motion the guide still pulses, by brightness only: nothing moves or grows */
+@media (prefers-reduced-motion:reduce){
+  #gring.on{animation:gglow .9s ease-in-out infinite alternate!important}
+  #gring::before,#gring::after{animation:none!important}
+  #gjump{animation:gjglow .9s ease-in-out infinite alternate!important}
+  #gdim{transition-duration:450ms!important}
+}
 /* results: a note under the heading, clamped version blurb, tighter ranking when there are many versions */
 .caveat{display:flex;align-items:baseline;gap:8px;max-width:100ch;margin:10px 0 14px}
 .caveat .tag{flex:none;align-self:center}
@@ -795,9 +823,10 @@ button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shad
 </head>
 <body>
 <div id="app"></div>
+<div id="gdim"></div><div id="gring"><span></span></div><button id="gjump" type="button" aria-label="Scroll to the next step"></button>
 <input type="file" id="file" multiple accept=".txt,.md,.srt,.vtt,.csv,text/plain" hidden>
 <!-- optional: runs with real results, in the platform's own shape. The page works without this file. -->
-<script src="data/triage-runs.js?v=10"></script>
+<script src="data/triage-runs.js?v=11"></script>
 <script>
 /* forwards picker keys to the harness when framed */
 if (window.parent !== window) document.addEventListener('keydown', e => { if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable || e.metaKey || e.ctrlKey || e.altKey) return; window.parent.postMessage({ protoKey: e.key }, '*'); });
@@ -1271,10 +1300,15 @@ function pgDataset() {
 }
 function slotHtml(v, f) {
   const x = sv(v, f), key = `data-id="${v.id}" data-f="${f.id}"`;
+  /* with types, a version's text stays folded until asked for: the list reads as a list of versions */
+  const see = S.split && f.viz ? `<button class="btn sm blue" data-act="vsel" data-id="${v.id}">${S.vsel === v.id ? 'Hide preview' : 'Preview'}</button>` : '';
+  if (S.split && (x.file || x.text.trim()) && !(S.vopen && S.vopen[v.id]))
+    return `<div class="slot shut"><span class="sfile-top full">${x.file ? `<span class="tag">${esc(x.file)}</span>` : ''}<small>${fmt(x.words || x.text.trim().split(/\s+/).length)} words</small>${see}</span></div>`;
+  const fold = S.split && (x.file || x.text.trim()) ? see : '';
   if (f.type === 'file') return `<div class="slot${x.file ? '' : ' empty'}"><div class="sfile">${x.file
-    ? `<span class="sfile-top full"><span class="tag">${esc(x.file)}</span><small>${fmt(x.words || 0)} words</small>${x.text.length > 700 || x.text.split('\n').length > 14 ? '<button class="btn sm flat" data-act="more">Show all</button>' : ''}<button class="btn sm flat" data-act="sclear" ${key}>Remove</button></span><p data-hl="${v.id}" data-keep="1">${esc(x.text)}</p>`
+    ? `<span class="sfile-top full"><span class="tag">${esc(x.file)}</span><small>${fmt(x.words || 0)} words</small>${x.text.length > 700 || x.text.split('\n').length > 14 ? '<button class="btn sm flat" data-act="more">Show all</button>' : ''}${fold}<button class="btn sm flat" data-act="sclear" ${key}>Remove</button></span><p data-hl="${v.id}" data-keep="1">${esc(x.text)}</p>`
     : `<strong>No file yet</strong><button class="btn sm" data-act="spick" ${key}>Choose file</button>`}</div></div>`;
-  return `<div class="slot${x.text.trim() ? '' : ' empty'}"><div class="hl" data-hl="${v.id}" aria-hidden="true"></div><textarea data-bind="slot" ${key} placeholder="Empty. Type or paste the ${esc(f.name.toLowerCase())}." aria-label="${esc(v.name)}: ${esc(f.name)}">${esc(x.text)}</textarea></div>`;
+  return `${fold ? `<div class="slot-top">${fold}</div>` : ''}<div class="slot${x.text.trim() ? '' : ' empty'}"><div class="hl" data-hl="${v.id}" aria-hidden="true"></div><textarea data-bind="slot" ${key} placeholder="Empty. Type or paste the ${esc(f.name.toLowerCase())}." aria-label="${esc(v.name)}: ${esc(f.name)}">${esc(x.text)}</textarea></div>`;
 }
 function fieldCtl(f, i) {
   if (S.confirm === f.id) { const n = anyIn(f); return `<span class="fconfirm">Delete with ${n} ${n === 1 ? 'entry' : 'entries'}?<button class="btn sm pri" data-act="fdelyes" data-id="${f.id}">Delete</button><button class="btn sm" data-act="fdelno">Keep</button></span>`; }
@@ -1373,21 +1407,20 @@ function matTabs() {
   const tabs = `<nav class="ftabs" aria-label="${Fw()}s">${S.fields.map(x => `<button class="pill" data-act="ftab" data-id="${x.id}" aria-pressed="${x === f}"><span data-flabel="${x.id}">${esc(x.name)}</span><small data-fcount="${x.id}">${fcount(x)}</small></button>`).join('')}<button class="btn sm flat" data-act="fadd">+ ${Fw()}</button></nav>`;
   if (!f) return `<section class="sec">${tabs}<p class="hint">${S.split ? 'Add a type of treatment, such as a form or a chat.' : 'Add a part to say what each participant is given, such as a transcript or a description.'}</p></section>`;
   S.dropField = f.id;
-  const seen = mine(f).find(x => x.id === S.vsel) || mine(f)[0];
+  const seen = f.viz ? mine(f).find(x => x.id === S.vsel) : null;
   return `<section class="sec">${tabs}<div class="fedit"><span class="lbl">${Fw()}</span>${fieldCtl(f, i)}</div>
   <div class="dbar"><button class="pill" data-act="diff" aria-pressed="${!!S.diff}">Highlight differences</button><span id="diffnote"></span></div>
-  <div class="vcols">${mine(f).map((v, j) => `<div class="vcol${f.viz && v === seen ? ' vseen' : ''}"><div class="col-head"><span class="badge c-${vcol(v)}">${v.id}</span>${vname(v)}<span class="vt"><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button>${f.viz ? `<button class="vsee" data-act="vsel" data-id="${v.id}" aria-pressed="${v === seen}">${v === seen ? 'Shown below' : 'Visualise'}</button>` : ''}</span></div><div class="slotbox" style="border-left:6px solid var(--${vcol(v)})">${slotHtml(v, f)}</div></div>`).join('')}<button class="vadd" data-act="vadd">+ Add a version</button></div>${dropHtml()}${vizHtml(f, seen)}</section>`;
+  <div class="vcols">${mine(f).map((v, j) => `<div class="vcol${f.viz && v === seen ? ' vseen' : ''}"><div class="col-head"><span class="badge c-${vcol(v)}">${v.id}</span>${vname(v)}<span class="vt"><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button>${S.split ? (sv(v, f).file || sv(v, f).text.trim() ? `<button class="vsee" data-act="vopen" data-id="${v.id}" aria-pressed="${!!(S.vopen && S.vopen[v.id])}">${S.vopen && S.vopen[v.id] ? 'Done' : 'Edit'}</button>` : '') : f.viz ? `<button class="vsee" data-act="vsel" data-id="${v.id}" aria-pressed="${v === seen}">${v === seen ? 'Hide preview' : 'Preview'}</button>` : ''}</span></div><div class="slotbox" style="border-left:6px solid var(--${vcol(v)})">${slotHtml(v, f)}</div></div>`).join('')}<button class="vadd" data-act="vadd">+ Add a version</button></div>${dropHtml()}${vizHtml(f, seen)}</section>`;
 }
 /* the visualisation: an HTML file the researcher made, run in a sandboxed frame and sent the selected version.
    The file listens for { standin: { name, type, text, file } } and may answer { standinHeight } to size its frame. */
 function vizHtml(f, v) {
-  if (!f.viz) return `<div class="viz none"><p><strong>No visualisation for ${esc(f.name)}.</strong></p><button class="btn sm" data-act="vizpick" data-id="${f.id}">Add file</button></div>`;
-  if (!v) return '';
-  const src = f.viz.html != null ? `srcdoc="${esc(f.viz.html)}"` : `src="${esc(f.viz.src)}"`;
-  return `<section class="viz"><header><span class="lbl">Visualisation</span><span class="badge c-${vcol(v)}">${v.id}</span><strong>${esc(v.name)}</strong><small>${esc(f.viz.name)}</small></header><iframe id="vizf" title="Visualisation of ${esc(v.name)}" sandbox="allow-scripts" ${src}></iframe></section>`;
+  if (!f.viz || !v) return '';
+  const src = f.viz.html != null ? `srcdoc="${esc(f.viz.html)}"` : `src="${esc(f.viz.src)}"`, many = mine(f).length > 1;
+  return `<section class="viz" id="viz"><header><span class="lbl">Preview</span>${many ? `<button class="x" data-act="vizstep" data-d="-1" aria-label="Previous version">←</button>` : ''}<span class="badge c-${vcol(v)}">${v.id}</span><strong>${esc(v.name)}</strong>${many ? `<button class="x" data-act="vizstep" data-d="1" aria-label="Next version">→</button>` : ''}<small>${esc(f.viz.name)}</small><button class="btn sm flat" data-act="vsel" data-id="${v.id}">Close</button></header><iframe id="vizf" title="Preview of ${esc(v.name)}" sandbox="allow-scripts" ${src}></iframe></section>`;
 }
 function vizSend() {
-  const fr = $('#vizf'), f = fieldOf(S.tab), v = f && (mine(f).find(x => x.id === S.vsel) || mine(f)[0]);
+  const fr = $('#vizf'), f = fieldOf(S.tab), v = f && mine(f).find(x => x.id === S.vsel);
   if (fr && v) fr.contentWindow.postMessage({ standin: { name: v.name, type: f.name, text: sv(v, f).text, file: sv(v, f).file || '' } }, '*');
 }
 addEventListener('message', e => {
@@ -1987,7 +2020,7 @@ function homeFeatured() {
 function pgHome() {
   return `<h1 class="sr-only">Scenarios</h1><div class="res-tools htools"><button class="btn" data-act="newdemo">+ Demo</button><button class="btn pri" data-act="new">+ New scenario</button></div>
   <div class="hrows">${RUNS.map(rowHtml).join('')}</div>
-  <div class="hfoot"><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button></div>`;
+  <div class="hfoot"><button class="pill" data-act="guide" aria-pressed="${GUIDE.on}">Guide</button><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button></div>`;
 }
 /* the switch at the bottom of the home page: puts the finished YouTube demo on the list, or takes it off again,
    so it can be shown without going through + Demo and the Upload dataset buttons */
@@ -2003,6 +2036,62 @@ function toggleImport(id) {
   else if (m) { IMP[m.id] = m; RUNS.push({ id: m.id, status: m.status || 'done', date: m.date || 'Today', s: Object.assign(clone(DEMO), clone(m.s), { rid: m.id }) }); }
   render();
 }
+
+/* ---------- guide ---------- */
+/* Shows what to press next while the demo scenario is being made. On first open it dims the page and points at + Demo;
+   after that it only rings the next control: Upload dataset, a preview, Continue, Run, the finished run, then through its results.
+   Which step it is on is read from the page, so going back or skipping ahead never leaves it stuck. */
+const GUIDE = { on: true, done: false, viz: false, pv: false, seen: {} };
+try { GUIDE.on = localStorage.getItem('standin-guide') !== 'off'; } catch (e) {}
+function guideStep() {
+  if (!GUIDE.on || GUIDE.done) return null;
+  const r = route(), c = curRun(), up = p => $(`[data-act="demo"][data-part="${p}"]`), next = () => $('.foot .btn.pri:not([disabled])');
+  if (r === 'home') {
+    const d = RUNS.find(x => x.demo && x.id !== 'hike');
+    if (!d) return { el: $('[data-act="newdemo"]'), dim: true, tip: 'Start here' };
+    return d.status === 'running' ? null : { el: $(`.hrow[data-id="${d.id}"]`) };
+  }
+  if (!c || !c.demo || c.id === 'hike') return null;
+  if (r === 'results') {
+    /* the results tour: another metric, the top version, one of its reasons, the next version, back to the ranking */
+    const k = GUIDE.seen;
+    if (!routeArg()) { if (k.vstep) { GUIDE.done = true; return null; } return { el: (!k.metric && $$('.pill[data-act="metric"]')[1]) || $('.lb-row[data-act="view"]') }; }
+    return { el: (!k.tag && $('.rsn[data-act="tag"]')) || (!k.vstep && $('[data-act="vstep"][data-d="1"]')) || $('#page a.btn[href="#/results"]') };
+  }
+  if (r === 'dataset') return { el: up('dataset') || (!GUIDE.viz && $('[data-act="vsel"]')) || next() };
+  if (r === 'profiles' || r === 'actions' || r === 'audit') return { el: up(r) || next() };
+  if (r === 'prompt') return { el: (!GUIDE.pv && !S.pfill && $('[data-act="shuffle"]')) || next() };
+  if (r === 'run') return { el: $('[data-act="run"]:not([disabled])') };
+  return null;
+}
+const gHole = (b, p, r) => { const x = b.left - p, y = b.top - p, w = b.width + 2 * p, h = b.height + 2 * p; return `M${x + r} ${y}h${w - 2 * r}a${r} ${r} 0 0 1 ${r} ${r}v${h - 2 * r}a${r} ${r} 0 0 1 ${-r} ${r}h${2 * r - w}a${r} ${r} 0 0 1 ${-r} ${-r}v${2 * r - h}a${r} ${r} 0 0 1 ${r} ${-r}Z`; };
+/* every new step the ring closes in on the next control, then keeps pulsing on it: a glow and rings spreading outwards.
+   Only the first step, + Demo on a fresh page, dims the rest of the page. */
+let gLast = '', gStep = '';
+function guidePlace() {
+  const st = guideStep(), el = st && st.el, dim = $('#gdim'), ring = $('#gring'), jump = $('#gjump');
+  let key = '', box = '', clip = '', off = '';
+  if (el) {
+    const b = el.getBoundingClientRect(), d = el.dataset, id = [route(), d.act, d.part || d.to || d.id || ''].join(':');
+    if (id !== gStep) { gStep = id; gLast = ''; ring.className = ''; void ring.offsetWidth; }
+    off = b.top > innerHeight - 24 ? 'down' : b.bottom < 72 ? 'up' : '';
+    box = `left:${b.left - 6}px;top:${b.top - 6}px;width:${b.width + 12}px;height:${b.height + 12}px`;
+    if (jump.className !== off) { jump.className = off; jump.textContent = off === 'up' ? '↑' : '↓'; }
+    if (st.dim) {
+      const sw = $('[data-act="guide"]'), hole = off ? gHole(jump.getBoundingClientRect(), 6, 26) : gHole(b, 6, 10);
+      clip = `path(evenodd,"M0 0H${innerWidth}V${innerHeight}H0Z${hole}${sw ? gHole(sw.getBoundingClientRect(), 5, 9) : ''}")`;
+    }
+    key = [off, box, clip, st.tip || ''].join('|');
+  } else { gStep = ''; if (jump.className) jump.className = ''; }
+  if (key !== gLast) {
+    ring.className = el && !off ? 'on' : ''; ring.style.cssText = box; ring.firstChild.textContent = (st && st.tip) || '';
+    dim.className = clip ? 'on' : ''; if (clip) dim.style.clipPath = clip;
+    gLast = key;
+  }
+  requestAnimationFrame(guidePlace);
+}
+$('#gjump').onclick = () => { const st = guideStep(); if (st && st.el) st.el.scrollIntoView({ block: 'center', behavior: smooth() }); };
+requestAnimationFrame(guidePlace);
 
 /* ---------- render + events ---------- */
 const PAGES = { home: pgHome, dataset: pgDataset, profiles: pgProfiles, actions: pgActions, audit: pgAudit, prompt: pgPrompt, run: pgRun, results: pgResults };
@@ -2031,8 +2120,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.iconPick
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, id = b.dataset.id, V = () => S.vars.find(v => v.id === id);
+  if (route() === 'results') GUIDE.seen[a] = true;
   if (a === 'new') newRun(false);
-  else if (a === 'newdemo') newRun(true);
+  else if (a === 'newdemo') { GUIDE.viz = GUIDE.pv = false; GUIDE.seen = {}; newRun(true); }
+  else if (a === 'guide') { GUIDE.on = !GUIDE.on; GUIDE.done = GUIDE.viz = GUIDE.pv = false; GUIDE.seen = {}; try { localStorage.setItem('standin-guide', GUIDE.on ? 'on' : 'off'); } catch (e) {} render(); }
   else if (a === 'demorun') toggleDemoRun();
   else if (a === 'imprun') toggleImport(id);
   else if (a === 'demo') uploadPart(b.dataset.part);
@@ -2041,7 +2132,9 @@ document.addEventListener('click', e => {
   else if (a === 'pick') { pendingSlot = null; $('#file').multiple = true; $('#file').click(); }
   else if (a === 'vizpick') { pendingSlot = { viz: id }; const inp = $('#file'); inp.multiple = false; inp.accept = '.html,.htm,text/html'; inp.click(); }
   else if (a === 'vizdel') { delete fieldOf(id).viz; render(); }
-  else if (a === 'vsel') { S.vsel = id; render(); const z = $('.viz'); if (z) z.scrollIntoView({ block: 'nearest', behavior: smooth() }); }
+  else if (a === 'vsel') { GUIDE.viz = true; S.vsel = S.vsel === id ? null : id; render(); const z = $('#viz'); if (z) z.scrollIntoView({ block: 'start', behavior: smooth() }); }
+  else if (a === 'vizstep') { const vs = mine(fieldOf(S.tab)), i = vs.findIndex(v => v.id === S.vsel), n = vs.length; S.vsel = vs[(i + +b.dataset.d + n) % n].id; const y = scrollY; render(); scrollTo(0, y); }
+  else if (a === 'vopen') { S.vopen = { ...(S.vopen || {}) }; if (S.vopen[id]) delete S.vopen[id]; else S.vopen[id] = true; render(); }
   else if (a === 'spick') { pendingSlot = { vid: id, fid: b.dataset.f }; $('#file').multiple = false; $('#file').click(); }
   else if (a === 'more') { const on = b.closest('.sfile').classList.toggle('open'); b.textContent = on ? 'Show less' : 'Show all'; }
   else if (a === 'impvar') { pendingSlot = { csv: true }; $('#file').multiple = false; $('#file').click(); }
@@ -2052,7 +2145,7 @@ document.addEventListener('click', e => {
   else if (a === 'fdel') { if (anyIn(fieldOf(id))) { S.confirm = id; render(); } else removeField(id); }
   else if (a === 'fdelyes') removeField(id);
   else if (a === 'fdelno') { S.confirm = null; render(); }
-  else if (a === 'ftab') { S.tab = id; S.confirm = null; render(); }
+  else if (a === 'ftab') { S.tab = id; S.confirm = null; S.vsel = null; render(); }
   else if (a === 'dropf') { S.dropField = id; render(); }
   else if (a === 'diff') { S.diff = !S.diff; b.setAttribute('aria-pressed', S.diff); refreshDiff(); }
   else if (a === 'vdel') { S.variants = S.variants.filter(v => v.id !== id); render(); }
@@ -2068,7 +2161,7 @@ document.addEventListener('click', e => {
   else if (a === 'delopt') { const v = V(), i = +b.dataset.i, gone = v.opts.splice(i, 1)[0]; if (gone.pct != null) v.opts.reduce((m, o) => o.pct > m.pct ? o : m).pct += gone.pct; refreshVar(v); }
   else if (a === 'ph') insertPh(b.dataset.ph);
   else if (a === 'pv') { S.pv = id; render(); }
-  else if (a === 'shuffle') { S.pfill = true; S.seed = 1 + Math.floor(Math.random() * S.count); render(); }
+  else if (a === 'shuffle') { GUIDE.pv = true; S.pfill = true; S.seed = 1 + Math.floor(Math.random() * S.count); render(); }
   else if (a === 'praw') { S.pfill = false; render(); }
   else if (a === 'toggle') { const x = S.actions.find(q => q.id === id); if (x.id === S.main) return; x.on = !x.on; render(); }
   else if (a === 'main') { S.main = id; render(); }
@@ -2179,6 +2272,8 @@ document.addEventListener('drop', e => {
 });
 
 if (!location.hash) history.replaceState(null, '', '#/home');
+/* a reload always lands on the home page: runs made in this session are gone, so a deeper address would point at nothing */
+if (route() !== 'home') history.replaceState(null, '', location.pathname + location.search + '#/home');
 render();
 </script>
 </body>

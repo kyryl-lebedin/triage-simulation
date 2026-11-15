@@ -1,7 +1,8 @@
 <!doctype html>
-<!-- A researcher's visualisation for a chat treatment: the prompt goes into an agent, and the agent's first turns
-     with a patient play out. The turns are illustrative, written for this visual: they show what each block of the
-     prompt makes the agent do. They are not model output.
+<!-- A researcher's visualisation for a chat treatment, in the style of an NHS service: the prompt goes into an
+     agent, and the agent's first turns with a patient play out in a chat window. The turns are illustrative,
+     written for this visual to show what each block of the prompt makes the agent do. They are not model output.
+     It carries a prototype banner and no NHS logo: it is a picture of a treatment, not a live service.
      Stand-in sends the selected version as { standin: { name, type, text } }. -->
 <html lang="en">
 <head>
@@ -9,65 +10,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prompt into agent</title>
 <style>
-  :root { --ink: #17140f; --paper: #fffdf7; --ground: #ede7dc; --mustard: #f2b52b; --cobalt: #2b46d6; --leaf: #1f8a5f; --tomato: #e5432a; --muted: #6b655a; --line: 2px solid #17140f; }
+  :root { --blue: #005eb8; --dark: #003087; --text: #212b32; --grey1: #4c6272; --grey4: #d8dde0; --grey5: #f0f4f5; --green: #007f3b; --yellow: #ffeb3b; --aqua: #00a499; --purple: #330072; --warm: #ed8b00; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; }
-  .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1.05fr); gap: 0; align-items: stretch; padding: 18px; min-height: 520px; }
-  h2 { margin: 0 0 8px; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  /* the prompt, block by block */
-  .prompt { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-  .block { border: var(--line); border-radius: 6px; background: var(--paper); padding: 9px 11px; opacity: .35; transform: translateX(-6px); transition: opacity 300ms, transform 300ms, box-shadow 200ms; }
-  .block.in { opacity: 1; transform: none; }
-  .block.hot { box-shadow: 0 0 0 3px var(--c); }
-  .block b { display: inline-block; margin-bottom: 4px; padding: 1px 7px; border-radius: 3px; background: var(--c); color: #fff; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
-  .block p { margin: 0; font: 500 11.5px/1.45 ui-monospace, "SF Mono", Menlo, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+  html, body { margin: 0; background: var(--grey5); color: var(--text); font: 400 16px/1.45 "Frutiger W01", "Frutiger", Arial, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 132px minmax(0, 1.05fr); align-items: stretch; padding: 24px; min-height: 540px; }
+  h2 { margin: 0 0 12px; font-size: 19px; font-weight: 600; }
+  h2 small { display: block; font-size: 14px; font-weight: 400; color: var(--grey1); }
+  /* the prompt, block by block: NHS inset text, one colour per block */
+  .prompt { min-width: 0; }
+  .block { margin-bottom: 12px; padding: 12px 16px; border-left: 8px solid var(--c); background: #fff; opacity: .3; transition: opacity 300ms, box-shadow 200ms; }
+  .block.in { opacity: 1; }
+  .block.hot { box-shadow: 0 0 0 4px var(--yellow), 0 0 0 6px var(--text); }
+  .block b { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--c); }
+  .block p { margin: 0; font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
   /* the agent */
   .mid { display: grid; place-items: center; position: relative; }
-  .mid::before, .mid::after { content: ""; position: absolute; top: 50%; height: 2px; background: var(--ink); width: 34px; }
-  .mid::before { left: 6px; } .mid::after { right: 6px; }
-  .agent { display: grid; place-items: center; gap: 4px; width: 92px; height: 92px; border: var(--line); border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; box-shadow: 4px 4px 0 var(--mustard); }
-  .agent svg { width: 34px; height: 34px; margin-bottom: -8px; }
+  .mid::before, .mid::after { content: ""; position: absolute; top: 50%; height: 4px; margin-top: -2px; background: var(--blue); width: 26px; }
+  .mid::before { left: 4px; } .mid::after { right: 4px; }
+  .agent { display: grid; place-items: center; align-content: center; gap: 2px; width: 84px; height: 84px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 4px 0 var(--dark); }
+  .agent svg { width: 30px; height: 30px; }
   .agent.think { animation: pulse 700ms ease-in-out infinite; }
-  @keyframes pulse { 50% { transform: scale(1.07); box-shadow: 4px 4px 0 var(--tomato); } }
-  .flow { position: absolute; left: 6px; top: calc(50% - 5px); width: 10px; height: 10px; border-radius: 50%; background: var(--mustard); border: 2px solid var(--ink); opacity: 0; }
+  @keyframes pulse { 50% { transform: scale(1.08); background: var(--dark); } }
+  .flow { position: absolute; left: 4px; top: calc(50% - 6px); width: 12px; height: 12px; border-radius: 50%; background: var(--yellow); border: 2px solid var(--text); opacity: 0; }
   .flow.go { animation: flow 600ms ease-in forwards; }
-  @keyframes flow { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(34px); } }
-  /* the conversation */
-  .chat { display: flex; flex-direction: column; min-width: 0; border: var(--line); border-radius: 10px; background: var(--paper); overflow: hidden; box-shadow: 4px 4px 0 var(--ink); }
-  .chat header { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: var(--line); font-weight: 800; font-size: 13px; }
-  .chat header i { width: 9px; height: 9px; border-radius: 50%; background: var(--leaf); }
-  .chat header span { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--muted); }
-  .turns { flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 12px; overflow-y: auto; max-height: 440px; }
-  .turn { max-width: 86%; animation: rise 260ms ease-out; }
+  @keyframes flow { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(26px); } }
+  /* the conversation: an NHS service page */
+  .chat { display: flex; flex-direction: column; min-width: 0; background: #fff; border: 1px solid var(--grey4); border-bottom-width: 4px; }
+  .chat header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--blue); color: #fff; font-size: 19px; font-weight: 600; }
+  .chat header span { margin-left: auto; padding: 2px 7px; background: #fff; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .sub { margin: 0; padding: 8px 16px; border-bottom: 1px solid var(--grey4); font-size: 14px; color: var(--grey1); }
+  .turns { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 16px; overflow-y: auto; max-height: 460px; background: var(--grey5); }
+  .turn { max-width: 84%; animation: rise 260ms ease-out; }
   @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
-  .turn p { margin: 0; padding: 8px 11px; border: var(--line); border-radius: 12px; font-size: 13px; line-height: 1.4; font-weight: 500; }
-  .turn.a p { background: var(--ground); border-bottom-left-radius: 2px; }
-  .turn.p { align-self: flex-end; } .turn.p p { background: var(--cobalt); color: #fff; border-bottom-right-radius: 2px; }
-  .turn small { display: block; margin: 3px 4px 0; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--c, var(--muted)); }
-  .turn.p small { text-align: right; color: var(--muted); }
-  .dots p { display: inline-flex; gap: 4px; } .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink); animation: dot 900ms infinite; } .dots i:nth-child(2) { animation-delay: 150ms; } .dots i:nth-child(3) { animation-delay: 300ms; }
+  .turn p { margin: 0; padding: 10px 14px; font-size: 16px; line-height: 1.4; }
+  .turn.a p { background: #fff; border-left: 4px solid var(--c, var(--blue)); box-shadow: 0 1px 0 var(--grey4); }
+  .turn.p { align-self: flex-end; } .turn.p p { background: var(--blue); color: #fff; border-radius: 4px 4px 0 4px; }
+  .turn small { display: block; margin: 4px 2px 0; font-size: 12px; font-weight: 700; color: var(--c, var(--grey1)); }
+  .turn.p small { text-align: right; color: var(--grey1); font-weight: 400; }
+  .dots p { display: inline-flex; gap: 5px; align-items: center; min-height: 20px; } .dots i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: dot 900ms infinite; } .dots i:nth-child(2) { animation-delay: 150ms; } .dots i:nth-child(3) { animation-delay: 300ms; }
   @keyframes dot { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
-  .end { align-self: center; padding: 4px 10px; border: 1.5px dashed var(--ink); border-radius: 4px; font: 700 11px ui-monospace, Menlo, monospace; }
-  footer { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-top: var(--line); font-size: 11px; font-weight: 700; color: var(--muted); }
-  footer button { margin-left: auto; padding: 4px 10px; border: var(--line); border-radius: 4px; background: var(--paper); font: inherit; color: var(--ink); cursor: pointer; }
-  @media (max-width: 760px) { .wrap { grid-template-columns: 1fr; gap: 14px; } .mid::before, .mid::after, .flow { display: none; } }
+  .end { align-self: stretch; padding: 10px 14px; border-left: 8px solid var(--green); background: #fff; font-size: 14px; }
+  .end b { display: block; }
+  .reply { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--grey4); }
+  .reply i { flex: 1; height: 40px; border: 2px solid var(--grey1); background: #fff; }
+  .reply b { display: grid; place-items: center; padding: 0 16px; border-radius: 4px; background: var(--green); color: #fff; font-size: 16px; box-shadow: 0 4px 0 #00401e; }
+  footer { display: flex; align-items: center; gap: 10px; padding: 8px 16px 12px; font-size: 14px; color: var(--grey1); }
+  footer button { margin-left: auto; padding: 6px 12px; border: 0; border-radius: 4px; background: var(--grey1); color: #fff; font: inherit; font-weight: 600; font-size: 14px; box-shadow: 0 3px 0 #263139; cursor: pointer; }
+  @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; gap: 16px; } .mid::before, .mid::after, .flow { display: none; } }
   @media (prefers-reduced-motion: reduce) { .turn, .agent.think, .flow.go { animation: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <section class="prompt"><h2>The prompt, block by block</h2><div id="blocks" class="prompt"></div></section>
+  <section class="prompt"><h2>Instructions given to the agent<small>Each block is a part of the prompt under test</small></h2><div id="blocks"></div></section>
   <div class="mid"><span class="flow" id="flow"></span>
-    <div class="agent" id="agent"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="6" y="11" width="22" height="16" rx="4"/><path d="M17 11V6M13 19v2M21 19v2M3 18v4M31 18v4"/><circle cx="17" cy="5" r="1.6" fill="currentColor"/></svg>Agent</div></div>
+    <div class="agent" id="agent"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="6" y="11" width="22" height="16" rx="4"/><path d="M17 11V6M13 19v2M21 19v2M3 18v4M31 18v4"/><circle cx="17" cy="5" r="1.6" fill="currentColor"/></svg>Agent</div></div>
   <section class="chat">
-    <header><i></i><span id="vname" style="margin:0;color:inherit;font-size:13px;font-weight:800"></span><span>agent ↔ patient</span></header>
+    <header><strong>111 online chat</strong><span>Prototype</span></header>
+    <p class="sub"><strong id="vname"></strong> · what a patient would see</p>
     <div class="turns" id="turns"></div>
-    <footer>Illustrative turns written for this visual, not model output.<button id="again">Replay</button></footer>
+    <div class="reply" aria-hidden="true"><i></i><b>Send</b></div>
+    <footer>Illustrative turns written for this visual, not model output. Not a live NHS service.<button id="again">Replay</button></footer>
   </section>
 </div>
 <script>
 const $ = id => document.getElementById(id), esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-const COL = ['#2b46d6', '#e5432a', '#1f8a5f', '#b47d00', '#6b3fa0'];
+const COL = ['#005eb8', '#330072', '#00a499', '#ed8b00', '#ae2573'];
 let run = 0;
 
 /* split the prompt at its headed blocks ("Rules:", "Probing:", ...); what comes before the first heading is the role */
@@ -99,14 +107,14 @@ function script(text, bs) {
     t.push(['a', 'Do you feel sick or sweaty?', rules]);
     t.push(['p', 'Not really.']);
   }
-  t.push(['end', '[END]  the record goes to the judge', of(/\[END\]/)]);
+  t.push(['end', '', of(/\[END\]/)]);
   return t;
 }
 const wait = ms => new Promise(r => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : ms));
 async function draw(d) {
   const me = ++run, bs = blocks(d.text || ''), turns = script(d.text || '', bs);
   $('vname').textContent = d.name || 'Chat';
-  $('blocks').innerHTML = bs.map((b, i) => `<div class="block" style="--c:${b.c}" data-i="${i}"><b>${esc(b.name)}</b><p>${esc(b.text)}</p></div>`).join('');
+  $('blocks').innerHTML = bs.map(b => `<div class="block" style="--c:${b.c}"><b>${esc(b.name)}</b><p>${esc(b.text)}</p></div>`).join('');
   $('turns').innerHTML = ''; size();
   for (const el of $('blocks').children) {   /* the prompt goes in, one block at a time */
     if (me !== run) return; el.classList.add('in'); $('flow').classList.remove('go'); void $('flow').offsetWidth; $('flow').classList.add('go'); await wait(380);
@@ -119,8 +127,8 @@ async function draw(d) {
     $('turns').append(dots); $('turns').scrollTop = 1e6; await wait(who === 'p' ? 650 : 900); dots.remove(); $('agent').classList.remove('think');
     if (me !== run) return;
     const el = document.createElement('div');
-    if (who === 'end') { el.className = 'end'; el.textContent = text; }
-    else { el.className = 'turn ' + who; if (b) el.style.setProperty('--c', b.c); el.innerHTML = `<p>${esc(text)}</p><small>${who === 'p' ? 'Patient' : 'Agent · from ' + esc(b.name)}</small>`; }
+    if (who === 'end') { el.className = 'end'; el.innerHTML = '<b>The agent ends the chat</b>What the patient said goes to a separate system, which decides the service.'; }
+    else { el.className = 'turn ' + who; if (b) el.style.setProperty('--c', b.c); el.innerHTML = `<p>${esc(text)}</p><small>${who === 'p' ? 'Patient' : 'Because of: ' + esc(b.name)}</small>`; }
     $('turns').append(el); $('turns').scrollTop = 1e6; size(); await wait(who === 'p' ? 500 : 350);
   }
   [...$('blocks').children].forEach(x => x.classList.remove('hot'));

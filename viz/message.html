@@ -1,0 +1,83 @@
+<!doctype html>
+<!-- A researcher's visualisation for a closing message: the message as a patient would see it on a phone at the end
+     of an online check, in the style of an NHS service. It shows the message and nothing else.
+     It carries a prototype banner and no NHS logo: it is a picture of a treatment, not a live service.
+     A message is paragraphs separated by blank lines. The first is the instruction; the rest are recognised by how
+     they start (see KINDS). Stand-in sends the selected version as { standin: { name, type, text } }. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closing message</title>
+<style>
+  :root { --blue: #005eb8; --dark: #003087; --text: #212b32; --grey1: #4c6272; --grey4: #d8dde0; --grey5: #f0f4f5; --green: #007f3b; --red: #d5281b; --yellow: #ffeb3b; --warm: #fff9c4; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--grey5); color: var(--text); font: 400 16px/1.45 "Frutiger W01", "Frutiger", Arial, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 390px); justify-content: center; padding: 28px 24px; }
+  /* the phone */
+  .phone { border: 10px solid #1b1f22; border-radius: 38px; background: #fff; overflow: hidden; box-shadow: 0 10px 30px #212b3233; }
+  .bar { display: flex; justify-content: space-between; padding: 8px 22px 6px; background: var(--blue); color: #fff; font-size: 12px; font-weight: 700; }
+  .head { display: flex; align-items: center; gap: 10px; padding: 8px 16px 14px; background: var(--blue); color: #fff; }
+  .head strong { font-size: 19px; font-weight: 600; }
+  .head span { margin-left: auto; padding: 2px 6px; background: #fff; color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .screen { padding: 18px 16px 22px; background: var(--grey5); }
+  .crumb { margin: 0 0 12px; font-size: 14px; color: var(--grey1); }
+  .card { margin: 0 0 16px; background: #fff; border: 1px solid var(--grey4); border-bottom-width: 4px; }
+  .card h1 { margin: 0; padding: 12px 16px; background: var(--red); color: #fff; font-size: 20px; line-height: 1.25; font-weight: 600; }
+  .card p { margin: 0; padding: 14px 16px; font-size: 16px; }
+  .blk { margin: 0 0 16px; }
+  .blk p { margin: 0; }
+  .reason { padding: 12px 16px; border-left: 8px solid var(--blue); background: #fff; }
+  .easy { padding: 14px 16px; background: #fff; border: 1px solid var(--grey4); }
+  .easy a { display: flex; align-items: center; gap: 10px; margin-top: 12px; color: var(--blue); font-weight: 600; text-decoration: none; }
+  .easy a i { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--green); color: #fff; font-style: normal; font-size: 18px; }
+  .warn { padding: 0; background: var(--warm); border: 1px solid #ffeb3b; }
+  .warn b { display: inline-block; margin: -1px 0 0 14px; padding: 4px 12px; background: var(--yellow); font-size: 16px; transform: translateY(-14px); }
+  .warn p { padding: 0 16px 14px; margin-top: -6px; }
+  .auth { padding: 12px 16px; background: #fff; border: 1px solid var(--grey4); font-size: 15px; color: var(--grey1); }
+  .net { background: #fff; border: 4px solid var(--red); }
+  .net b { display: block; padding: 8px 14px; background: var(--red); color: #fff; font-size: 17px; }
+  .net p { padding: 12px 14px; }
+  .done { display: block; width: 100%; margin-top: 4px; padding: 12px; border: 0; border-radius: 4px; background: var(--green); color: #fff; font: inherit; font-weight: 600; font-size: 17px; box-shadow: 0 4px 0 #00401e; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="phone">
+    <div class="bar"><span>9:41</span><span>5G ▮▮▮</span></div>
+    <div class="head"><strong>111 online</strong><span>Prototype</span></div>
+    <div class="screen" id="screen"></div>
+  </div>
+</div>
+<script>
+const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+/* the blocks a message can be built from, and how to recognise each paragraph */
+const KINDS = [
+  ['directive', null],
+  ['reason', /^You told us/i],
+  ['easy', /^Nearest|^Tap here|^You can book|We have sent/i],
+  ['warn', /^Minutes matter|^This is treatable|would mean a long wait|can get worse/i],
+  ['auth', /^This (is the same )?advice|clinical guidance|111 clinician/i],
+  ['net', /^If /i],
+];
+function draw(d) {
+  const paras = (d.text || '').trim().split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+  const out = paras.map((p, i) => {
+    const k = i === 0 ? KINDS[0] : KINDS.slice(1).find(x => x[1].test(p)); const id = k ? k[0] : 'plain';
+    if (id === 'directive') { const cut = p.indexOf('. ') + 1 || p.length; return `<div class="card"><h1>${esc(p.slice(0, cut))}</h1>${p.slice(cut).trim() ? `<p>${esc(p.slice(cut).trim())}</p>` : ''}</div>`; }
+    if (id === 'reason') return `<div class="blk reason"><p>${esc(p)}</p></div>`;
+    if (id === 'easy') return `<div class="blk easy"><p>${esc(p)}</p><a><i>→</i>Get directions</a></div>`;
+    if (id === 'warn') return `<div class="blk warn"><b>Important</b><p>${esc(p)}</p></div>`;
+    if (id === 'auth') return `<div class="blk auth"><p>${esc(p)}</p></div>`;
+    if (id === 'net') return `<div class="blk net"><b>If things get worse</b><p>${esc(p)}</p></div>`;
+    return `<div class="blk"><p>${esc(p)}</p></div>`;
+  });
+  document.getElementById('screen').innerHTML = `<p class="crumb">Your answers · What to do now</p>${out.join('')}<button class="done" type="button">I understand</button>`;
+  if (parent !== window) parent.postMessage({ standinHeight: document.documentElement.scrollHeight }, '*');
+}
+addEventListener('message', e => { if (e.data && e.data.standin) draw(e.data.standin); });
+if (parent !== window) parent.postMessage({ standinReady: true }, '*');
+else draw({ name: 'Sample', text: 'Go to A&E now. Get someone to take you.\n\nYou told us you have pain in your tummy.\n\nNearest A&E: Northgate General Hospital, 2.1 miles.\n\nIf the pain gets much worse, call 999.' });
+</script>
+</body>
+</html>
