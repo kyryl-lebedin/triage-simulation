@@ -556,9 +556,15 @@ Source: Moon S-H, Shim JL, Park K-S, Park C-S (2019). Triage accuracy and causes
 Acuity Scale. PLOS ONE 14(9): e0216972. CC BY 4.0. 1,267 records."""
 
 
+MODEL_NAME = {"claude-haiku-5-5": "Claude Haiku 5.5", "claude-sonnet-5-5": "Claude Sonnet 5.5", "claude-opus-5-5": "Claude Opus 5.5", "claude-fable-5-2": "Claude Fable 5.2"}
+
+
 def build_main():
     cs, cr = json.loads((D / "control" / "cases.json").read_text()), json.loads((D / "control" / "results.json").read_text())
     cases = cs["cases"]; CASE = {c["id"]: c for c in cases}; PC = cr["patients"]; n = len(cases)
+    # a real run (scripts/run_real.py) replaces the mock rows of every form, chat and message; the nurse's rows are real either way
+    rp = D / "control" / "results_real.json"
+    real = json.loads(rp.read_text()) if rp.exists() else None
     LABEL.update(CTL_LABEL)
     src = cs["source"]
     REAL = f'Real: taken from each patient\'s record ({src["label"]}).'
@@ -620,16 +626,47 @@ def build_main():
              {"id": "notgo", "name": "Did not go", "on": True, "bad": True, "icon": "no", "fields": ["msg"], "desc": "Waits, asks someone else first, or does nothing."}]
     QS = [T_QS[0], T_QS[2], M_QS[1]]   # one shared "why", what a substitute never asked, when they would go
     aids, qs = [a["id"] for a in acts], [q["id"] for q in QS]
-    tb = Table(order, aids, qs)
+    # What a patient does is not what is measured. The six above are the metrics: three set by the judge, three counted
+    # from what patients do. These are the things a patient can do with each type (role "do"): offered in the prompt, never ranked.
+    # They go after the metrics, so the rows of results still point at the same six.
+    DO = {"form": [("answer", "Tick an answer", "yes", "Picks one of the listed options."),
+                   ("own_words", "Write in own words", "quote", "Types into a free-text box."),
+                   ("not_sure", "Tick \u201cNot sure\u201d", "help", "Does not know which option fits."),
+                   ("skip", "Skip a question", "skip", "Leaves it unanswered and moves on."),
+                   ("give_up", "Give up part-way", "away", "Closes the form before the end.")],
+          "chat": [("reply", "Answer the question", "comment", "Replies to what was asked."),
+                   ("vague", "Give a vague answer", "wave", "\u201cA bit\u201d, \u201cnot really\u201d, \u201cprobably nothing\u201d."),
+                   ("dont_know", "Say \u201cI don't know\u201d", "help", "Cannot answer what was asked."),
+                   ("add_more", "Mention something else", "quote", "Brings up a symptom nobody asked about."),
+                   ("stop", "Stop replying", "away", "Leaves the chat before it ends.")],
+          "msg": [("go_now", "Go now", "yes", "Sets off for emergency care in the time the message gives."),
+                  ("go_later", "Go later", "hourglass", "Means to go, but waits first."),
+                  ("ask_first", "Ask someone first", "phone", "Rings a GP or a relative before deciding."),
+                  ("do_nothing", "Do nothing", "no", "Stays at home.")]}
+    FROM = {"quit": ["give_up", "stop"], "proceed": ["go_now"], "notgo": ["go_later", "ask_first", "do_nothing"]}
+    for a in acts:
+        if a["id"] in FROM: a["from"] = FROM[a["id"]]
+    acts += [{"id": i, "name": nm, "on": True, "icon": ic, "fields": [f], "desc": d, "role": "do"} for f, rows in DO.items() for i, nm, ic, d in rows]
+    tb = Table(order, [a["id"] for a in acts], qs)
     ARMS = [a["id"] for a in MAIN_ARMS] + ["NURSE"] + [a["id"] for a in M_ARMS]
     told = {c["id"] for c in cases if c["real"]["ktas_expert"] <= 3}   # the closing message is tested on patients told to go to emergency care
     vix = {a: i for i, a in enumerate(ARMS)}
     lvl = lambda rank_: f"level {5 - rank_}, {KTAS_NAME[5 - rank_].lower()}"
     CAUSE = {4: ("Pain score misapplied", "Record: the experts' comment was that the pain score had been applied wrongly to the scale."),
              2: ("Symptoms misjudged", "Record: the experts' comment was that the physical symptoms that go with the complaint had been misjudged.")}
+    for run in (real["triage_runs"] if real else []):
+        # a real row: the judge's level against the expert panel's, what the patient did, and their own answers afterwards
+        c = CASE[run["patient_id"]]; gr = 5 - c["real"]["ktas_expert"]
+        out = "quit" if run["final_action"] == "abandon" else "right" if run["disposition"] == gr else "low" if run["disposition"] < gr else "high"
+        ans = [("why", out, run["why"], run["why_short"])]
+        if run.get("unasked"): ans.append(("unasked", None, run["unasked"], run.get("unasked_short") or "Other"))
+        tb.add(vix[run["arm"]], c["id"], [out] + run["moves"], ans)
+    for run in (real["message_runs"] if real else []):
+        c = CASE[run["patient_id"]]; did = "proceed" if run["action"] == "go_now" else "notgo"
+        tb.add(vix[run["arm"]], c["id"], [did, run["action"]], [("why", did, run["why"], run["why_short"]), ("when", None, run["when"], run["when_short"])])
     for run in cr["triage_runs"]:
         c = CASE[run["patient_id"]]; pr = PC[c["id"]]["profile"]; arm = run["arm"]; gr = 5 - c["real"]["ktas_expert"]
-        if arm not in vix: continue
+        if arm not in vix or (real and arm != "NURSE"): continue
         if run["final_action"] == "abandon": out = "quit"
         else: out = "right" if run["disposition"] == gr else "low" if run["disposition"] < gr else "high"
         if arm == "NURSE":
@@ -647,7 +684,7 @@ def build_main():
         elif out != "quit":
             ans.append(("unasked", None, R.choice(["No, it covered everything I had.", "No, I think it asked about everything."]), R.choice(["Nothing missed", "Nothing was missed"])))
         tb.add(vix[arm], c["id"], [out], ans)
-    for run in cr["message_runs"]:
+    for run in ([] if real else cr["message_runs"]):
         c = CASE[run["patient_id"]]; pr = PC[c["id"]]["profile"]
         if c["id"] not in told: continue
         short = R.choice(M_SHORT_BY_TEXT.get(run["reason_text"]) or M_SHORT[(run["action"], run["reason_code"])])
@@ -665,8 +702,8 @@ Result: the nurse's level matched the experts' for {k["agree"]:,} of {k["n"]:,} 
 Assumptions when this nurse is used as the control:
 1. A Korean emergency nurse stands in for the 111 call handler a substitute would replace.
 2. The expert panel's level is the right answer.
-3. The nurse measured vital signs. A form or chat cannot, so for the {A["abnormal_vitals"]} patients with an abnormal reading it is assumed to go one level too low {int(A["unseen"] * 100)}% of the time.
-4. What each patient says to a form or chat is written by rule from their record.
+3. {"The nurse measured vital signs. A form or chat cannot: a patient can only say what they could know themselves." if real else f'The nurse measured vital signs. A form or chat cannot, so for the {A["abnormal_vitals"]} patients with an abnormal reading it is assumed to go one level too low {int(A["unseen"] * 100)}% of the time.'}
+4. {"Each patient is played by a model that knows only a fact sheet written by rule from their record." if real else "What each patient says to a form or chat is written by rule from their record."}
 5. Everyone here went to an emergency department, so nothing here tests pharmacy or self-care advice."""
     variants = []
     for a in MAIN_ARMS:
@@ -689,6 +726,20 @@ Assumptions when this nurse is used as the control:
         # the results come in two stages, each with its own versions, its own main score and its own number of patients
         "stages": [{"id": "triage", "name": "Triage", "ask": "Which substitute gives patients the right urgency level?", "main": "right", "types": ["form", "chat", "real"]},
                    {"id": "msg", "name": "Closing message", "ask": "Told to go to emergency care: which message gets them to go?", "main": "proceed", "types": ["msg"]}],
+        # how one patient goes through each stage, drawn as a flow on the Prompt page: who asks the questions, who decides.
+        # A row is a chain of steps; every row of a stage runs into its "end". A short row reaches it by one long arrow ("via").
+        "flow": [
+            {"name": "Triage", "rows": [
+                [{"t": "Patient", "d": "Speaks from one real emergency record", "ref": "prompt"},
+                 {"t": "Form or chat asks", "d": ["Form: its fixed questions, filled in", "Chat: up to 12 questions, one at a time"], "kind": "treat", "out": "may give up part-way"},
+                 {"t": "Record", "d": "Only what the patient said"},
+                 {"t": "Judge decides", "d": "\u201cGive one urgency level, 1 to 5, from the record alone.\u201d", "kind": "judge", "ref": "judge"}],
+                [{"t": "Real nurse", "d": "Control: saw the patient in person", "via": "the level she recorded"}]],
+             "end": {"t": "Scored", "d": "Against the expert panel's level: right, too low or too high"}},
+            {"name": "Closing message", "rows": [
+                [{"t": "Patient", "d": "Told to go to emergency care", "ref": "prompt"},
+                 {"t": "Closing message", "d": "One of 7 wordings", "kind": "treat"}]],
+             "end": {"t": "Patient decides", "d": "Went as told, or did not go"}}],
         "variants": variants, "nextField": 1, "tab": "form", "dropField": "form", "confirm": None, "diff": False,
         "count": n, "vars": [clean(v) for v in vars_],
         "prompt": ("You are {name}, a {age}-year-old {sex} who needs to find out how urgently to be seen. You are not a clinician and you do not know what is wrong. "
@@ -709,14 +760,17 @@ Assumptions when this nurse is used as the control:
                               "note": f"The NHS route is our mapping, not part of the dataset: {NHS_ROUTE[kk]}", "cases": []} for kk in (1, 2, 3, 4, 5)],
                   "src": f'Share of the {n:,} patients at each level, as set by the expert panel: {src["label"]}.'},
         "notes": {},   # no written-up findings: the page shows the scores and the participants' reasons only
-        "caveat": "The patients, the nurse's decisions and the right levels are real (Moon 2019, 1,267 emergency-department records). The results for the forms, chats and messages are simulated from assumed effects: no model has been run yet. What each patient says is written by rule from their record.",
+        "caveat": (f"A real run on {len(real['patients'])} of the 1,267 patients, drawn with the same spread of right levels. Each patient was played by {MODEL_NAME[real['models']['patient']]}, speaking from a fact sheet written by rule from their record; "
+                   f"the judge was {MODEL_NAME[real['models']['judge']]}. The nurse's decisions and the right levels are real (Moon 2019) and cover all 1,267."
+                   if real else "The patients, the nurse's decisions and the right levels are real (Moon 2019, 1,267 emergency-department records). The results for the forms, chats and messages are simulated from assumed effects: no model has been run yet. What each patient says is written by rule from their record."),
     }
     return {"id": "triage", "status": "done", "date": "Today", "preload": True, "label": "111 substitution", "s": s, "people": people, "strings": tb.strings, "rows": tb.rows}
 
 
 JS = """/* Generated by scripts/build_platform_runs.py from data/*.json and data/results/MOCK_results.json.
    Do not edit by hand: change the data and run the script again.
-   Runs for the platform prototype (index.html), in its own scenario shape. Results are MOCK, except the real nurse in the control run. */
+   Runs for the platform prototype (index.html), in its own scenario shape. The nurse's rows are real. The other rows of the main run are real
+   when data/control/results_real.json exists (scripts/run_real.py), and MOCK otherwise. The two older runs are MOCK. */
 (function () {
   const RAW = %s;
   window.STANDIN_IMPORTS = RAW.map(r => ({ id: r.id, status: r.status, date: r.date, preload: r.preload, toggle: r.toggle, label: r.label, s: r.s, responses() {

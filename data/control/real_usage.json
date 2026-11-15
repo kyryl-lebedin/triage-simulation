@@ -1,0 +1,18 @@
+{
+ "claude-haiku-5-5": {
+  "calls": 6829,
+  "input": 13658,
+  "cache_write": 9337992,
+  "cache_read": 3867344,
+  "output": 2537559,
+  "cost_micro_usd": 3176416
+ },
+ "claude-sonnet-5-5": {
+  "calls": 423,
+  "input": 846,
+  "cache_write": 641694,
+  "cache_read": 240035,
+  "output": 109054,
+  "cost_micro_usd": 3683012
+ }
+}
