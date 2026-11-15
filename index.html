@@ -308,7 +308,17 @@ body{font-size:14px}
 .step:active{transform:translate(2px,2px)}
 .var{margin-bottom:20px}
 .var-head{margin-bottom:7px}
-.var-name{font-size:18px}
+.var-name{font-size:24px;font-stretch:115%;letter-spacing:-.01em}
+.var-icw{position:relative;flex:none}
+.var-ic{display:grid;place-items:center;width:34px;height:34px;padding:0;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:2px 2px 0 var(--ink);transition:transform 110ms var(--out)}
+.var-ic:active,.var-ic[aria-expanded=true]{transform:translate(2px,2px);box-shadow:none}
+.var-ic[aria-expanded=true]{background:var(--mustard)}
+.var-ic svg{width:20px;height:20px}
+.ipick{position:absolute;left:0;top:calc(100% + 8px);z-index:10;display:grid;grid-template-columns:repeat(11,32px);gap:4px;padding:8px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);animation:rise 160ms var(--out) both}
+.ipick button{display:grid;place-items:center;width:32px;height:32px;padding:0;border:1.5px solid var(--ink);border-radius:4px;background:var(--paper)}
+.ipick button svg{width:18px;height:18px}
+@media (hover:hover){.ipick button:hover{background:var(--ground)}}
+.ipick button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 .tag{height:20px;font-size:10px}
 .bar{height:54px}
 .seg{padding:0 9px}
@@ -757,7 +767,12 @@ button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shad
 .hrow-name{margin-left:4px}
 .hfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:56px;padding-top:14px;border-top:1.5px solid #17140f22;font-size:12px;font-weight:700;color:var(--muted)}
 .hfoot .pill[aria-pressed=true]{background:var(--sky);color:var(--ink)}
-.htools{margin-bottom:18px}
+.htools{justify-content:flex-end;margin-bottom:18px}
+.hfoot{justify-content:flex-end}
+/* home: the page fills the window so the run switches sit at its bottom edge */
+.page.home{display:flex;flex-direction:column;min-height:calc(100vh - 52px);min-height:calc(100dvh - 52px);padding-bottom:20px}
+.page.home .hrows{margin-bottom:56px}
+.page.home .hfoot{margin-top:auto}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 /* results: a note under the heading, clamped version blurb, tighter ranking when there are many versions */
 .caveat{display:flex;align-items:baseline;gap:8px;max-width:100ch;margin:10px 0 14px}
@@ -820,7 +835,21 @@ const ICON = {
   /* an action can name one of these with icon: '...' */
   up: '<path d="M12 20V5M5.500 11.500L12 5l6.500 6.500"/>', down: '<path d="M12 4v15M5.500 12.500L12 19l6.500-6.500"/>',
   help: '<circle cx="12" cy="12" r="8.500"/><path d="M9.500 9.500a2.500 2.500 0 1 1 3.600 2.200c-.8.500-1.100 1-1.100 1.800M12 16.800v.2"/>',
-  skip: '<path d="M5 5l8 7-8 7zM18.500 5v14"/>', wave: '<path d="M3 12c2-4.500 4-4.500 6 0s4 4.500 6 0 4-4.500 6 0"/>'
+  skip: '<path d="M5 5l8 7-8 7zM18.500 5v14"/>', wave: '<path d="M3 12c2-4.500 4-4.500 6 0s4 4.500 6 0 4-4.500 6 0"/>',
+  /* participant variables (Participants page) */
+  medical: '<path d="M9 3.500h6v5.500h5.500v6H15v5.500H9V15H3.500V9H9z"/>',
+  level: '<path d="M5 20v-4M10 20v-8M15 20V8M20 20V4"/>',
+  pain: '<path d="M13.500 3L5.500 13.500h6L10 21l8.500-11h-6z"/>',
+  pin: '<path d="M12 21s-6.500-5.600-6.500-11a6.500 6.500 0 0 1 13 0c0 5.400-6.500 11-6.500 11z"/><circle cx="12" cy="10" r="2.300"/>',
+  book: '<path d="M12 6.500C10 5 7 4.500 3.500 5v13c3.500-.5 6.500 0 8.500 1.500 2-1.500 5-2 8.500-1.500V5C17 4.500 14 5 12 6.500zM12 6.500v13"/>',
+  language: '<path d="M5 20L11 4h2l6 16M7.500 14h9"/>',
+  phone: '<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17.500h2"/>',
+  shield: '<path d="M12 3l7.500 3v5.500c0 4.500-3.200 8-7.500 9.500C7.700 19.500 4.500 16 4.500 11.500V6z"/><path d="M9 12l2.200 2.200L15.500 10"/>',
+  clinic: '<path d="M4 21V9l8-5 8 5v12M3 21h18"/><path d="M12 11v6M9 14h6"/>',
+  money: '<circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-1-1.400-1.500-2.500-1.500-1.500 0-2.500.8-2.500 2s1 1.700 2.500 2 2.500.8 2.500 2-1 2-2.500 2c-1.100 0-2-.5-2.500-1.500M12 6v1.700M12 16.300V18"/>',
+  work: '<rect x="3.500" y="7.500" width="17" height="12" rx="1.500"/><path d="M9 7.500V5h6v2.500M3.500 13h17"/>',
+  home: '<path d="M4 11l8-6.500 8 6.500M6 9.500V20h12V9.500"/><path d="M10 20v-5h4v5"/>',
+  heart: '<path d="M12 20s-7.500-4.600-7.500-10A4.200 4.200 0 0 1 12 7.500 4.200 4.200 0 0 1 19.500 10c0 5.400-7.500 10-7.500 10z"/>'
 };
 /* custom actions get an icon from their name, so every metric on the results page can be shown as an icon */
 const ICON_KW = [
@@ -869,20 +898,6 @@ const BASE = {
   A: { keep: 71, like: 24, dislike: 3, comment: 6, save: 5, replay: 4, share: 3, subscribe: 4, strike: 1 },
   B: { keep: 58, like: 19, dislike: 11, comment: 14, save: 9, replay: 2, share: 5, subscribe: 6, strike: 4 },
   C: { keep: 64, like: 21, dislike: 4, comment: 5, save: 4, replay: 9, share: 3, subscribe: 3, strike: 2 }
-};
-const NOTES = {
-  A: [
-    { t: 'Under-35s stayed for the storm', p: 'Only 22% of 18 to 34 year olds clicked away. The storm starts in the first second, so there was nothing to skip.', q: 'No intro, no asking me to subscribe, just weather.', by: 'Jae-won L., 22, male, Asia-Pacific, no pet', m: 'away', s: 'age' },
-    { t: 'Easy to watch, quiet in the comments', p: 'Only 3% disliked it, but only 6% commented. It holds attention without starting a conversation.', q: 'Good storm. Left it on while I ate dinner.', by: 'Hannah B., 29, female, Europe, no pet', m: 'comment', s: 'none' }
-  ],
-  B: [
-    { t: 'Pet owners pushed back', p: '41 of 55 dislikes came from pet owners. 29 said hearing about the dog\'s death in the first 15 seconds was upsetting.', q: 'I lost my own dog in March. I can\'t watch this tonight.', by: 'Priya S., 34, female, North America, has a pet', m: 'dislike', s: 'pet' },
-    { t: 'Those who stayed got invested', p: 'Comments more than doubled, to 14% against 6% and 5%. Most were people sharing their own stories.', q: 'Juno looks just like my Biscuit did. I was in before the hike even started.', by: 'Tomás R., 41, male, Latin America, has a pet', m: 'comment', s: 'pet' }
-  ],
-  C: [
-    { t: 'The summit shot got replayed', p: 'Replays tripled, to 9% against 4% and 2%, as viewers went back to watch the summit again.', q: 'Went back twice just for that ridge at sunrise.', by: 'Margaret O., 58, female, North America, has a pet', m: 'replay', s: 'none' },
-    { t: 'Some felt the ending was spoiled', p: 'It won viewers 45 and over at 70%, but a group of 35 to 44 year olds left, saying the intro "spoiled the ending".', q: 'Why would I watch twenty minutes when you just showed me the finish?', by: 'Daniel K., 38, male, Europe, no pet', m: 'away', s: 'age' }
-  ]
 };
 function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
 /* the fixed demo numbers belong to the hiking run; every other run gets its own made-up ones */
@@ -1205,7 +1220,7 @@ function shell(body) {
   }).join('');
   /* the bar's contents line up with the page column; the stages sit dead centre.
      Results show no stages: "Edit setup" on the ranking brings them back by opening the setup */
-  return `<header class="top"><div class="top-in"><div class="top-l"><a class="brand" href="#/home" aria-label="Stand-in, all scenarios">Stand-in</a></div>${r === 'home' ? '' : `${r === 'results' ? '<span></span>' : `<nav class="stages" aria-label="Stages">${st}</nav>`}<div class="top-r"><span class="top-name" id="topName">${esc(S.name)}</span></div>`}</div></header><main class="page" id="page">${body}</main>`;
+  return `<header class="top"><div class="top-in"><div class="top-l"><a class="brand" href="#/home" aria-label="Stand-in, all scenarios">Stand-in</a></div>${r === 'home' ? '' : `${r === 'results' ? '<span></span>' : `<nav class="stages" aria-label="Stages">${st}</nav>`}<div class="top-r"><span class="top-name" id="topName">${esc(S.name)}</span></div>`}</div></header><main class="page${r === 'home' ? ' home' : ''}" id="page">${body}</main>`;
 }
 function foot(back, next, nextLabel, disabled) {
   return `<div class="foot">${back ? `<a class="btn" href="#/${back}">← Back</a>` : '<span></span>'}${next ? `<button class="btn pri" data-act="go" data-to="${next}"${disabled ? ' disabled' : ''}>${nextLabel} →</button>` : ''}</div>`;
@@ -1393,7 +1408,7 @@ function pgProfiles() {
 const aiLabel = v => (v.ref ? 'Real-world split' : 'AI estimate') + (v.ai === 'edited' ? ', edited' : '');
 const needsText = o => 'Only for: ' + Object.entries(o.needs).map(([k, l]) => { const w = S.vars.find(x => x.id === k); return w ? l.map(i => (w.opts[i] || {}).name).filter(Boolean).join(' or ') : ''; }).filter(Boolean).join(', ');
 function varHtml(v) {
-  const head = `<div class="var-head"><input class="var-name" data-bind="varname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Variable name">${v.ai ? `<span class="tag ai">${aiLabel(v)}</span>` : v.from ? `<span class="tag">From ${esc(v.from)}</span>` : ''}<span class="sp"></span>${filled(v) && !v.loading && !(v.ref && v.ai === true) ? `<button class="btn sm flat" data-act="aifill" data-id="${v.id}">${v.ref ? 'Use real-world split' : 'Estimate with AI'}</button>` : ''}<button class="x" data-act="delvar" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div>`;
+  const head = `<div class="var-head"><span class="var-icw"><button class="var-ic" data-act="vicon" data-id="${v.id}" aria-haspopup="true" aria-expanded="${S.iconPick === v.id}" aria-label="Icon for ${esc(v.name)}" title="Change icon">${svg(varHeadIcon(v))}</button>${S.iconPick === v.id ? `<span class="ipick" role="group" aria-label="Icons">${VAR_ICONS.map(([k, l]) => `<button data-act="seticon" data-id="${v.id}" data-icon="${k}" aria-pressed="${ICON[k] === varHeadIcon(v)}" title="${l}" aria-label="${l}">${svg(ICON[k])}</button>`).join('')}</span>` : ''}</span><input class="var-name" data-bind="varname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Variable name">${v.ai ? `<span class="tag ai">${aiLabel(v)}</span>` : v.from ? `<span class="tag">From ${esc(v.from)}</span>` : ''}<span class="sp"></span>${filled(v) && !v.loading && !(v.ref && v.ai === true) ? `<button class="btn sm flat" data-act="aifill" data-id="${v.id}">${v.ref ? 'Use real-world split' : 'Estimate with AI'}</button>` : ''}<button class="x" data-act="delvar" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div>`;
   let bar;
   if (v.loading) bar = `<div class="bar wait"><p>Estimating from typical audiences…</p></div>`;
   else if (!filled(v)) bar = `<div class="bar empty"><p>No split yet</p><div class="btns"><button class="btn blue" data-act="aifill" data-id="${v.id}">${v.ref ? 'Use real-world split' : 'Fill with AI'}</button><button class="btn" data-act="even" data-id="${v.id}">Split evenly</button></div></div>`;
@@ -1736,18 +1751,8 @@ function pgResults() {
     ${ctrl}${caveat}<div id="board">${versionView(vid, mainId)}</div>`;
   }
   /* #/results: the ranking fills the page; each version opens on its own page */
-  const rank = ranked(mainId), w = rank[0], s = rank[1]; if (!w) return `<div class="head"><h1 class="ask">Nothing to show yet</h1><p class="hint">The main metric does not apply to any version.</p></div>${foot('actions', null)}`;
-  /* a version can be a control or a reference (version.role): it is ranked with the rest, but the headline names the best candidate */
-  const cand = rank.filter(v => !v.role), ctl = rank.find(v => v.role === 'control');
-  if (cand.length && cand.length < rank.length) {
-    const b = cand[0], bv = overall(b.id, mainId), cv = ctl ? overall(ctl.id, mainId) : null, d = ctl ? Math.abs(bv - cv) : 0;
-    const vs = ctl ? `, ${d === 0 ? 'level with' : d + (d === 1 ? ' point ' : ' points ') + (bv < cv ? 'below' : 'above')} ${esc(ctl.name)} at ${cv}%, the control` : '';
-    return `${stnav}<div class="res-head"><div><h1 class="ask">${esc(b.name)} is the best candidate</h1><p class="hint">For “${esc(actName(mainId))}”: ${bv}% of ${fmt(nFor(b.id))} participants${vs}.</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
-  ${ctrl}${caveat}<div id="board">${leaderboard()}</div>`;
-  }
-  const wv = overall(w.id, mainId);
-  const sub = s ? `${wv}% of ${fmt(nFor(w.id))} participants, ${Math.abs(wv - overall(s.id, mainId))} ${Math.abs(wv - overall(s.id, mainId)) === 1 ? 'point' : 'points'} ${isBad(mainId) ? 'below' : 'ahead of'} ${esc(s.name)}.` : `${wv}% of ${fmt(S.count)} participants.`;
-  return `${stnav}<div class="res-head"><div><h1 class="ask">${esc(w.name)} comes top</h1><p class="hint">For “${esc(actName(mainId))}”: ${sub}</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
+  if (!ranked(mainId).length) return `<div class="head"><h1 class="ask">Nothing to show yet</h1><p class="hint">The main metric does not apply to any version.</p></div>${foot('actions', null)}`;
+  return `${stnav}<h1 class="sr-only">Results</h1><div class="res-tools htools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div>
   ${ctrl}${caveat}<div id="board">${leaderboard()}</div>`;
 }
 function niceMax(m) { return [5, 10, 20, 25, 40, 50, 60, 80, 100].find(x => x >= m * 1.18) || 100; }
@@ -1759,8 +1764,6 @@ function versionView(vid, mainId) {
   const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id) || 0)), 1);
   const eachQs = S.questions.filter(q => q.each), others = S.questions.filter(q => !q.each);
   const lift = `<div class="lift${o / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - o / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${o}<small>%</small></span></div>`;
-  /* a scenario that carries its own notes (even none) is shown exactly those */
-  const notes = S.notes ? (S.notes[v.id] || []) : (isDemo(S.rid) && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
   const rcard = eachQs.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, m, col)}</div>`).join('');
   const qcards = others.filter(q => !IMP[S.rid] || reasons(v.id, q.id, null).length).map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
   return `<section class="vd" id="vd">
@@ -1768,7 +1771,7 @@ function versionView(vid, mainId) {
     <div class="vd-grid">
       <div><div class="track"><div class="sub">${lift}</div></div><p class="cap">${esc(actName(m))} · scale 0 to ${max}%</p>
         <div class="spread">${acts.map(a => `<button class="row" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === m}" title="${esc(a.name)}" aria-label="${esc(a.name)}, ${overall(v.id, a.id)}%"><span class="ri">${svg(actIcon(a))}</span><i class="rb c-${col}" style="transform:scaleX(${Math.max(.015, overall(v.id, a.id) / rowMax).toFixed(3)})"></i><b>${overall(v.id, a.id)}%</b></button>`).join('')}</div></div>
-      <div class="why"><span class="lbl" style="margin:0">Why</span>${rcard}${qcards}${notes.map(n => `<article class="note" style="border-top-color:var(--${col})"><h4>${esc(n.t)}</h4><p>${esc(n.p)}</p>${n.q ? `<blockquote>“${esc(n.q)}”<cite>${esc(n.by)}</cite></blockquote>` : ''}<footer><span class="nf" title="${esc(actName(n.m))}">${svg(actIcon(act(n.m)))}${n.s !== 'none' ? ' × ' + esc((S.vars.find(x => x.id === n.s) || { name: n.s }).name) : ''}</span>${S.actions.some(a => a.id === n.m && a.on) ? `<button class="btn sm" data-act="see" data-m="${n.m}">Show me</button>` : ''}</footer></article>`).join('')}</div>
+      <div class="why"><span class="lbl" style="margin:0">Why</span>${rcard}${qcards}</div>
     </div>
   </section>`;
 }
@@ -1796,6 +1799,22 @@ function varIcon(v) {
   if (isAge(v)) return ICON.hourglass;
   if (v.id === 'region' || /region|country|location|continent|city/i.test(v.name)) return ICON.globe;
   return isPet(v) ? ICON.paw : ICON.tag;
+}
+const VAR_KW = [
+  [/condition|problem|symptom|complaint|diagnos|case/i, 'medical'], [/pain/i, 'pain'], [/level|urgen|acuity|triage|priority/i, 'level'],
+  [/arriv|transport|travel/i, 'pin'], [/digital|tech|online|internet|device|phone/i, 'phone'], [/literacy|educat|school|read/i, 'book'],
+  [/english|language|fluen|speak/i, 'language'], [/trust|faith|belie/i, 'shield'], [/style|report|tone|manner/i, 'comment'],
+  [/access|clinic|hospital|care|distance/i, 'clinic'], [/income|salary|money|wealth|earn|class/i, 'money'],
+  [/job|work|occupation|employ|profession|career/i, 'work'], [/home|house|living|tenure/i, 'home'], [/health|well|fitness/i, 'heart']
+];
+const VAR_ICONS = [['people', 'People'], ['person', 'Person'], ['female', 'Female'], ['male', 'Male'], ['hourglass', 'Age'], ['globe', 'Place'],
+  ['pin', 'Location'], ['home', 'Home'], ['work', 'Work'], ['money', 'Money'], ['book', 'Education'], ['language', 'Language'],
+  ['phone', 'Device'], ['comment', 'Speech'], ['heart', 'Health'], ['medical', 'Medical'], ['clinic', 'Care'], ['pain', 'Pain'],
+  ['level', 'Level'], ['shield', 'Trust'], ['paw', 'Pets'], ['tag', 'Other']];
+function varHeadIcon(v) {
+  if (v.icon && ICON[v.icon]) return ICON[v.icon];
+  const own = varIcon(v); if (own !== ICON.tag) return own;
+  const hit = VAR_KW.find(([re]) => re.test(v.name + ' ' + v.key)); return hit ? ICON[hit[1]] : ICON.tag;
 }
 function optIcon(v, i) {
   const o = v.opts[i]; if (!o) return null;
@@ -1961,9 +1980,9 @@ function homeFeatured() {
   ${rest.length ? `<section class="hearlier"><span class="lbl">Earlier</span><div class="hrows">${rest.map(rowHtml).join('')}</div></section>` : ''}`;
 }
 function pgHome() {
-  return `<h1 class="sr-only">Scenarios</h1><div class="res-tools htools"><button class="btn pri" data-act="new">+ New scenario</button><button class="btn" data-act="newdemo">+ Demo</button></div>
+  return `<h1 class="sr-only">Scenarios</h1><div class="res-tools htools"><button class="btn" data-act="newdemo">+ Demo</button><button class="btn pri" data-act="new">+ New scenario</button></div>
   <div class="hrows">${RUNS.map(rowHtml).join('')}</div>
-  <div class="hfoot"><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button>${TOGGLES.map(m => `<button class="pill" data-act="imprun" data-id="${m.id}" aria-pressed="${RUNS.some(r => r.id === m.id)}">Show ${esc((m.label || m.id).split(':')[0].toLowerCase())} run</button>`).join('')}</div>`;
+  <div class="hfoot"><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button></div>`;
 }
 /* the switch at the bottom of the home page: puts the finished YouTube demo on the list, or takes it off again,
    so it can be shown without going through + Demo and the Upload dataset buttons */
@@ -1986,6 +2005,7 @@ let lastRoute = null;
 function render() {
   const r = route(), key = location.hash, same = key === lastRoute, y = same ? scrollY : 0;
   if (r !== 'run' && runTimer) { clearInterval(runTimer); runTimer = null; }
+  if (r !== 'profiles') S.iconPick = null;
   const cur = curRun();
   if (cur) { if (r === 'home') cur.s = clone(S); else if (cur.status === 'draft' && r !== 'results') cur.stage = r; }
   $('#app').innerHTML = shell(PAGES[r]());
@@ -2000,6 +2020,9 @@ function render() {
 }
 addEventListener('hashchange', render);
 
+function closeIconPick() { const v = S.iconPick && S.vars.find(x => x.id === S.iconPick); S.iconPick = null; if (v && route() === 'profiles') refreshVar(v); }
+document.addEventListener('click', e => { if (S.iconPick && !e.target.closest('.var-icw')) closeIconPick(); }, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.iconPick) { const id = S.iconPick; closeIconPick(); const t = $(`[data-var="${id}"] .var-ic`); if (t) t.focus(); } });
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, id = b.dataset.id, V = () => S.vars.find(v => v.id === id);
@@ -2030,10 +2053,12 @@ document.addEventListener('click', e => {
   else if (a === 'vdel') { S.variants = S.variants.filter(v => v.id !== id); render(); }
   else if (a === 'vup' || a === 'vdown') { const i = S.variants.findIndex(v => v.id === id), j = i + (a === 'vup' ? -1 : 1); if (S.variants[j]) { [S.variants[i], S.variants[j]] = [S.variants[j], S.variants[i]]; render(); } }
   else if (a === 'count') { const real = isReal(S.rid), d = +b.dataset.d / (real ? 10 : 1); S.count = Math.max(real ? 5 : 50, Math.min(5000, S.count + d)); $('#count').value = S.count; refreshWho(); }
+  else if (a === 'vicon') { const was = S.iconPick; S.iconPick = was === id ? null : id; if (was && was !== id) refreshVar(S.vars.find(v => v.id === was)); refreshVar(V()); }
+  else if (a === 'seticon') { const v = V(); v.icon = b.dataset.icon; S.iconPick = null; refreshVar(v); const t = $(`[data-var="${v.id}"] .var-ic`); if (t) t.focus(); }
   else if (a === 'aifill') aiFill(V());
   else if (a === 'even') { const v = V(); evenSplit(v); v.fresh = true; refreshVar(v); }
   else if (a === 'delvar') { S.vars = S.vars.filter(v => v.id !== id); render(); }
-  else if (a === 'addvar') { const n = S.nextVar++, v = { id: 'v' + n, key: 'variable_' + n, name: 'New variable', opts: [{ name: 'Option 1', pct: 50 }, { name: 'Option 2', pct: 50 }] }; S.vars.push(v); render(); const inp = $(`[data-var="${v.id}"] .var-name`); inp.focus(); inp.select(); }
+  else if (a === 'addvar') { const n = S.nextVar++, v = { id: 'v' + n, key: 'variable_' + n, name: 'New variable', opts: [{ name: 'Option 1', pct: 50 }, { name: 'Option 2', pct: 50 }] }; S.vars.push(v); S.iconPick = v.id; render(); const inp = $(`[data-var="${v.id}"] .var-name`); inp.focus(); inp.select(); }
   else if (a === 'addopt') { const v = V(); if (filled(v)) { const big = v.opts.reduce((m, o) => o.pct > m.pct ? o : m), take = Math.max(1, Math.min(10, Math.floor(big.pct / 2))); big.pct -= take; v.opts.push({ name: 'Option ' + (v.opts.length + 1), pct: take }); } else v.opts.push({ name: 'Option ' + (v.opts.length + 1), pct: null }); refreshVar(v); const ins = $$(`[data-var="${v.id}"] .opt input`), last = ins[ins.length - 1]; last.focus(); last.select(); }
   else if (a === 'delopt') { const v = V(), i = +b.dataset.i, gone = v.opts.splice(i, 1)[0]; if (gone.pct != null) v.opts.reduce((m, o) => o.pct > m.pct ? o : m).pct += gone.pct; refreshVar(v); }
   else if (a === 'ph') insertPh(b.dataset.ph);
@@ -2056,12 +2081,6 @@ document.addEventListener('click', e => {
   else if (a === 'stage') { S.stage = id; S.metric = null; S.open = null; if (routeArg()) go('results'); else render(); }
   else if (a === 'qeach') { const q = S.questions.find(x => x.id === id); q.each = !q.each; b.setAttribute('aria-pressed', q.each); }
   else if (a === 'qdel') { S.questions = S.questions.filter(x => x.id !== id); render(); }
-  else if (a === 'see') {
-    /* a note's "Show me": switch to its metric and open the top reason, whose panel shows who gave it */
-    S.metric = b.dataset.m; S.open = null; refreshBoard();
-    const vid = routeArg(), wq = S.questions.find(q => q.each), top = vid && wq && reasons(vid, wq.id, S.metric)[0];
-    if (top) toggleTag([vid, wq.id, S.metric, top.short].join('|'), true); else $('.ctrl').scrollIntoView({ block: 'start', behavior: smooth() });
-  }
 });
 document.addEventListener('input', e => {
   const t = e.target, b = t.dataset && t.dataset.bind;
