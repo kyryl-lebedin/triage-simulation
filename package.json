@@ -1,0 +1,12 @@
+{
+  "name": "stand-in",
+  "private": true,
+  "description": "Synthetic audience simulator: index.html plus a local server that runs the participants through Claude",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0"
+  }
+}
