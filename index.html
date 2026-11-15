@@ -783,18 +783,30 @@ button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shad
 .page.home .hfoot{margin-top:auto}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 /* the guide: a ring on the next thing to press. On first open it also dims the page and says where to start */
-#gdim{position:fixed;inset:0;z-index:58;background:#17140fb8;pointer-events:none;opacity:0;transition:opacity 220ms}
+#gdim{position:fixed;inset:0;z-index:58;background:#17140fb8;pointer-events:none;opacity:0;transition:opacity 450ms}
 #gdim.on{opacity:1}
-#gring{position:fixed;z-index:59;display:none;border:3px solid var(--mustard);border-radius:10px;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink);pointer-events:none;animation:gpulse 1.3s var(--out) infinite}
-#gring.on{display:block}
+#gring{position:fixed;z-index:59;display:none;border:4px solid var(--mustard);border-radius:11px;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink);pointer-events:none}
+#gring.on{display:block;animation:gin 520ms var(--out) both,gglow 1s ease-in-out 520ms infinite alternate}
+#gring::before,#gring::after{content:"";position:absolute;inset:-4px;border:3px solid var(--mustard);border-radius:16px;opacity:0;animation:gwave 1.8s linear 400ms infinite}
+#gring::after{animation-delay:1.3s}
 #gring span{position:absolute;top:calc(100% + 15px);right:0;padding:5px 10px;border:var(--line);border-radius:6px;background:var(--mustard);color:var(--ink);font-size:13px;font-weight:800;white-space:nowrap;box-shadow:2px 2px 0 var(--ink)}
 #gring span::before{content:"";position:absolute;bottom:100%;right:24px;border:8px solid transparent;border-bottom-color:var(--ink)}
 #gring span:empty{display:none}
 #gjump{position:fixed;left:50%;z-index:59;display:none;width:40px;height:40px;margin-left:-20px;padding:0;border:var(--line);border-radius:50%;background:var(--mustard);color:var(--ink);font-size:18px;font-weight:900;box-shadow:2px 2px 0 var(--ink);cursor:pointer;animation:gbob .9s ease-in-out infinite alternate}
 #gjump.down{display:block;bottom:18px}
 #gjump.up{display:block;top:78px}
-@keyframes gpulse{0%{outline:3px solid #f2b52be6;outline-offset:0}100%{outline:3px solid #f2b52b00;outline-offset:11px}}
+@keyframes gin{from{opacity:0;transform:scale(1.4)}to{opacity:1;transform:scale(1)}}
+@keyframes gglow{from{background:#f2b52b00;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink),0 0 0 10px #f2b52b00}to{background:#f2b52b59;box-shadow:0 0 0 1.5px var(--ink),inset 0 0 0 1.5px var(--ink),0 0 0 10px #f2b52b99}}
+@keyframes gjglow{from{box-shadow:2px 2px 0 var(--ink),0 0 0 10px #f2b52b00}to{box-shadow:2px 2px 0 var(--ink),0 0 0 10px #f2b52b99}}
+@keyframes gwave{0%{inset:-4px;opacity:1}55%{inset:-22px;opacity:.6}100%{inset:-34px;opacity:0}}
 @keyframes gbob{to{transform:translateY(5px)}}
+/* with reduced motion the guide still pulses, by brightness only: nothing moves or grows */
+@media (prefers-reduced-motion:reduce){
+  #gring.on{animation:gglow .9s ease-in-out infinite alternate!important}
+  #gring::before,#gring::after{animation:none!important}
+  #gjump{animation:gjglow .9s ease-in-out infinite alternate!important}
+  #gdim{transition-duration:450ms!important}
+}
 /* results: a note under the heading, clamped version blurb, tighter ranking when there are many versions */
 .caveat{display:flex;align-items:baseline;gap:8px;max-width:100ch;margin:10px 0 14px}
 .caveat .tag{flex:none;align-self:center}
@@ -2027,9 +2039,9 @@ function toggleImport(id) {
 
 /* ---------- guide ---------- */
 /* Shows what to press next while the demo scenario is being made. On first open it dims the page and points at + Demo;
-   after that it only rings the next control: Upload dataset, a preview, Continue, Run, and the finished run.
+   after that it only rings the next control: Upload dataset, a preview, Continue, Run, the finished run, then through its results.
    Which step it is on is read from the page, so going back or skipping ahead never leaves it stuck. */
-const GUIDE = { on: true, done: false, viz: false, pv: false };
+const GUIDE = { on: true, done: false, viz: false, pv: false, seen: {} };
 try { GUIDE.on = localStorage.getItem('standin-guide') !== 'off'; } catch (e) {}
 function guideStep() {
   if (!GUIDE.on || GUIDE.done) return null;
@@ -2040,7 +2052,12 @@ function guideStep() {
     return d.status === 'running' ? null : { el: $(`.hrow[data-id="${d.id}"]`) };
   }
   if (!c || !c.demo || c.id === 'hike') return null;
-  if (r === 'results') { GUIDE.done = true; return null; }
+  if (r === 'results') {
+    /* the results tour: another metric, the top version, one of its reasons, the next version, back to the ranking */
+    const k = GUIDE.seen;
+    if (!routeArg()) { if (k.vstep) { GUIDE.done = true; return null; } return { el: (!k.metric && $$('.pill[data-act="metric"]')[1]) || $('.lb-row[data-act="view"]') }; }
+    return { el: (!k.tag && $('.rsn[data-act="tag"]')) || (!k.vstep && $('[data-act="vstep"][data-d="1"]')) || $('#page a.btn[href="#/results"]') };
+  }
   if (r === 'dataset') return { el: up('dataset') || (!GUIDE.viz && $('[data-act="vsel"]')) || next() };
   if (r === 'profiles' || r === 'actions' || r === 'audit') return { el: up(r) || next() };
   if (r === 'prompt') return { el: (!GUIDE.pv && !S.pfill && $('[data-act="shuffle"]')) || next() };
@@ -2048,20 +2065,26 @@ function guideStep() {
   return null;
 }
 const gHole = (b, p, r) => { const x = b.left - p, y = b.top - p, w = b.width + 2 * p, h = b.height + 2 * p; return `M${x + r} ${y}h${w - 2 * r}a${r} ${r} 0 0 1 ${r} ${r}v${h - 2 * r}a${r} ${r} 0 0 1 ${-r} ${r}h${2 * r - w}a${r} ${r} 0 0 1 ${-r} ${-r}v${2 * r - h}a${r} ${r} 0 0 1 ${r} ${-r}Z`; };
-let gLast = '';
+/* every new step the ring closes in on the next control, then keeps pulsing on it: a glow and rings spreading outwards.
+   Only the first step, + Demo on a fresh page, dims the rest of the page. */
+let gLast = '', gStep = '';
 function guidePlace() {
   const st = guideStep(), el = st && st.el, dim = $('#gdim'), ring = $('#gring'), jump = $('#gjump');
   let key = '', box = '', clip = '', off = '';
   if (el) {
-    const b = el.getBoundingClientRect();
+    const b = el.getBoundingClientRect(), d = el.dataset, id = [route(), d.act, d.part || d.to || d.id || ''].join(':');
+    if (id !== gStep) { gStep = id; gLast = ''; ring.className = ''; void ring.offsetWidth; }
     off = b.top > innerHeight - 24 ? 'down' : b.bottom < 72 ? 'up' : '';
     box = `left:${b.left - 6}px;top:${b.top - 6}px;width:${b.width + 12}px;height:${b.height + 12}px`;
-    if (st.dim) { const sw = $('[data-act="guide"]'); clip = `path(evenodd,"M0 0H${innerWidth}V${innerHeight}H0Z${gHole(b, 6, 10)}${sw ? gHole(sw.getBoundingClientRect(), 5, 9) : ''}")`; }
+    if (jump.className !== off) { jump.className = off; jump.textContent = off === 'up' ? '↑' : '↓'; }
+    if (st.dim) {
+      const sw = $('[data-act="guide"]'), hole = off ? gHole(jump.getBoundingClientRect(), 6, 26) : gHole(b, 6, 10);
+      clip = `path(evenodd,"M0 0H${innerWidth}V${innerHeight}H0Z${hole}${sw ? gHole(sw.getBoundingClientRect(), 5, 9) : ''}")`;
+    }
     key = [off, box, clip, st.tip || ''].join('|');
-  }
+  } else { gStep = ''; if (jump.className) jump.className = ''; }
   if (key !== gLast) {
     ring.className = el && !off ? 'on' : ''; ring.style.cssText = box; ring.firstChild.textContent = (st && st.tip) || '';
-    jump.className = off; jump.textContent = off === 'up' ? '↑' : '↓';
     dim.className = clip ? 'on' : ''; if (clip) dim.style.clipPath = clip;
     gLast = key;
   }
@@ -2097,9 +2120,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.iconPick
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, id = b.dataset.id, V = () => S.vars.find(v => v.id === id);
+  if (route() === 'results') GUIDE.seen[a] = true;
   if (a === 'new') newRun(false);
-  else if (a === 'newdemo') { GUIDE.viz = GUIDE.pv = false; newRun(true); }
-  else if (a === 'guide') { GUIDE.on = !GUIDE.on; GUIDE.done = GUIDE.viz = GUIDE.pv = false; try { localStorage.setItem('standin-guide', GUIDE.on ? 'on' : 'off'); } catch (e) {} render(); }
+  else if (a === 'newdemo') { GUIDE.viz = GUIDE.pv = false; GUIDE.seen = {}; newRun(true); }
+  else if (a === 'guide') { GUIDE.on = !GUIDE.on; GUIDE.done = GUIDE.viz = GUIDE.pv = false; GUIDE.seen = {}; try { localStorage.setItem('standin-guide', GUIDE.on ? 'on' : 'off'); } catch (e) {} render(); }
   else if (a === 'demorun') toggleDemoRun();
   else if (a === 'imprun') toggleImport(id);
   else if (a === 'demo') uploadPart(b.dataset.part);
@@ -2248,6 +2272,8 @@ document.addEventListener('drop', e => {
 });
 
 if (!location.hash) history.replaceState(null, '', '#/home');
+/* a reload always lands on the home page: runs made in this session are gone, so a deeper address would point at nothing */
+if (route() !== 'home') history.replaceState(null, '', location.pathname + location.search + '#/home');
 render();
 </script>
 </body>
