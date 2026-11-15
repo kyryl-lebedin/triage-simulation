@@ -544,7 +544,7 @@ a.brand:active{transform:scale(.97)}
 .hnext{font-weight:800}
 /* home: rows */
 .hrows{border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
-.hrow{display:grid;grid-template-columns:78px minmax(0,2.4fr) minmax(0,1.5fr);align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:0;border-bottom:1.5px solid #17140f22;background:transparent;text-align:left;font-size:13px;font-weight:700}
+.hrow{display:grid;grid-template-columns:78px minmax(0,1fr);align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:0;border-bottom:1.5px solid #17140f22;background:transparent;text-align:left;font-size:13px;font-weight:700}
 .hrow:last-child{border-bottom:0}
 @media (hover:hover){button.hrow:hover{background:#17140f0d}}
 button.hrow:active{background:#17140f1f}
@@ -573,7 +573,7 @@ button.hrow:active{background:#17140f1f}
 .hearlier{margin-top:24px}
 
 
-/* material: fields and slots */
+/* treatments: parts or types, and slots */
 .mtop{display:flex;align-items:flex-end;gap:16px}
 .mtop .name-in{flex:1;min-width:0}
 .mtop .btn{flex:none;margin-bottom:6px}
@@ -602,14 +602,14 @@ button.hrow:active{background:#17140f1f}
 .ftype button{height:20px;padding:0 6px;border:0;background:var(--paper);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .ftype button+button{border-left:var(--line)}
 .ftype button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
-.ftype+.x,.ftype~.x{width:22px;height:22px;font-size:11px;flex:none}
+.fedit .x{width:22px;height:22px;font-size:11px;flex:none}
 .fconfirm{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;min-width:0;font-size:12px;font-weight:800}
 .drop{margin-top:12px}
 .drop-btns{align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .check{margin:18px 0 0}
 .check.ok{background:var(--paper)}
 .sumbox .chips{margin-top:2px}
-/* material: field tabs */
+/* treatments: one tab per part or type */
 .ftabs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:10px}
 .ftabs .pill small{margin-left:7px;font-size:11px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
 .fedit{display:flex;align-items:center;gap:6px;min-height:40px;padding:6px 10px;margin-bottom:10px;border:var(--line);border-radius:var(--r);background:var(--paper)}
@@ -640,11 +640,142 @@ button.hrow:active{background:#17140f1f}
 .vadd{min-height:44px;border:2px dashed var(--ink);border-radius:var(--r);background:transparent;font-weight:900;font-size:14px;transition:transform 110ms var(--out)}
 @media (hover:hover){.vadd:hover{background:var(--paper)}}
 .vadd:active{transform:scale(.98)}
+
+/* ---- additions for imported runs (see data/triage-runs.js) ---- */
+/* material: long text files */
+.sfile p{white-space:pre-wrap}
+.sfile-top .btn+.btn{margin-left:0}
+.vcol .sfile.open p{display:block;-webkit-line-clamp:unset;overflow:visible}
+/* participants */
+.addrow{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+.ai-note a{color:inherit;font-weight:800}
+/* actions: who decides the outcome */
+.judge{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px;align-items:start}
+.judge .ai-note{margin:4px 0 10px}
+.jtext{display:block;width:100%;min-height:300px;padding:12px 14px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);font-size:13px;line-height:1.55;font-weight:500;resize:vertical}
+.jtext:focus{outline:3px solid var(--cobalt);outline-offset:3px}
+.jl{margin-top:0}
+.jl .row{grid-template-columns:minmax(0,1.7fr) minmax(0,.6fr) 48px;height:auto;min-height:40px;padding:5px 12px;cursor:default}
+.jl .row span{white-space:normal;line-height:1.3}
+.jl .row em{display:block;font-style:normal;font-weight:600;font-size:11px;color:var(--muted)}
+@media (max-width:900px){.judge{grid-template-columns:minmax(0,1fr)}}
+.mhead{flex:1;min-width:0}
+/* actions: a brief description on each tile */
+.tile{height:128px}
+.tile.add{min-height:128px}
+.tile-press{padding-bottom:46px}
+.tdesc{position:absolute;left:10px;bottom:9px;width:calc(100% - 20px);height:27px;padding:0 8px;border:1.5px solid currentColor;border-radius:4px;background:transparent;font-size:12px;font-weight:600}
+.tdesc::placeholder{color:currentColor;opacity:.65}
+.tdesc:focus{outline:0;box-shadow:0 0 0 2px var(--mustard)}
+/* prompt page: settings in a row, then one column of chat-style messages */
+.llm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.lf{display:flex;flex-direction:column;min-width:0}
+.sel{height:40px;min-width:0;padding:0 10px;border:var(--line);border-radius:var(--r);background:var(--paper);color:var(--ink);font:inherit;font-weight:800;font-size:14px;box-shadow:2px 2px 0 var(--ink)}
+.sel[disabled]{opacity:.45;box-shadow:none}
+.lnote{font-size:12px;font-weight:600;color:var(--muted)}
+p.lnote{margin:10px 0 0}
+.mname+.lnote{align-self:center;margin-left:10px}
+.chat{display:flex;flex-direction:column;gap:14px;max-width:800px;margin-left:auto;margin-right:auto}
+.chat-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.chat-top strong{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.pvs{display:inline-flex;align-items:center;gap:4px;margin-left:auto}
+.pvs .lbl{margin:0 4px 0 0}
+.pv{width:26px;height:26px;border:var(--line);border-radius:4px;background:var(--paper);font-weight:900;font-size:12px}
+.pv[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.msg{align-self:flex-start;width:92%;padding:14px 16px 16px;border:var(--line);border-radius:12px 12px 12px 2px;background:var(--paper);box-shadow:var(--sh)}
+.msg.me{align-self:flex-end;width:auto;max-width:70%;padding:9px 14px;border-radius:12px 12px 2px 12px;background:var(--sky);box-shadow:none;font-weight:700;font-size:13px}
+.msg-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 9px;margin-bottom:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.msg-h b{display:grid;place-items:center;width:22px;height:22px;border-radius:4px;background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:0}
+.msg-h span{margin-left:auto;font-weight:700;letter-spacing:.03em;text-transform:none;color:var(--muted)}
+.msg .strip{min-height:0;padding:0;border:0;border-radius:3px;background:transparent;box-shadow:none;font-size:15px;line-height:1.85}
+.msg pre{margin:10px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px;line-height:1.6}
+.msg pre:empty{display:none}
+/* the audit: a collapsed system prompt, then the chat forks into one branch per question */
+.sys{align-self:flex-start;width:92%;border:2px dashed var(--ink);border-radius:8px;background:transparent}
+.sys summary{display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;list-style:none;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.sys summary::-webkit-details-marker{display:none}
+.sys summary b{display:grid;place-items:center;width:22px;height:22px;border-radius:4px;background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:0}
+.sys summary span{margin-left:auto;padding:2px 8px;border:1.5px solid var(--ink);border-radius:4px;background:var(--paper);letter-spacing:.04em}
+.sys summary span::after{content:"Show"}
+.sys[open] summary span::after{content:"Hide"}
+.sys pre{margin:0;padding:0 12px 12px;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.6}
+.forknote{align-self:center;font-size:12px;font-weight:700;color:var(--muted);text-align:center}
+.fork{position:relative;height:2px;margin:14px calc(50% / var(--n)) 0;background:var(--ink)}
+.fork::before{content:"";position:absolute;left:50%;top:-14px;width:2px;height:14px;margin-left:-1px;background:var(--ink)}
+.branches{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:14px 12px}
+.fork+.branches{margin-top:-14px;padding-top:14px}
+.branch{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0}
+.fork+.branches .branch::before{content:"";position:absolute;left:50%;top:-14px;width:2px;height:14px;margin-left:-1px;background:var(--ink)}
+.branch .msg{width:100%;padding:12px}
+.branch .msg.me{align-self:flex-end;width:auto;max-width:100%}
+.branch .fillin{margin-top:0;font-size:13px}
+/* fill-in parts: a dark tag with where the text comes from, on a mustard wash */
+.filled .msg .ph,.fillin{background:#f2b52b59;border-radius:3px}
+.filled .msg .ph{display:inline;margin:0;padding:2px 6px 2px 0;border:0;font-weight:700;font-size:inherit;line-height:inherit;white-space:normal;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.filled .msg .ph.bad{background:var(--blush)}
+.rawmat{margin-top:10px;font-size:14px;line-height:2}
+.ph i,.fillin i{display:inline-block;margin-right:6px;padding:0 5px;border-radius:3px;background:var(--ink);color:var(--paper);font-style:normal;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;line-height:17px;vertical-align:1px}
+.fillin{margin-top:10px;max-height:260px;overflow:auto;padding:8px 10px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;font-weight:600}
+.fillin i{display:table;margin:0 0 5px}
+.chat .palette{margin-top:4px;padding:12px 14px;border:2px dashed var(--ink);border-radius:var(--r)}
+@media (max-width:900px){.llm{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* home: one separate box per run, a little wider than its name */
+.hrows{display:flex;flex-direction:column;align-items:flex-start;gap:12px;border:0;background:transparent;box-shadow:none;overflow:visible}
+.hrow{display:flex;width:auto;max-width:100%;gap:12px;min-height:66px;padding:0 48px 0 16px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);transition:transform 110ms var(--out)}
+.hrow:last-child{border-bottom:var(--line)}
+@media (hover:hover){button.hrow:hover{background:var(--paper);transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}}
+button.hrow:active{background:var(--paper);transform:translate(3px,3px);box-shadow:none}
+.hrow-name strong{font-size:21px;font-stretch:112%}
+.hrow .tag{flex:none;height:24px;padding:0 9px;font-size:11px;font-variant-numeric:tabular-nums}
+.hrow .tag.dm{background:var(--sky)}
+.tag.role{background:var(--ink);color:var(--paper)}
+/* results in stages: one big tab per stage, above everything else */
+.rstages{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:22px}
+.rstage{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 14px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);text-align:left;transition:transform 110ms var(--out)}
+.rstage b{display:grid;place-items:center;flex:none;width:34px;height:34px;border:var(--line);border-radius:var(--r);font-weight:900;font-size:18px;background:var(--ground)}
+.rstage strong{display:block;font-weight:900;font-stretch:112%;font-size:18px;line-height:1.15}
+.rstage small{display:block;margin-top:2px;font-size:12px;font-weight:700;color:var(--muted)}
+.rstage[aria-pressed=true]{background:var(--ink);color:var(--paper);box-shadow:none;transform:translate(3px,3px)}
+.rstage[aria-pressed=true] b{background:var(--mustard);color:var(--ink)}
+.rstage[aria-pressed=true] small{color:#fffdf7b3}
+.pill.ico.named{gap:6px;padding:0 11px}
+/* treatments: the researcher's own visualisation of a version */
+.vizctl{display:flex;align-items:center;gap:8px;margin-left:10px;flex:none;order:9}
+.vizctl .lbl{margin:0}
+.vizctl .tag{text-transform:none;letter-spacing:0;font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vcol.vseen{box-shadow:var(--sh),0 0 0 3px var(--cobalt)}
+.vt .vsee{height:24px;padding:0 8px;border:var(--line);border-radius:4px;background:var(--paper);font-size:11px;font-weight:800}
+.vt .vsee[aria-pressed=true]{background:var(--cobalt);color:#fff}
+.viz{margin-top:22px;border:var(--line);border-radius:var(--r);background:var(--paper);box-shadow:var(--sh);overflow:hidden}
+.viz>header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;border-bottom:var(--line)}
+.viz>header .lbl{margin:0}
+.viz>header strong{font-weight:900;font-size:15px}
+.viz>header small{margin-left:auto;font-size:11px;font-weight:700;color:var(--muted)}
+.viz iframe{display:block;width:100%;height:560px;border:0;background:#fff}
+.viz.none{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:14px 16px;border-style:dashed;box-shadow:none;background:transparent}
+.viz.none p{margin:0;flex:1;min-width:260px;font-size:13px;font-weight:600;color:var(--muted)}
+.hrow-name{margin-left:4px}
+.hfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:56px;padding-top:14px;border-top:1.5px solid #17140f22;font-size:12px;font-weight:700;color:var(--muted)}
+.hfoot .pill[aria-pressed=true]{background:var(--sky);color:var(--ink)}
+/* results: a note under the heading, clamped version blurb, tighter ranking when there are many versions */
+.caveat{display:flex;align-items:baseline;gap:8px;max-width:100ch;margin:10px 0 14px}
+.caveat .tag{flex:none;align-self:center}
+.vd-title p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.lb.many{gap:8px}
+.lb.many .lb-row{min-height:88px;grid-template-columns:60px 60px minmax(0,1fr) 84px 44px}
+.lb.many .lb-rank,.lb.many .lb-letter{font-size:32px}
+.lb.many .lb-body{gap:7px;padding:9px 16px}
+.lb.many .lb-name strong{font-size:19px}
+.lb.many .lb-bar{height:20px}
+.lb.many .lb-score b{min-width:76px;font-size:28px}
+.lb.many .lb-delta{font-size:20px}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <input type="file" id="file" multiple accept=".txt,.md,.srt,.vtt,.csv,text/plain" hidden>
+<!-- optional: runs with real results, in the platform's own shape. The page works without this file. -->
+<script src="data/triage-runs.js?v=10"></script>
 <script>
 /* forwards picker keys to the harness when framed */
 if (window.parent !== window) document.addEventListener('keydown', e => { if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable || e.metaKey || e.ctrlKey || e.altKey) return; window.parent.postMessage({ protoKey: e.key }, '*'); });
@@ -652,8 +783,9 @@ if (window.parent !== window) document.addEventListener('keydown', e => { if (/^
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const ROUTES = [['dataset', 'Material'], ['profiles', 'Participants'], ['actions', 'Actions'], ['run', 'Run'], ['results', 'Results']];
+const ROUTES = [['dataset', 'Treatments'], ['profiles', 'Participants'], ['actions', 'Actions'], ['audit', 'Audit'], ['prompt', 'Prompt'], ['run', 'Run'], ['results', 'Results']];
 const VCOL = ['cobalt', 'tomato', 'mustard', 'leaf', 'sky', 'blush'];
+const LETTERS = 'ABCDEFGHIJKLMNOPQRST';   /* a scenario holds up to twenty versions */
 const SEG = ['cobalt', 'tomato', 'mustard', 'leaf', 'ink', 'sky', 'blush'];
 const svg = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 const THUMB = '<path d="M7 10.5V20H4v-9.5zM7 10.5l4.2-6.8c1.6.1 2.6 1.3 2.3 3L13 10h5.2c1.2 0 2 1 1.8 2.2l-1.1 6c-.2 1-1 1.8-2 1.8H7"/>';
@@ -682,7 +814,11 @@ const ICON = {
   paw: '<circle cx="6.500" cy="10" r="1.800"/><circle cx="10" cy="5.800" r="1.800"/><circle cx="14" cy="5.800" r="1.800"/><circle cx="17.500" cy="10" r="1.800"/><path d="M12 11.500c-3 0-5.500 3.600-5.500 6 0 1.500 1.200 2.500 2.700 2.500 1.200 0 1.800-.7 2.800-.7s1.600.7 2.800.7c1.500 0 2.700-1 2.700-2.500 0-2.400-2.500-6-5.500-6z"/>',
   nopaw: '<circle cx="6.500" cy="10" r="1.800"/><circle cx="10" cy="5.800" r="1.800"/><circle cx="14" cy="5.800" r="1.800"/><circle cx="17.500" cy="10" r="1.800"/><path d="M12 11.500c-3 0-5.500 3.600-5.500 6 0 1.500 1.200 2.500 2.700 2.500 1.200 0 1.800-.7 2.800-.7s1.600.7 2.800.7c1.500 0 2.700-1 2.700-2.500 0-2.400-2.500-6-5.500-6z"/><path d="M3 3l18 18"/>',
   yes: '<path d="M5 12.500l4.500 4.500L19 7"/>', no: '<path d="M6 6l12 12M18 6L6 18"/>',
-  tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.300"/>'
+  tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.300"/>',
+  /* an action can name one of these with icon: '...' */
+  up: '<path d="M12 20V5M5.500 11.500L12 5l6.500 6.500"/>', down: '<path d="M12 4v15M5.500 12.500L12 19l6.500-6.500"/>',
+  help: '<circle cx="12" cy="12" r="8.500"/><path d="M9.500 9.500a2.500 2.500 0 1 1 3.600 2.200c-.8.500-1.100 1-1.100 1.800M12 16.800v.2"/>',
+  skip: '<path d="M5 5l8 7-8 7zM18.500 5v14"/>', wave: '<path d="M3 12c2-4.500 4-4.500 6 0s4 4.500 6 0 4-4.500 6 0"/>'
 };
 /* custom actions get an icon from their name, so every metric on the results page can be shown as an icon */
 const ICON_KW = [
@@ -697,19 +833,16 @@ const BAD_RE = /dislike|downvote|leave|away|skip|report|unsub|block|hide|ignore|
 
 const S = {
   rid: 'hike', name: 'Which intro keeps viewers?',
-  fields: [{ id: 'f1', name: 'Transcript', type: 'file' }, { id: 'f2', name: 'Video description', type: 'text' }],
+  fields: [{ id: 'f1', name: 'Transcript', type: 'file', viz: { name: 'talking-head.html', src: 'viz/talking-head.html' } }],
   variants: [
     { id: 'A', name: 'Cold open', vals: {
-      f1: { text: 'Wind is hitting forty. Pepper, stay close. Ten more minutes and nobody gets off this ridge tonight. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'cold-open.srt', words: 36 },
-      f2: { text: 'We hiked 400 miles in 31 days with Pepper, our rescue dog. On day 19 a storm caught us on the ridge with nowhere to camp. Full route, gear list and costs below.', file: '' } } },
+      f1: { text: 'Wind is hitting forty. Pepper, stay close. Ten more minutes and nobody gets off this ridge tonight. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'cold-open.srt', words: 36 } } },
     { id: 'B', name: 'Story first', vals: {
-      f1: { text: 'Last spring Juno died. She was fourteen, and she had walked every trail with us. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'story-first.srt', words: 34 },
-      f2: { text: 'We hiked 400 miles in 31 days with Pepper, our rescue dog. This is the trail we promised Juno, the dog we lost last spring. Full route, gear list and costs below.', file: '' } } },
+      f1: { text: 'Last spring Juno died. She was fourteen, and she had walked every trail with us. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'story-first.srt', words: 34 } } },
     { id: 'C', name: 'Payoff tease', vals: {
-      f1: { text: 'This is the summit. Thirty-one days, and Pepper had never seen snow until this morning. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'payoff-tease.srt', words: 34 },
-      f2: { text: 'We hiked 400 miles in 31 days with Pepper, our rescue dog. It ends at a summit sunrise, and her first ever snow. Full route, gear list and maps below.', file: '' } } }
+      f1: { text: 'This is the summit. Thirty-one days, and Pepper had never seen snow until this morning. We are Sam and Ali, this is Pepper, and this is how we hiked 400 miles in 31 days.', file: 'payoff-tease.srt', words: 34 } } }
   ],
-  nextField: 3, tab: 'f1', dropField: 'f1', confirm: null, diff: true,
+  nextField: 2, tab: 'f1', dropField: 'f1', confirm: null, diff: true,
   count: 500,
   vars: [
     { id: 'gender', key: 'gender', name: 'Gender', opts: [{ name: 'Female', pct: 60, say: 'female' }, { name: 'Male', pct: 36, say: 'male' }, { name: 'Non-binary / other', pct: 4, say: 'non-binary' }] },
@@ -719,24 +852,25 @@ const S = {
   ],
   prompt: 'You are {name}, a {age}-year-old {gender} viewer in {region}. {pet_status}. It is a weeknight and you are scrolling YouTube. You will be shown the first 30 seconds of a video. React the way you honestly would.',
   actions: [
-    { id: 'keep', name: 'Keep watching past 30s', on: true }, { id: 'like', name: 'Like', on: true }, { id: 'dislike', name: 'Dislike', on: true, bad: true },
-    { id: 'comment', name: 'Comment', on: true }, { id: 'save', name: 'Save', on: true }, { id: 'replay', name: 'Replay intro', on: true },
-    { id: 'share', name: 'Share', on: false }, { id: 'subscribe', name: 'Subscribe', on: false }, { id: 'away', name: 'Click away', on: true, bad: true }
+    { id: 'like', name: 'Like', on: true, fields: ['f1'], desc: 'Press the thumbs up.' }, { id: 'dislike', name: 'Dislike', on: true, bad: true, fields: ['f1'], desc: 'Press the thumbs down.' },
+    { id: 'comment', name: 'Comment', on: true, fields: ['f1'], desc: 'Write a public comment under the video.' }, { id: 'replay', name: 'Replay intro', on: true, fields: ['f1'], desc: 'Watch the first 30 seconds again.' },
+    { id: 'away', name: 'Click away', on: true, bad: true, fields: ['f1'], desc: 'Leave before the intro ends.' }, { id: 'strike', name: 'Send a strike', on: true, bad: true, icon: 'flag', fields: ['f1'], desc: 'Report the video as breaking the rules.' },
+    { id: 'save', name: 'Save', on: true, fields: ['f1'], desc: 'Add it to Watch later or a playlist.' }, { id: 'share', name: 'Share', on: true, fields: ['f1'], desc: 'Send the link to someone.' }, { id: 'subscribe', name: 'Subscribe', on: true, fields: ['f1'], desc: 'Subscribe to the channel.' }
   ],
   questions: [{ id: 'why', text: 'Why did you make these choices?', each: true }, { id: 'q1', text: 'What would you not like about this video?', each: false }], nextQ: 2, open: null,
-  main: 'keep', metric: null, seed: 214, running: false, nextVar: 1, nextAct: 1
+  main: 'like', metric: null, llm: { model: 'claude-opus-5-5', effort: 'medium', temp: 1, runs: 3 }, seed: 214, running: false, nextVar: 1, nextAct: 1
 };
 const AI = { gender: [60, 36, 4], age: [6, 22, 31, 21, 12, 8], region: [46, 27, 15, 8, 4], pet: [58, 42] };
 
 /* ---------- results data (fake) ---------- */
 const BASE = {
-  A: { keep: 71, like: 24, dislike: 3, comment: 6, save: 5, replay: 4, share: 3, subscribe: 4 },
-  B: { keep: 58, like: 19, dislike: 11, comment: 14, save: 9, replay: 2, share: 5, subscribe: 6 },
-  C: { keep: 64, like: 21, dislike: 4, comment: 5, save: 4, replay: 9, share: 3, subscribe: 3 }
+  A: { keep: 71, like: 24, dislike: 3, comment: 6, save: 5, replay: 4, share: 3, subscribe: 4, strike: 1 },
+  B: { keep: 58, like: 19, dislike: 11, comment: 14, save: 9, replay: 2, share: 5, subscribe: 6, strike: 4 },
+  C: { keep: 64, like: 21, dislike: 4, comment: 5, save: 4, replay: 9, share: 3, subscribe: 3, strike: 2 }
 };
 const NOTES = {
   A: [
-    { t: 'Under-35s stayed for the storm', p: '78% of 18 to 34 year olds kept watching. The storm starts in the first second, so there was nothing to skip.', q: 'No intro, no asking me to subscribe, just weather.', by: 'Jae-won L., 22, male, Asia-Pacific, no pet', m: 'keep', s: 'age' },
+    { t: 'Under-35s stayed for the storm', p: 'Only 22% of 18 to 34 year olds clicked away. The storm starts in the first second, so there was nothing to skip.', q: 'No intro, no asking me to subscribe, just weather.', by: 'Jae-won L., 22, male, Asia-Pacific, no pet', m: 'away', s: 'age' },
     { t: 'Easy to watch, quiet in the comments', p: 'Only 3% disliked it, but only 6% commented. It holds attention without starting a conversation.', q: 'Good storm. Left it on while I ate dinner.', by: 'Hannah B., 29, female, Europe, no pet', m: 'comment', s: 'none' }
   ],
   B: [
@@ -745,7 +879,7 @@ const NOTES = {
   ],
   C: [
     { t: 'The summit shot got replayed', p: 'Replays tripled, to 9% against 4% and 2%, as viewers went back to watch the summit again.', q: 'Went back twice just for that ridge at sunrise.', by: 'Margaret O., 58, female, North America, has a pet', m: 'replay', s: 'none' },
-    { t: 'Some felt the ending was spoiled', p: 'It won viewers 45 and over at 70%, but a group of 35 to 44 year olds left, saying the intro "spoiled the ending".', q: 'Why would I watch twenty minutes when you just showed me the finish?', by: 'Daniel K., 38, male, Europe, no pet', m: 'keep', s: 'age' }
+    { t: 'Some felt the ending was spoiled', p: 'It won viewers 45 and over at 70%, but a group of 35 to 44 year olds left, saying the intro "spoiled the ending".', q: 'Why would I watch twenty minutes when you just showed me the finish?', by: 'Daniel K., 38, male, Europe, no pet', m: 'away', s: 'age' }
   ]
 };
 function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
@@ -753,7 +887,34 @@ function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { 
 /* runs that show the fixed demo numbers: the hiking run, plus any scenario filled by "Upload dataset" */
 const DEMO_IDS = new Set(['hike']), isDemo = rid => DEMO_IDS.has(rid);
 const salt = rid => isDemo(rid) ? '' : rid;
+/* imported runs (window.STANDIN_IMPORTS): their own responses stand in for the made-up numbers */
+const IMP = {};
+function impPct(rid) {
+  const m = IMP[rid]; if (!m) return null;
+  if (!m.pct) {
+    const c = {}; m.pct = {};
+    m.responses().forEach(r => { const o = c[r.variant] ??= { n: 0, a: {} }; o.n++; r.actions.forEach(a => o.a[a] = (o.a[a] || 0) + 1); });
+    m.n = {};
+    for (const v in c) { m.n[v] = c[v].n; m.pct[v] = {}; for (const a in c[v].a) m.pct[v][a] = Math.round(c[v].a[a] / c[v].n * 100); }
+  }
+  return m.pct;
+}
+const stateOf = rid => S.rid === rid ? S : (RUNS.find(x => x.id === rid) || {}).s;
+/* S.fields is what the Treatments page splits versions by, and it means one of two things:
+   parts (default): every version has every part, and a participant is shown all of them together;
+   types (S.split): each version is one type (version.field), and a participant is shown only that.
+   An action can be limited to some of them (action.fields); with types it has no score elsewhere. */
+const fw = () => S.split ? 'type' : 'part', Fw = () => S.split ? 'Type' : 'Part';
+const shown = v => S.split ? S.fields.filter(f => f.id === v.field) : S.fields;
+function applies(s, vid, aid) {
+  const a = s && s.actions.find(x => x.id === aid), v = s && s.variants.find(x => x.id === vid);
+  return !a || !a.fields || !v || !v.field || a.fields.includes(v.field);
+}
+const isReal = rid => { const r = RUNS.find(x => x.id === rid); return !!(r && r.real); };
 function ov(rid, vid, aid) {
+  if (!applies(stateOf(rid), vid, aid)) return null;
+  if (isReal(rid) && !IMP[rid]) return 0;
+  const ip = impPct(rid); if (ip && ip[vid]) return ip[vid][aid] || 0;
   if (aid === 'away') return 100 - ov(rid, vid, 'keep');
   const b = isDemo(rid) ? (BASE[vid] || {})[aid] : null;
   if (b != null) return b;
@@ -765,9 +926,10 @@ const overall = (vid, aid) => ov(S.rid, vid, aid);
 /* ---------- what each synthetic participant is asked ----------
    One conversation per participant per version, in two stages:
    1. React: they see the version and pick their actions (stage1Message, stage1Schema).
-   2. Audit: we ask the follow-up questions in a second turn (stage2Message, stage2Schema).
-      Asking them separately stops the questions from steering the choices.
-   The system prompt makes every answer come back twice, in full and as a 2-3 word tag,
+   2. Audit: each follow-up question is asked in its own branch of the conversation, in parallel
+      (auditSystem, stage2Message(q), stage2Schema). Asking after the choices stops the questions from
+      steering them; asking in separate branches stops one answer from colouring the next.
+   The second prompt makes every answer come back twice, in full and as a 2-3 word tag,
    so the user only ever writes the question. The schemas fit Claude's structured outputs
    (output_config.format = { type: 'json_schema', schema }). tally() groups the tags. */
 function personaText(p) {
@@ -777,31 +939,40 @@ function personaText(p) {
     return v ? (p.pick[v.id] != null ? sayOpt(v, p.pick[v.id], p.n) : `(${v.name.toLowerCase()} not specified)`) : m;
   });
 }
-function systemPrompt(p) {
+/* what a participant may choose for one version: on, not scored by a judge, and allowed by that version's type */
+const actsFor = v => onActs().filter(a => !a.scored && (!v || applies(S, v.id, a.id)));
+function systemPrompt(p, v) {
   return `${personaText(p)}
 
-You are taking part in a study with two stages. Stay in character throughout: answer only as this person would, in their own words.
+You are taking part in a study. Stay in character throughout: answer only as this person would, in their own words.
 
-Stage 1, react. You will be shown something. Decide which of these actions you would really take. Pick any number, including none.
-${onActs().map(a => `- ${a.id}: ${a.name}`).join('\n')}
-Reply with JSON only: {"actions": ["<action id>", ...]}
-
-Stage 2, questions. You will then be asked about what you did. Answer every question, and give each answer twice:
-- "full": your complete answer, in your own words, the way you would actually say it.
-- "short": the same answer in 2 to 3 words, plain and specific, so it can be grouped with other people's answers.
-A question marked "for each action" gets one answer for every action you chose in stage 1. Other questions get one answer, with "action" set to null.
-Reply with JSON only: {"answers": [{"question": "<question id>", "action": "<action id or null>", "full": "...", "short": "..."}]}`;
+${actsFor(v).length ? `Stage 1, react. You will be shown something. Decide which of these actions you would really take. Pick any number, including none.
+${actsFor(v).map(a => `- ${a.id}: ${a.name}${a.desc ? '. ' + a.desc : ''}`).join('\n')}
+Reply with JSON only: {"actions": ["<action id>", ...]}` : 'Stage 1, respond. You will be shown something. Respond to it the way you really would.'}
+`;
 }
 function stage1Message(v) {
-  /* every field the user defined on the Material page, as this version fills it */
-  const parts = S.fields.map(f => { const x = sv(v, f); return x.text.trim() ? `${f.name}:\n"""\n${x.text.trim()}\n"""` : x.file ? `${f.name}: (file ${x.file})` : ''; }).filter(Boolean);
-  return `Version "${v.name}":\n\n${parts.join('\n\n') || '(empty)'}\n\nStage 1: which actions do you take?`;
+  /* every part of this version, or with types the one text it has.
+     The version's name is left out on purpose: "Cold open" or "Story first" would tell the participant what is being tested */
+  const parts = shown(v).map(f => { const x = sv(v, f); return x.text.trim() ? `${f.name}:\n"""\n${x.text.trim()}\n"""` : x.file ? `${f.name}: (file ${x.file})` : ''; }).filter(Boolean);
+  return `${parts.join('\n\n') || '(empty)'}\n\nStage 1: ${actsFor(v).length ? 'which actions do you take?' : 'respond.'}`;
 }
-function stage2Message() {
-  return 'Stage 2: answer these questions.\n' + S.questions.map(q => `- ${q.id}: ${q.text}${q.each ? ' (for each action)' : ''}`).join('\n');
+/* the system prompt every audit branch starts with: how to answer */
+function auditSystem() {
+  return `Stage 2, a question. You are now asked about what you just did. Stay in character. Give your answer twice:
+- "full": your complete answer, in your own words, the way you would actually say it.
+- "short": the same answer in 2 to 3 words, plain and specific, so it can be grouped with other people's answers.
+A question marked "for each action" gets one answer for every action you chose in stage 1. Otherwise give one answer, with "action" set to null.
+
+Reply with JSON only: {"answers": [{"question": "<question id>", "action": "<action id or null>", "full": "...", "short": "..."}]}`;
 }
-function stage1Schema() {
-  return { type: 'object', additionalProperties: false, required: ['actions'], properties: { actions: { type: 'array', items: { type: 'string', enum: onActs().map(a => a.id) } } } };
+/* one branch's message: a single question (or, with no argument, all of them as a list) */
+function stage2Message(q) {
+  const line = x => `${x.id}: ${x.text}${x.each ? ' (for each action)' : ''}`;
+  return q ? line(q) : S.questions.map(x => '- ' + line(x)).join('\n');
+}
+function stage1Schema(v) {
+  return { type: 'object', additionalProperties: false, required: ['actions'], properties: { actions: { type: 'array', items: { type: 'string', enum: actsFor(v).map(a => a.id) } } } };
 }
 function stage2Schema() {
   const item = { type: 'object', additionalProperties: false, required: ['question', 'action', 'full', 'short'], properties: {
@@ -885,7 +1056,7 @@ function build(B, groupsFor = b => groupLocal([...b.tags.values()])) {
       ((out[vid] ??= {})[q] ??= {})[aid] = groups.map(g => {
         const parts = g.members.filter(m => vb[m]).map(m => ({ short: b.tags.get(m).short, ...vb[m] })).sort((x, y) => y.n - x.n);
         if (!parts.length) return null;
-        return { short: g.name, n: parts.reduce((s, p) => s + p.n, 0), forms: parts.map(p => ({ short: p.short, n: p.n })), quotes: parts.flatMap(p => p.quotes).slice(0, 3), who: parts.flatMap(p => p.who), base: b.base[vid] || [] };
+        return { short: g.name, n: parts.reduce((s, p) => s + p.n, 0), forms: parts.map(p => ({ short: p.short, n: p.n })), quotes: parts.flatMap(p => p.quotes).filter((q, i, all) => all.findIndex(x => x.full === q.full) === i).slice(0, 3), who: parts.flatMap(p => p.who), base: b.base[vid] || [] };
       }).filter(Boolean).sort((x, y) => y.n - x.n);
     }
   }
@@ -902,35 +1073,36 @@ const WHY = {
   A: {
     keep: [[['Instant action', 'Action instantly', 'The instant action'], 40, ['No intro, no asking me to subscribe, just weather.', 'The storm starts in the first second. I was in.'], YOUNG], [['Needed the outcome', 'Need the outcome'], 30, ['I had to know if they got off that ridge.']], [['Dog in danger', 'Dog was in danger'], 18, ['Pepper in that wind? I am not leaving until she is safe.'], PETS], [['Great footage'], 12, ['That storm footage looks unreal.']]],
     like: [[['Gripping opening', 'Opening was gripping'], 45, ['Best first ten seconds I have seen in a while.'], YOUNG], [['Feels real', 'Felt real'], 30, ['No script, no music swell. It felt like being there.']], [['Loved Pepper', 'Love Pepper'], 25, ['Pepper leaning into the wind. Instant like.'], PETS]],
-    dislike: [[['Too chaotic', 'Chaotic', 'Way too chaotic'], 60, ['I could not tell what was going on.'], OLDER], [['Wind too loud', 'Wind was loud'], 40, ['The wind noise hurt my ears.']]],
-    comment: [[['Asked about gear', 'Asking about gear'], 40, ['What tent survives forty-mile wind?']], [['Worried for Pepper', 'Worried about Pepper'], 35, ['Please tell me Pepper had a jacket on.'], PETS], [['Own storm story', 'My storm story'], 25, ['Got caught like this on Snowdon once. Terrifying.']]],
+    dislike: [[['Too chaotic', 'Chaotic', 'Way too chaotic'], 60, ['I could not tell what was going on.', 'Shouting, wind, a shaky camera. I had no idea what I was watching.', "It felt like walking into the middle of someone else's argument."], OLDER], [['Wind too loud', 'Wind was loud'], 40, ['The wind noise hurt my ears.', 'I had to turn my volume right down in the first five seconds.', 'You can barely hear them over the wind.']]],
+    comment: [[['Asked about gear', 'Asking about gear'], 40, ['What tent survives forty-mile wind?', 'Which jackets are those? They look like they held up.', 'Please do a full gear list for the ridge section.']], [['Worried for Pepper', 'Worried about Pepper'], 35, ['Please tell me Pepper had a jacket on.', 'Is Pepper okay after that night? She looked scared.', 'I hope you kept the dog on a lead up there.'], PETS], [['Own storm story', 'My storm story'], 25, ['Got caught like this on Snowdon once. Terrifying.', 'This took me straight back to a night on Ben Nevis in October.', 'We bailed off a ridge in the Lakes in wind like that last year.']]],
     away: [[['Too chaotic', 'Chaotic'], 45, ['Just shouting and wind. I scrolled on.'], OLDER], [['No context', 'No context given'], 30, ['I did not know who they were or why I should care.']], [['Wind too loud'], 25, ['Had to turn it off, the wind noise was too much.']]]
   },
   B: {
     keep: [[['Emotional hook', 'Emotionally hooked'], 45, ['You cannot hear about Juno and not stay.', 'I needed to see Pepper make it, for her.'], PETS], [["Pepper's story", 'Story of Pepper'], 35, ["A rescue dog walking in the old dog's place? I am in."]], [['Felt personal', 'Personal'], 20, ['It felt like they were talking to me, not to a camera.']]],
     like: [[['Touching tribute', 'Tribute was touching'], 55, ['Lovely way to honour Juno.'], PETS], [['Honest storytelling', 'Storytelling was honest'], 45, ['They did not dress it up. I respect that.']]],
-    dislike: [[['Dog death upsetting', 'Upsetting dog death', "Dog's death upset"], 29, ["I lost my own dog in March. I can't watch this tonight.", 'I did not expect a dead dog in the first fifteen seconds.'], PETS], [['Too sad tonight', 'Sad tonight'], 12, ['Not what I want after a long day.'], PETS], [['Slow to start', 'Slow start'], 9, ['Thirty seconds in and still no hike.']], [['Feels manipulative', 'Manipulative'], 5, ['Using a dead dog to get views. No thanks.']]],
-    comment: [[['Shared own story', 'Sharing my story', 'My own story'], 55, ['Juno looks just like my Biscuit did. I was in before the hike even started.'], PETS], [['Sent condolences', 'Condolences'], 30, ['So sorry about Juno. Fourteen good years.']], [['Asked about Pepper'], 15, ['How old is Pepper? Where did you adopt her?']]],
+    dislike: [[['Dog death upsetting', 'Upsetting dog death', "Dog's death upset"], 29, ["I lost my own dog in March. I can't watch this tonight.", 'I did not expect a dead dog in the first fifteen seconds.', 'Opening with Juno dying was too much for me.'], PETS], [['Too sad tonight', 'Sad tonight'], 12, ['Not what I want after a long day.', 'I came here to switch off, not to cry.', 'Too heavy for a weeknight.'], PETS], [['Slow to start', 'Slow start'], 9, ['Thirty seconds in and still no hike.', 'It takes far too long to get to the trail.', 'I was waiting for the walking to begin and it never did.']], [['Feels manipulative', 'Manipulative'], 5, ['Using a dead dog to get views. No thanks.', 'It felt like the sad story was there to hook me.', 'Grief as an intro feels calculated.']]],
+    comment: [[['Shared own story', 'Sharing my story', 'My own story'], 55, ['Juno looks just like my Biscuit did. I was in before the hike even started.', "We scattered our old collie's ashes on a trail like this.", 'My lab walked every weekend with me for twelve years. I get it.'], PETS], [['Sent condolences', 'Condolences'], 30, ['So sorry about Juno. Fourteen good years.', 'Sending love to you both. She was clearly adored.', 'What a lovely way to remember her.']], [['Asked about Pepper'], 15, ['How old is Pepper? Where did you adopt her?', 'Is Pepper a rescue too? She looks so happy.', 'How did Pepper cope with thirty-one days of walking?']]],
     away: [[['Too upsetting', 'Upsetting'], 50, ['I could not do the dog part. Closed it.'], PETS], [['Slow start', 'Slow to start'], 35, ['I came for a hike, not a eulogy.']], [['Wrong expectations', 'Wrong expectation'], 15, ['The title said hike. This was something else.']]]
   },
   C: {
     keep: [[['Wanted the journey', 'Want the journey'], 40, ['Now I want to see how they got up there.'], OLDER], [['Stunning summit', 'Summit was stunning'], 35, ['That view sold me straight away.']], [['Clear payoff', 'Payoff is clear'], 25, ['I know where this is going, so I will give it time.']]],
     like: [[['Beautiful summit', 'Summit was beautiful'], 50, ['That ridge at sunrise. Instant like.'], OLDER], [['Knew the payoff'], 30, ['Nice to know the ending is worth it.']], [['Good pacing', 'Pacing was good'], 20, ['Fast, clear, no waffle.']]],
-    dislike: [[['Spoiled ending', 'Spoils the ending', 'Ending spoiled'], 60, ['Why would I watch twenty minutes when you just showed me the finish?'], MIDAGE], [['Feels clickbaity', 'Clickbait'], 40, ['Leading with the summit feels like a trailer.']]],
-    comment: [[['Asked which peak', 'Which peak?'], 45, ['Which mountain is that at the start?']], [['Said congrats', 'Congrats'], 35, ['Four hundred miles! Huge congrats to you and Pepper.']], [['Asked about route', 'Asked for route'], 20, ['Can you share the route map?']]],
+    dislike: [[['Spoiled ending', 'Spoils the ending', 'Ending spoiled'], 60, ['Why would I watch twenty minutes when you just showed me the finish?', 'You gave away the best moment in the first shot.', 'Now I know they make it, where is the tension?'], MIDAGE], [['Feels clickbaity', 'Clickbait'], 40, ['Leading with the summit feels like a trailer.', 'It is the old trick of showing the payoff to keep you watching.', 'Felt like a thumbnail come to life.']]],
+    comment: [[['Asked which peak', 'Which peak?'], 45, ['Which mountain is that at the start?', 'Where is that summit? I need to add it to my list.', 'What peak is that with the snow?']], [['Said congrats', 'Congrats'], 35, ['Four hundred miles! Huge congrats to you and Pepper.', 'What an achievement. Well done, all three of you.', 'Congratulations, that sunrise was earned.']], [['Asked about route', 'Asked for route'], 20, ['Can you share the route map?', 'Is the full route on Komoot or anywhere I can download it?', 'Which trail is this? I would love the stages.']]],
     away: [[['Spoiled ending', 'Ending spoiled'], 55, ['Already saw the end, so why stay?'], MIDAGE], [['Seen enough'], 25, ['Got the best bit in five seconds. Done.']], [['Feels clickbaity', 'Clickbaity'], 20, ['Felt like an ad for the rest of the video.']]]
   }
 };
 const WHY_ANY = {
   keep: [[['Hooked early', 'Hooked'], 50, ['It grabbed me straight away.']], [['Curious'], 30, ['I wanted to see where it went.']], [['Nothing better on'], 20, ['Nothing else caught my eye.']]],
   like: [[['Enjoyed it', 'Enjoyed'], 60, ['Just a good watch.']], [['Well made'], 40, ['You can tell they put work into it.']]],
-  dislike: [[['Not for me'], 60, ['Not really my kind of thing.']], [['Felt off'], 40, ['Something about it did not sit right.']]],
-  comment: [[['Had a question'], 50, ['I wanted to ask them something.']], [['Said thanks', 'Thanks'], 50, ['Wanted to say I enjoyed it.']]],
+  dislike: [[['Not for me'], 60, ['Not really my kind of thing.', 'I can see why people like it, it is just not for me.', 'Did nothing for me, honestly.']], [['Felt off'], 40, ['Something about it did not sit right.', 'The tone felt wrong to me.', 'I could not say why, but it put me off.']]],
+  comment: [[['Had a question'], 50, ['I wanted to ask them something.', 'There was one thing I needed to know before going on.', 'I had a question nobody else had asked yet.']], [['Said thanks', 'Thanks'], 50, ['Wanted to say I enjoyed it.', 'Just dropping in to say thank you for making this.', 'A quick thanks, this made my evening.']]],
   away: [[['Lost interest'], 60, ['It did not hold me.']], [['Too slow', 'Slow'], 40, ['It took too long to get going.']]],
   save: [[['Watch later', 'Watching later'], 50, ['Saving this for the weekend.']], [['Trip planning', 'Planning a trip'], 30, ['I might walk part of this route next summer.'], OLDER], [['For a friend'], 20, ['My sister would love this.']]],
   replay: [[['Rewatch the view', 'Rewatched the view'], 50, ['Went back twice just for that ridge at sunrise.'], OLDER], [['Missed a detail'], 30, ['Wanted to catch what they said about the route.']], [['Loved the moment'], 20, ['Watched Pepper in the snow again.'], PETS]],
   share: [[['For dog lovers'], 50, ['Sent it to my dog-walking group.'], PETS], [['Hiking friends'], 30, ['Shared it with the people I hike with.']], [['Just beautiful'], 20, ['Too pretty not to pass on.']]],
   subscribe: [[['Want more trips', 'Wants more trips'], 55, ['I want to see where they go next.']], [['Like the couple'], 25, ['They seem like genuinely nice people.']], [['Dog content'], 20, ['Anything with Pepper in it, I am watching.'], PETS]],
+  strike: [[['Misleading title', 'Title was misleading'], 45, ['The title said hike. This is not what I clicked for.']], [['No content warning', 'No warning'], 35, ['This should come with a warning.'], PETS], [['Looks like bait', 'Like bait'], 20, ['Looks like engagement bait to me.']]],
   other: [[['Fits my interests'], 40, ['This is the kind of thing I look for.']], [['Felt right'], 35, ['It just felt like the natural thing to do.']], [['Curious'], 25, ['I wanted to see what would happen.']]]
 };
 const ASK = {
@@ -956,6 +1128,8 @@ function cite(p) {
 }
 const RESP = {}, TALLY = {}; /* per run */
 function demoResponses() {
+  if (IMP[S.rid]) return IMP[S.rid].responses();
+  if (isReal(S.rid)) return [];
   const acts = onActs(), sig = JSON.stringify([S.rid, S.count, S.variants.map(v => v.id), acts.map(a => a.id), S.questions.map(q => [q.id, q.each]), S.vars.map(v => v.opts.map(o => o.pct))]);
   if (RESP[S.rid] && RESP[S.rid].sig === sig) return RESP[S.rid].list;
   const who = Array.from({ length: S.count }, (_, i) => { const p = person(i + 1); return { persona: cite(p), profile: p.pick }; }), list = [];
@@ -991,13 +1165,13 @@ function reasons(vid, qid, aid) {
   return ((TALLY[S.rid].t[vid] || {})[qid] || {})[aid || '*'] || [];
 }
 /* exposed for whoever wires up the model */
-window.STANDIN = { systemPrompt, stage1Message, stage2Message, stage1Schema, stage2Schema, collect, groupLocal, groupPrompt, groupsFromReply, build, tally, person: n => person(n), get state() { return S; }, get runs() { return RUNS; } };
+window.STANDIN = { systemPrompt, stage1Message, auditSystem, stage2Message, stage1Schema, stage2Schema, collect, groupLocal, groupPrompt, groupsFromReply, build, tally, person: n => person(n), get state() { return S; }, get runs() { return RUNS; } };
 /* ---------- helpers ---------- */
 const hashParts = () => location.hash.replace(/^#\/?/, '').split('/');
 const route = () => { const r = hashParts()[0]; return ROUTES.some(x => x[0] === r) ? r : 'home'; };
 const routeArg = () => hashParts()[1] || null; /* e.g. #/results/B -> 'B' */
 const go = r => { location.hash = '#/' + r; };
-const vcol = v => VCOL['ABCDEFGHIJ'.indexOf(v.id) % VCOL.length] || 'ink';
+const vcol = v => VCOL[LETTERS.indexOf(v.id) % VCOL.length] || 'ink';
 const filled = v => v.opts.every(o => o.pct != null);
 const onActs = () => { const a = S.actions.filter(a => a.on); const m = a.find(x => x.id === S.main); return m ? [m, ...a.filter(x => x !== m)] : a; };
 const actName = id => (S.actions.find(a => a.id === id) || {}).name || id;
@@ -1005,21 +1179,31 @@ const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, 
 const cum = (v, i) => v.opts.slice(0, i + 1).reduce((s, o) => s + o.pct, 0);
 const fmt = n => n.toLocaleString('en-GB');
 const act = id => S.actions.find(a => a.id === id) || { id, name: id };
-const actIcon = a => { if (!a.custom && ICON[a.id]) return ICON[a.id]; const hit = ICON_KW.find(([re]) => re.test(a.name)); return ICON[hit ? hit[1] : 'custom']; };
+const actIcon = a => { if (a.icon && ICON[a.icon]) return ICON[a.icon]; if (!a.custom && ICON[a.id]) return ICON[a.id]; const hit = ICON_KW.find(([re]) => re.test(a.name)); return ICON[hit ? hit[1] : 'custom']; };
 const isBad = id => !!act(id).bad;
 /* versions ordered best first on one metric; for "bad" actions lower is better */
-const ranked = id => [...S.variants].sort((a, b) => (isBad(id) ? 1 : -1) * (overall(a.id, id) - overall(b.id, id)));
+/* how many participants were shown a version: all of them, unless the data says a version went to some only */
+const nFor = vid => { const m = IMP[S.rid]; if (!m) return S.count; impPct(S.rid); return (m.n && m.n[vid]) || S.count; };
+/* results can come in stages (S.stages): each has its own types of version, its own main score and its own ranking */
+const stages = () => S.split && S.stages && S.stages.length > 1 ? S.stages : null;
+const stageOf = vid => { const v = S.variants.find(x => x.id === vid); return stages() && v ? stages().find(x => x.types.includes(v.field)) : null; };
+const curStage = () => { const st = stages(); return st ? st.find(x => x.id === S.stage) || st[0] : null; };
+const stageVariants = () => { const st = curStage(); return st ? S.variants.filter(v => st.types.includes(v.field)) : S.variants; };
+const stageActs = () => { const vs = stageVariants(); return onActs().filter(a => vs.some(v => overall(v.id, a.id) != null)); };
+const stageMain = () => { const st = curStage(), acts = stageActs(); return st && acts.some(a => a.id === st.main) ? st.main : acts.some(a => a.id === S.main) ? S.main : (acts[0] || {}).id; };
+const ranked = id => S.variants.filter(v => overall(v.id, id) != null).sort((a, b) => (isBad(id) ? 1 : -1) * (overall(a.id, id) - overall(b.id, id)));
 
 /* ---------- shell ---------- */
 function shell(body) {
   const r = route(), idx = ROUTES.findIndex(x => x[0] === r);
   const st = ROUTES.map(([k, l], i) => {
     const cls = i === idx ? 'now' : i < idx ? 'done' : '';
-    const mark = i < idx ? '✓' : i < 3 ? i + 1 : i === 3 ? '▸' : '▦';
-    return (i ? `<span class="stage-gap${i === 3 ? ' wide' : ''}"></span>` : '') + `<a class="stage ${cls}" href="#/${k}"${i === idx ? ' aria-current="step"' : ''}><b>${mark}</b>${l}</a>`;
+    const mark = i < idx ? '✓' : i < 5 ? i + 1 : i === 5 ? '▸' : '▦';
+    return (i ? `<span class="stage-gap${i === 5 ? ' wide' : ''}"></span>` : '') + `<a class="stage ${cls}" href="#/${k}"${i === idx ? ' aria-current="step"' : ''}><b>${mark}</b>${l}</a>`;
   }).join('');
-  /* the bar's contents line up with the page column; the stages sit dead centre */
-  return `<header class="top"><div class="top-in"><div class="top-l"><a class="brand" href="#/home" aria-label="Stand-in, all scenarios">Stand-in</a></div>${r === 'home' ? '' : `<nav class="stages" aria-label="Stages">${st}</nav><div class="top-r"><span class="top-name" id="topName">${esc(S.name)}</span></div>`}</div></header><main class="page" id="page">${body}</main>`;
+  /* the bar's contents line up with the page column; the stages sit dead centre.
+     Results show no stages: "Edit setup" on the ranking brings them back by opening the setup */
+  return `<header class="top"><div class="top-in"><div class="top-l"><a class="brand" href="#/home" aria-label="Stand-in, all scenarios">Stand-in</a></div>${r === 'home' ? '' : `${r === 'results' ? '<span></span>' : `<nav class="stages" aria-label="Stages">${st}</nav>`}<div class="top-r"><span class="top-name" id="topName">${esc(S.name)}</span></div>`}</div></header><main class="page" id="page">${body}</main>`;
 }
 function foot(back, next, nextLabel, disabled) {
   return `<div class="foot">${back ? `<a class="btn" href="#/${back}">← Back</a>` : '<span></span>'}${next ? `<button class="btn pri" data-act="go" data-to="${next}"${disabled ? ' disabled' : ''}>${nextLabel} →</button>` : ''}</div>`;
@@ -1031,8 +1215,33 @@ const sv = (v, f) => v.vals[f.id] || (v.vals[f.id] = { text: '', file: '' });
 const has = (v, f) => { const x = sv(v, f); return f.type === 'file' ? !!x.file : !!x.text.trim(); };
 const anyIn = f => S.variants.filter(v => { const x = sv(v, f); return x.file || x.text.trim(); }).length;
 const filledCount = f => S.variants.filter(v => has(v, f)).length;
+/* the versions under one tab: all of them for a part, only its own for a type */
+const mine = f => S.split ? S.variants.filter(v => v.field === f.id) : S.variants;
+const fcount = f => S.split ? String(mine(f).length) : filledCount(f) + '/' + S.variants.length;
+/* the mock "Upload dataset" button: one per setup page, each fills only that page's part of the scenario */
+const UP_PARTS = { dataset: ['name', 'fields', 'variants', 'nextField', 'tab', 'dropField', 'diff', 'split', 'confirm'], profiles: ['count', 'vars', 'prompt', 'seed', 'nextVar'], actions: ['actions', 'main', 'nextAct', 'judge'], audit: ['questions', 'nextQ'] };
+const UP_NEED = ['dataset', 'profiles', 'actions'];
+const UP_COPY = { dataset: [], profiles: ['who', 'whoHint'], actions: ['acts', 'actsHint'], audit: [] };
+const upBtn = part => { const c = curRun(); return !c || !c.demo || (S.up && S.up[part]); } ;
+const upBtnHtml = part => upBtn(part) ? '' : `<button class="btn blue" data-act="demo" data-part="${part}">Upload dataset</button>`;
+function uploadPart(part) {
+  /* a new scenario takes the next prepared dataset not on the home page yet, and keeps it for all three pages */
+  const cur = curRun(), u = UPLOADS.find(x => cur && x.id === cur.data) || UPLOADS.find(x => !RUNS.some(r => r.data === x.id)) || UPLOADS[0];
+  if (cur) cur.data = u.id;
+  const src = u.m ? { ...clone(DEMO), ...clone(u.m.s) } : clone(DEMO), cp = src.copy || {};
+  UP_PARTS[part].forEach(k => { if (src[k] === undefined) delete S[k]; else S[k] = src[k]; });
+  S.copy = { ...(S.copy || {}) }; UP_COPY[part].forEach(k => { if (cp[k]) S.copy[k] = cp[k]; else delete S.copy[k]; });
+  S.up = { ...(S.up || {}), [part]: true };
+  /* once all three parts are in, the run shows that dataset's results */
+  if (UP_NEED.every(k => S.up[k])) {
+    if (u.m) IMP[S.rid] = u.m; else DEMO_IDS.add(S.rid);
+    ['notes', 'caveat'].forEach(k => { if (src[k] === undefined) delete S[k]; else S[k] = src[k]; });
+    S.metric = null; S.open = null;
+  }
+  render();
+}
 function pgDataset() {
-  return `<section class="sec mtop"><input class="name-in title" id="scn" data-bind="name" value="${esc(S.name)}" placeholder="Name this scenario" aria-label="Scenario name">${isDemo(S.rid) ? '' : '<button class="btn blue" data-act="demo">Upload dataset</button>'}</section>
+  return `<section class="sec mtop"><input class="name-in title" id="scn" data-bind="name" value="${esc(S.name)}" placeholder="Name this scenario" aria-label="Scenario name">${upBtnHtml('dataset')}</section>
   ${matTabs()}
   ${checkBar()}
   ${foot(null, 'profiles', 'Continue to Participants', !S.variants.length || !S.fields.length)}`;
@@ -1040,57 +1249,60 @@ function pgDataset() {
 function slotHtml(v, f) {
   const x = sv(v, f), key = `data-id="${v.id}" data-f="${f.id}"`;
   if (f.type === 'file') return `<div class="slot${x.file ? '' : ' empty'}"><div class="sfile">${x.file
-    ? `<span class="sfile-top full"><span class="tag">${esc(x.file)}</span><small>${fmt(x.words || 0)} words</small><button class="btn sm flat" data-act="sclear" ${key}>Remove</button></span><p data-hl="${v.id}" data-keep="1">${esc(x.text)}</p>`
+    ? `<span class="sfile-top full"><span class="tag">${esc(x.file)}</span><small>${fmt(x.words || 0)} words</small>${x.text.length > 700 || x.text.split('\n').length > 14 ? '<button class="btn sm flat" data-act="more">Show all</button>' : ''}<button class="btn sm flat" data-act="sclear" ${key}>Remove</button></span><p data-hl="${v.id}" data-keep="1">${esc(x.text)}</p>`
     : `<strong>No file yet</strong><button class="btn sm" data-act="spick" ${key}>Choose file</button>`}</div></div>`;
   return `<div class="slot${x.text.trim() ? '' : ' empty'}"><div class="hl" data-hl="${v.id}" aria-hidden="true"></div><textarea data-bind="slot" ${key} placeholder="Empty. Type or paste the ${esc(f.name.toLowerCase())}." aria-label="${esc(v.name)}: ${esc(f.name)}">${esc(x.text)}</textarea></div>`;
 }
 function fieldCtl(f, i) {
   if (S.confirm === f.id) { const n = anyIn(f); return `<span class="fconfirm">Delete with ${n} ${n === 1 ? 'entry' : 'entries'}?<button class="btn sm pri" data-act="fdelyes" data-id="${f.id}">Delete</button><button class="btn sm" data-act="fdelno">Keep</button></span>`; }
-  return `<input class="fname" data-bind="fname" data-id="${f.id}" value="${esc(f.name)}" aria-label="Field name"><span class="ftype" role="group" aria-label="Field type">${['text', 'file'].map(k => `<button data-act="ftype" data-id="${f.id}" data-t="${k}" aria-pressed="${f.type === k}">${k}</button>`).join('')}</span><button class="x" data-act="fleft" data-id="${f.id}" aria-label="Move ${esc(f.name)} earlier"${i === 0 ? ' disabled' : ''}>←</button><button class="x" data-act="fright" data-id="${f.id}" aria-label="Move ${esc(f.name)} later"${i === S.fields.length - 1 ? ' disabled' : ''}>→</button><button class="x" data-act="fdel" data-id="${f.id}" aria-label="Remove ${esc(f.name)}">✕</button>`;
+  const viz = `<span class="vizctl"><span class="lbl">Visualisation</span>${f.viz ? `<span class="tag" title="${esc(f.viz.name)}">${esc(f.viz.name)}</span><button class="btn sm flat" data-act="vizdel" data-id="${f.id}">Remove</button>` : `<button class="btn sm" data-act="vizpick" data-id="${f.id}">Add file</button>`}</span>`;
+  return `<input class="fname" data-bind="fname" data-id="${f.id}" value="${esc(f.name)}" aria-label="${Fw()} name">${viz}<button class="x" data-act="fleft" data-id="${f.id}" aria-label="Move ${esc(f.name)} earlier"${i === 0 ? ' disabled' : ''}>←</button><button class="x" data-act="fright" data-id="${f.id}" aria-label="Move ${esc(f.name)} later"${i === S.fields.length - 1 ? ' disabled' : ''}>→</button><button class="x" data-act="fdel" data-id="${f.id}" aria-label="Remove ${esc(f.name)}">✕</button>`;
 }
 const vname = v => `<input class="slab-name" data-bind="vname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Version name">`;
 function dropHtml() {
   if (!S.fields.length) return '';
   if (!fieldOf(S.dropField)) S.dropField = S.fields[0].id;
-  return `<div class="drop" id="drop"><div><strong>Drop files here</strong><p>Each file fills the next empty slot, or becomes a new version.</p></div><div class="drop-btns"><span class="lbl" style="margin:0">Fills</span>${S.fields.map(f => `<button class="pill" data-act="dropf" data-id="${f.id}" aria-pressed="${f.id === S.dropField}" data-flabel="${f.id}">${esc(f.name)}</button>`).join('')}<button class="btn" data-act="pick">Choose files</button></div></div>`;
+  return `<div class="drop" id="drop"><div><strong>Drop files here</strong><p>${S.split ? 'Each file becomes a new version of the chosen type.' : 'Each file fills the next empty slot, or becomes a new version.'}</p></div><div class="drop-btns"><span class="lbl" style="margin:0">Fills</span>${S.fields.map(f => `<button class="pill" data-act="dropf" data-id="${f.id}" aria-pressed="${f.id === S.dropField}" data-flabel="${f.id}">${esc(f.name)}</button>`).join('')}<button class="btn" data-act="pick">Choose files</button></div></div>`;
 }
 function checkBar() {
   let ok = false, h;
-  if (!S.fields.length) h = `<strong>No fields yet.</strong><span>Add a field to say what each participant is given.</span>`;
+  if (!S.fields.length) h = `<strong>No ${fw()}s yet.</strong><span>Add a ${fw()} to say what each participant is given.</span>`;
   else if (!S.variants.length) h = `<strong>No versions yet.</strong><span>Add at least two to compare.</span>`;
   else {
-    const rows = S.variants.map(v => [v, S.fields.filter(f => !has(v, f))]).filter(r => r[1].length);
-    if (!rows.length) { ok = true; h = `<strong>Complete.</strong><span>${S.variants.length} ${S.variants.length === 1 ? 'version' : 'versions'} × ${S.fields.length} ${S.fields.length === 1 ? 'field' : 'fields'}, nothing missing.</span>`; }
+    const rows = S.variants.map(v => [v, S.fields.filter(f => (!S.split || f.id === v.field) && !has(v, f))]).filter(r => r[1].length);
+    if (!rows.length) { ok = true; h = `<strong>Complete.</strong><span>${S.variants.length} ${S.variants.length === 1 ? 'version' : 'versions'} ${S.split ? 'across' : '×'} ${S.fields.length} ${fw()}${S.fields.length === 1 ? '' : 's'}, nothing missing.</span>`; }
     else h = `<strong>Not complete yet:</strong>` + rows.map(([v, fs]) => `<span class="lead"><span class="badge c-${vcol(v)}">${v.id}</span>missing ${esc(fs.map(f => f.name).join(', '))}</span>`).join('');
   }
   return ok ? '<div id="check" hidden></div>' : `<div class="gap check" id="check" role="status">${h}</div>`;
 }
 function refreshCheck() {
   const c = $('#check'); if (c) c.outerHTML = checkBar();
-  $$('[data-fcount]').forEach(e => { const f = fieldOf(e.dataset.fcount); if (f) e.textContent = filledCount(f) + '/' + S.variants.length; });
+  $$('[data-fcount]').forEach(e => { const f = fieldOf(e.dataset.fcount); if (f) e.textContent = fcount(f); });
 }
 function addVariant(name) {
-  const id = [...'ABCDEFGHIJ'].find(l => !S.variants.some(v => v.id === l));
+  const id = [...LETTERS].find(l => !S.variants.some(v => v.id === l));
   if (!id) return null;
-  const v = { id, name, vals: {} }; S.variants.push(v); return v;
+  const v = { id, name, vals: {} }; if (S.split) v.field = S.tab; S.variants.push(v); return v;
 }
 function removeField(id) {
   S.fields = S.fields.filter(f => f.id !== id);
+  if (S.split) { S.variants = S.variants.filter(v => v.field !== id); S.actions.forEach(a => { if (a.fields) { a.fields = a.fields.filter(x => x !== id); if (!a.fields.length) delete a.fields; } }); }
   S.variants.forEach(v => delete v.vals[id]);
   S.confirm = null; render();
 }
 let pendingSlot = null;
+const FILE_ACCEPT = '.txt,.md,.srt,.vtt,.csv,text/plain';
 function readText(file, cb) {
   const fr = new FileReader();
-  fr.onload = () => { const text = String(fr.result).replace(/\s+/g, ' ').trim(); cb({ text: text.slice(0, 600) + (text.length > 600 ? '…' : ''), file: file.name, words: text.split(' ').filter(Boolean).length }); };
+  fr.onload = () => { const text = String(fr.result).trim().slice(0, 200000); cb({ text, file: file.name, words: text.split(/\s+/).filter(Boolean).length }); };
   fr.readAsText(file);
 }
 function readFiles(files) {
   const list = [...files], f = fieldOf(S.dropField) || S.fields[0]; if (!list.length || !f) return;
   let left = list.length;
   list.forEach(file => readText(file, val => {
-    const v = S.variants.find(x => !has(x, f)) || addVariant(file.name.replace(/\.[^.]+$/, ''));
-    if (v) v.vals[f.id] = val;
+    const v = (!S.split && S.variants.find(x => !has(x, f))) || addVariant(file.name.replace(/\.[^.]+$/, ''));
+    if (v) { v.vals[f.id] = val; if (S.split) v.field = f.id; }
     if (!--left) render();
   }));
 }
@@ -1098,7 +1310,7 @@ function readInto(slot, file) {
   if (!file) return;
   readText(file, val => { const v = S.variants.find(x => x.id === slot.vid); if (v && fieldOf(slot.fid)) { v.vals[slot.fid] = val; render(); } });
 }
-/* differences between the versions of one field, word by word */
+/* differences between the versions under one tab, word by word */
 const words = s => s.split(/(\s+)/);
 const norm = w => w.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
 function lcs(a, b) {
@@ -1135,31 +1347,57 @@ function refreshDiff() {
 function matTabs() {
   if (!fieldOf(S.tab)) S.tab = (S.fields[0] || {}).id;
   const f = fieldOf(S.tab), i = S.fields.indexOf(f);
-  const tabs = `<nav class="ftabs" aria-label="Fields">${S.fields.map(x => `<button class="pill" data-act="ftab" data-id="${x.id}" aria-pressed="${x === f}"><span data-flabel="${x.id}">${esc(x.name)}</span><small data-fcount="${x.id}">${filledCount(x)}/${S.variants.length}</small></button>`).join('')}<button class="btn sm flat" data-act="fadd">+ Field</button></nav>`;
-  if (!f) return `<section class="sec">${tabs}<p class="hint">Add a field to say what each participant is given, such as a transcript or a description.</p></section>`;
+  const tabs = `<nav class="ftabs" aria-label="${Fw()}s">${S.fields.map(x => `<button class="pill" data-act="ftab" data-id="${x.id}" aria-pressed="${x === f}"><span data-flabel="${x.id}">${esc(x.name)}</span><small data-fcount="${x.id}">${fcount(x)}</small></button>`).join('')}<button class="btn sm flat" data-act="fadd">+ ${Fw()}</button></nav>`;
+  if (!f) return `<section class="sec">${tabs}<p class="hint">${S.split ? 'Add a type of treatment, such as a form or a chat.' : 'Add a part to say what each participant is given, such as a transcript or a description.'}</p></section>`;
   S.dropField = f.id;
-  return `<section class="sec">${tabs}<div class="fedit"><span class="lbl">Field</span>${fieldCtl(f, i)}</div>
+  const seen = mine(f).find(x => x.id === S.vsel) || mine(f)[0];
+  return `<section class="sec">${tabs}<div class="fedit"><span class="lbl">${Fw()}</span>${fieldCtl(f, i)}</div>
   <div class="dbar"><button class="pill" data-act="diff" aria-pressed="${!!S.diff}">Highlight differences</button><span id="diffnote"></span></div>
-  <div class="vcols">${S.variants.map((v, j) => `<div class="vcol"><div class="col-head"><span class="badge c-${vcol(v)}">${v.id}</span>${vname(v)}<span class="vt"><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></span></div><div class="slotbox" style="border-left:6px solid var(--${vcol(v)})">${slotHtml(v, f)}</div></div>`).join('')}<button class="vadd" data-act="vadd">+ Add a version</button></div>${dropHtml()}</section>`;
+  <div class="vcols">${mine(f).map((v, j) => `<div class="vcol${f.viz && v === seen ? ' vseen' : ''}"><div class="col-head"><span class="badge c-${vcol(v)}">${v.id}</span>${vname(v)}<span class="vt"><button class="x" data-act="vdel" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button>${f.viz ? `<button class="vsee" data-act="vsel" data-id="${v.id}" aria-pressed="${v === seen}">${v === seen ? 'Shown below' : 'Visualise'}</button>` : ''}</span></div><div class="slotbox" style="border-left:6px solid var(--${vcol(v)})">${slotHtml(v, f)}</div></div>`).join('')}<button class="vadd" data-act="vadd">+ Add a version</button></div>${dropHtml()}${vizHtml(f, seen)}</section>`;
+}
+/* the visualisation: an HTML file the researcher made, run in a sandboxed frame and sent the selected version.
+   The file listens for { standin: { name, type, text, file } } and may answer { standinHeight } to size its frame. */
+function vizHtml(f, v) {
+  if (!f.viz) return `<div class="viz none"><p><strong>No visualisation for ${esc(f.name)}.</strong> Add an HTML file of your own that draws a version, so it is clear what a participant gets. It is sent the selected version's text.</p><button class="btn sm" data-act="vizpick" data-id="${f.id}">Add file</button></div>`;
+  if (!v) return '';
+  const src = f.viz.html != null ? `srcdoc="${esc(f.viz.html)}"` : `src="${esc(f.viz.src)}"`;
+  return `<section class="viz"><header><span class="lbl">Visualisation</span><span class="badge c-${vcol(v)}">${v.id}</span><strong>${esc(v.name)}</strong><small>${esc(f.viz.name)} · made by the researcher, not shown to participants</small></header><iframe id="vizf" title="Visualisation of ${esc(v.name)}" sandbox="allow-scripts" ${src}></iframe></section>`;
+}
+function vizSend() {
+  const fr = $('#vizf'), f = fieldOf(S.tab), v = f && (mine(f).find(x => x.id === S.vsel) || mine(f)[0]);
+  if (fr && v) fr.contentWindow.postMessage({ standin: { name: v.name, type: f.name, text: sv(v, f).text, file: sv(v, f).file || '' } }, '*');
+}
+addEventListener('message', e => {
+  const fr = $('#vizf'); if (!fr || e.source !== fr.contentWindow || !e.data) return;
+  if (e.data.standinReady) vizSend();
+  if (e.data.standinHeight) fr.style.height = Math.max(240, Math.min(1500, Math.ceil(e.data.standinHeight))) + 'px';
+});
+function readViz(fid, file) {
+  if (!file) return;
+  const fr = new FileReader();
+  fr.onload = () => { const f = fieldOf(fid); if (f) { f.viz = { name: file.name, html: String(fr.result) }; render(); } };
+  fr.readAsText(file);
 }
 
 /* ---------- 2 participants ---------- */
 function pgProfiles() {
-  return `<div class="head"><h1 class="ask">Who is watching?</h1><p class="hint">Drag the dividers to set each split. If you don't know a split, leave it empty and let AI estimate it.</p></div>
+  const cp = S.copy || {};
+  return `<div class="head mtop"><div class="mhead"><h1 class="ask">${esc(cp.who || 'Who is watching?')}</h1><p class="hint">${esc(cp.whoHint || "Drag the dividers to set each split. If you don't know a split, leave it empty and let AI estimate it.")}</p></div>${upBtnHtml('profiles')}</div>
   <section class="sec"><span class="lbl">How many participants</span><div class="count"><button class="step" data-act="count" data-d="-50" aria-label="50 fewer">−</button><input type="number" id="count" data-bind="count" value="${S.count}" min="10" max="5000" aria-label="Participants"><button class="step" data-act="count" data-d="50" aria-label="50 more">+</button><em>synthetic participants, each reacts to every version</em></div></section>
-  <section class="sec"><span class="lbl">Split the crowd</span><div id="vars">${S.vars.map(varHtml).join('')}</div><button class="addvar" data-act="addvar">+ Add a variable</button></section>
-  <section class="sec"><span class="lbl">What each participant is told</span><div class="brief"><div><div class="strip" id="strip" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Participant prompt">${tplHtml()}</div><div class="palette" id="palette">${paletteHtml()}</div></div>
-    <aside class="who" id="who">${whoHtml()}</aside></div></section>
+  <section class="sec"><span class="lbl">Split the crowd</span><div id="vars">${S.vars.map(varHtml).join('')}</div><div class="addrow"><button class="addvar" data-act="addvar">+ Add a variable</button><button class="addvar" data-act="impvar" title="A CSV with rows of: variable, option, percent">Import splits (CSV)</button></div></section>
   ${foot('dataset', 'actions', 'Continue to Actions')}`;
 }
+/* a variable can carry a real-world split (v.ref = { pcts, src, url }); it takes the place of the AI estimate */
+const aiLabel = v => (v.ref ? 'Real-world split' : 'AI estimate') + (v.ai === 'edited' ? ', edited' : '');
+const needsText = o => 'Only for: ' + Object.entries(o.needs).map(([k, l]) => { const w = S.vars.find(x => x.id === k); return w ? l.map(i => (w.opts[i] || {}).name).filter(Boolean).join(' or ') : ''; }).filter(Boolean).join(', ');
 function varHtml(v) {
-  const head = `<div class="var-head"><input class="var-name" data-bind="varname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Variable name">${v.ai ? `<span class="tag ai">${v.ai === 'edited' ? 'AI estimate, edited' : 'AI estimate'}</span>` : ''}<span class="sp"></span>${filled(v) && !v.loading ? `<button class="btn sm flat" data-act="aifill" data-id="${v.id}">Estimate with AI</button>` : ''}<button class="x" data-act="delvar" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div>`;
+  const head = `<div class="var-head"><input class="var-name" data-bind="varname" data-id="${v.id}" value="${esc(v.name)}" aria-label="Variable name">${v.ai ? `<span class="tag ai">${aiLabel(v)}</span>` : v.from ? `<span class="tag">From ${esc(v.from)}</span>` : ''}<span class="sp"></span>${filled(v) && !v.loading && !(v.ref && v.ai === true) ? `<button class="btn sm flat" data-act="aifill" data-id="${v.id}">${v.ref ? 'Use real-world split' : 'Estimate with AI'}</button>` : ''}<button class="x" data-act="delvar" data-id="${v.id}" aria-label="Remove ${esc(v.name)}">✕</button></div>`;
   let bar;
   if (v.loading) bar = `<div class="bar wait"><p>Estimating from typical audiences…</p></div>`;
-  else if (!filled(v)) bar = `<div class="bar empty"><p>No split yet</p><div class="btns"><button class="btn blue" data-act="aifill" data-id="${v.id}">Fill with AI</button><button class="btn" data-act="even" data-id="${v.id}">Split evenly</button></div></div>`;
+  else if (!filled(v)) bar = `<div class="bar empty"><p>No split yet</p><div class="btns"><button class="btn blue" data-act="aifill" data-id="${v.id}">${v.ref ? 'Use real-world split' : 'Fill with AI'}</button><button class="btn" data-act="even" data-id="${v.id}">Split evenly</button></div></div>`;
   else bar = `<div class="bar${v.fresh ? ' fresh' : ''}" data-bar="${v.id}"><div class="bar-in">${v.opts.map((o, i) => `<div class="seg c-${SEG[i % SEG.length]}" data-seg="${i}"><b></b><span></span></div>`).join('')}</div>${v.opts.slice(0, -1).map((o, i) => `<button class="hand" data-hand="${i}" role="slider" aria-label="Divider between ${esc(o.name)} and ${esc(v.opts[i + 1].name)}" aria-valuemin="1"></button>`).join('')}</div>`;
-  const leg = `<div class="legend">${v.opts.map((o, i) => `<span class="opt"><i class="c-${SEG[i % SEG.length]}"></i><input data-bind="optname" data-id="${v.id}" data-i="${i}" value="${esc(o.name)}" aria-label="Option name"><b data-pct="${i}">${o.pct == null ? '' : o.pct + '%'}</b>${v.opts.length > 2 ? `<button data-act="delopt" data-id="${v.id}" data-i="${i}" aria-label="Remove ${esc(o.name)}">✕</button>` : ''}</span>`).join('')}<button class="btn sm flat" data-act="addopt" data-id="${v.id}">+ Option</button></div>`;
-  const note = v.ai && !v.loading ? `<p class="ai-note">Estimated from typical audiences for this material. Drag to correct it.</p>` : '';
+  const leg = `<div class="legend">${v.opts.map((o, i) => `<span class="opt"${o.needs ? ` title="${esc(needsText(o))}"` : ''}><i class="c-${SEG[i % SEG.length]}"></i><input data-bind="optname" data-id="${v.id}" data-i="${i}" value="${esc(o.name)}" aria-label="Option name"><b data-pct="${i}">${o.pct == null ? '' : o.pct + '%'}</b>${v.opts.length > 2 ? `<button data-act="delopt" data-id="${v.id}" data-i="${i}" aria-label="Remove ${esc(o.name)}">✕</button>` : ''}</span>`).join('')}<button class="btn sm flat" data-act="addopt" data-id="${v.id}">+ Option</button></div>`;
+  const note = (v.aiErr ? `<p class="ai-note">Could not estimate: ${esc(v.aiErr)}</p>` : '') + (v.ref ? `<p class="ai-note">Real-world figures: ${esc(v.ref.src)}.${v.ref.url ? ` <a href="${esc(v.ref.url)}" target="_blank" rel="noopener">Source</a>` : ''}</p>` : v.ai && !v.loading ? `<p class="ai-note">Estimated from typical audiences for this material. Drag to correct it.</p>` : '') + (v.note ? `<p class="ai-note">${esc(v.note)}</p>` : '');
   v.fresh = false;
   return `<div class="var" data-var="${v.id}">${head}${bar}${leg}${note}</div>`;
 }
@@ -1181,11 +1419,24 @@ function setPair(v, i, left) {
   left = Math.max(1, Math.min(tot - 1, Math.round(left)));
   if (left === v.opts[i].pct) return;
   v.opts[i].pct = left; v.opts[i + 1].pct = tot - left;
-  if (v.ai && v.ai !== 'edited') { v.ai = 'edited'; const t = $(`[data-var="${v.id}"] .tag.ai`); if (t) t.textContent = 'AI estimate, edited'; }
+  if (v.ai && v.ai !== 'edited') { v.ai = 'edited'; const t = $(`[data-var="${v.id}"] .tag.ai`); if (t) t.textContent = aiLabel(v); }
   paintVar(v); refreshWho();
 }
 function evenSplit(v) { const n = v.opts.length, b = Math.floor(100 / n); v.opts.forEach((o, i) => o.pct = b + (i < 100 - b * n ? 1 : 0)); }
+/* in a real scenario the estimate comes from the model */
+async function aiReal(v) {
+  v.loading = true; delete v.aiErr; refreshVar(v);
+  try {
+    const res = await fetch('api/estimate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ llm: { model: llm().model, effort: 'low' }, variable: v.name, options: v.opts.map(o => o.name), about: [S.name, S.fields.map(f => f.name).join(', ')].filter(Boolean).join('. ') }) }), d = await res.json();
+    if (!res.ok || !Array.isArray(d.pcts) || d.pcts.length !== v.opts.length) throw new Error(d.error || 'No estimate came back.');
+    const pc = shares(100, d.pcts.map(x => Math.max(0, +x || 0))).map(x => Math.max(1, x)); pc[pc.indexOf(Math.max(...pc))] -= pc.reduce((a, b) => a + b, 0) - 100;
+    v.opts.forEach((o, i) => o.pct = pc[i]); v.ai = true; v.fresh = true;
+  } catch (e) { v.aiErr = e.message.includes('fetch') ? 'This page cannot reach the local server.' : e.message; }
+  v.loading = false; if (route() === 'profiles') refreshVar(v);
+}
 function aiFill(v) {
+  if (isReal(S.rid)) return aiReal(v);
+  if (v.ref && v.ref.pcts.length === v.opts.length) { v.opts.forEach((o, i) => o.pct = v.ref.pcts[i]); v.ai = true; v.fresh = true; delete v.from; refreshVar(v); return; }
   v.loading = true; refreshVar(v);
   setTimeout(() => {
     let nums = AI[v.id];
@@ -1198,10 +1449,41 @@ function aiFill(v) {
     if (route() === 'profiles') refreshVar(v);
   }, 1100);
 }
+/* rows of "variable, option, percent"; a header row is skipped. Fills a variable of the same name, or adds one. */
+function readSplits(file) {
+  if (!file) return;
+  const fr = new FileReader();
+  fr.onload = () => {
+    const got = new Map();
+    String(fr.result).split(/\r?\n/).forEach(line => {
+      const c = line.split(/[,;\t]/).map(x => x.trim().replace(/^"|"$/g, '')), n = parseFloat(c[2]);
+      if (c.length >= 3 && c[0] && c[1] && n >= 0) { if (!got.has(c[0])) got.set(c[0], []); got.get(c[0]).push([c[1], n]); }
+    });
+    got.forEach((rows, name) => {
+      if (rows.length < 2) return;
+      const pcts = shares(100, rows.map(r => r[1])).map(x => Math.max(1, x)); pcts[pcts.indexOf(Math.max(...pcts))] -= pcts.reduce((a, b) => a + b, 0) - 100;
+      let v = S.vars.find(x => x.name.trim().toLowerCase() === name.toLowerCase());
+      if (!v) { const n = S.nextVar++; let k = slug(name); while (k === 'name' || S.vars.some(x => x.key === k)) k += '_2'; v = { id: 'v' + n, key: k, name, opts: [] }; S.vars.push(v); }
+      const old = v.opts;
+      v.opts = rows.map((r, i) => ({ ...(old.find(o => o.name.toLowerCase() === r[0].toLowerCase()) || {}), name: r[0], pct: pcts[i] }));
+      delete v.ai; v.from = file.name; v.fresh = true;
+    });
+    render();
+  };
+  fr.readAsText(file);
+}
 /* prompt strip */
 const phKeys = () => ['name', ...S.vars.map(v => v.key)];
-function tplHtml() { const keys = phKeys(); return S.prompt.split(/(\{[a-z0-9_]+\})/i).map(p => { const m = /^\{([a-z0-9_]+)\}$/i.exec(p); return m ? `<span class="ph${keys.includes(m[1]) ? '' : ' bad'}" contenteditable="false" data-ph="${m[1]}">${m[1]}</span>` : esc(p); }).join(''); }
-function paletteHtml() { return `<span>Drag or click to insert</span>` + phKeys().map(k => `<button draggable="true" data-act="ph" data-ph="${k}">${k}</button>`).join(''); }
+/* a fill-in part: the variable's name, then what it becomes for the participant on show */
+function phInner(k) {
+  if (!S.pfill) return { bad: !phKeys().includes(k), html: esc(k) };
+  const p = person(S.seed); let val, bad = false;
+  if (k === 'name') val = p.name;
+  else { const v = S.vars.find(x => x.key === k); if (!v) { bad = true; val = 'not a variable'; } else if (p.pick[v.id] == null) { bad = true; val = 'not set'; } else val = sayOpt(v, p.pick[v.id], S.seed); }
+  return { bad, html: `<i>${esc(k)}</i>${esc(val)}` };
+}
+function tplHtml() { return S.prompt.split(/(\{[a-z0-9_]+\})/i).map(p => { const m = /^\{([a-z0-9_]+)\}$/i.exec(p); if (!m) return esc(p); const x = phInner(m[1]); return `<span class="ph${x.bad ? ' bad' : ''}" contenteditable="false" data-ph="${m[1]}">${x.html}</span>`; }).join(''); }
+function paletteHtml() { return `<span>Drag a field up into the prompt, or click it</span>` + phKeys().map(k => `<button draggable="true" data-act="ph" data-ph="${k}">${k}</button>`).join(''); }
 function readStrip() { let s = ''; $('#strip').childNodes.forEach(n => { s += n.nodeType === 3 ? n.textContent : n.dataset && n.dataset.ph ? `{${n.dataset.ph}}` : n.tagName === 'BR' ? ' ' : n.textContent; }); S.prompt = s.replace(/ /g, ' '); }
 let savedRange = null;
 document.addEventListener('selectionchange', () => { const st = $('#strip'), sel = getSelection(); if (st && sel.rangeCount && st.contains(sel.anchorNode)) savedRange = sel.getRangeAt(0).cloneRange(); });
@@ -1209,7 +1491,7 @@ function insertPh(key, range) {
   const st = $('#strip'); if (!st) return;
   let r = range || savedRange;
   if (!r || !st.contains(r.startContainer)) { r = document.createRange(); r.selectNodeContents(st); r.collapse(false); }
-  const span = document.createElement('span'); span.className = 'ph'; span.contentEditable = 'false'; span.dataset.ph = key; span.textContent = key;
+  const span = document.createElement('span'); const x = phInner(key); span.className = 'ph' + (x.bad ? ' bad' : ''); span.contentEditable = 'false'; span.dataset.ph = key; span.innerHTML = x.html;
   r.deleteContents(); r.insertNode(span);
   const after = document.createRange(); after.setStartAfter(span); after.collapse(true);
   const sel = getSelection(); sel.removeAllRanges(); sel.addRange(after); savedRange = after.cloneRange();
@@ -1221,9 +1503,12 @@ function person(seed) {
   const p = { n: seed, name: NAMES[Math.floor(hash('n' + seed) * NAMES.length)], pick: {} };
   S.vars.forEach(v => {
     if (!filled(v)) return;
-    const u = hash(v.id + seed) * 100; let acc = 0, i = 0;
-    for (; i < v.opts.length - 1; i++) { acc += v.opts[i].pct; if (u < acc) break; }
-    p.pick[v.id] = i;
+    /* an option can be limited to some groups of an earlier variable (o.needs = { varId: [option indexes] }) */
+    const ok = o => !o.needs || Object.entries(o.needs).every(([k, l]) => p.pick[k] == null || l.includes(p.pick[k]));
+    const w = v.opts.map(o => ok(o) ? o.pct : 0), tot = w.reduce((a, b) => a + b, 0); if (!tot) return;
+    const u = hash(v.id + seed) * tot; let acc = 0, i = 0, last = 0;
+    for (; i < w.length; i++) { if (!w[i]) continue; last = i; acc += w[i]; if (u < acc) break; }
+    p.pick[v.id] = i < w.length ? i : last;
   });
   return p;
 }
@@ -1232,54 +1517,187 @@ function sayOpt(v, i, seed) {
   if (v.id === 'age') { const m = o.name.match(/\d+/g); if (m) { const lo = +m[0], hi = m[1] ? +m[1] : lo + 17; return String(lo + Math.floor(hash('age' + seed) * (hi - lo + 1))); } }
   return o.say || o.name;
 }
-function whoHtml() {
-  const p = person(S.seed);
-  const text = S.prompt.split(/(\{[a-z0-9_]+\})/i).map(part => {
-    const m = /^\{([a-z0-9_]+)\}$/i.exec(part); if (!m) return esc(part);
-    if (m[1] === 'name') return `<mark>${p.name}</mark>`;
-    const v = S.vars.find(x => x.key === m[1]);
-    if (!v) return `<mark class="miss">${esc(part)}</mark>`;
-    if (p.pick[v.id] == null) return `<mark class="miss">${esc(v.name.toLowerCase())} not set</mark>`;
-    return `<mark>${esc(sayOpt(v, p.pick[v.id], S.seed))}</mark>`;
-  }).join('');
-  return `<div class="who-top"><strong>Participant ${p.n} of ${fmt(S.count)}</strong><button class="btn sm" data-act="shuffle">Show another</button></div><p>${text}</p>`;
-}
-function refreshWho() { const w = $('#who'); if (w) w.innerHTML = whoHtml(); }
+/* the prompt lives on its own page now; these calls from the other pages have nothing to refresh */
+function refreshWho() {}
 
 /* ---------- 3 actions ---------- */
+/* actions belong to the parts or types from the Treatments page: one group of tiles for each, starting empty.
+   An action with none of its own (action.fields unset) applies to all of them and sits in a group of its own. */
+function actTile(a) {
+  const main = a.id === S.main;
+  return `<div class="tile${a.on ? ' on' : ''}${main ? ' main' : ''}"><button class="tile-press" data-act="toggle" data-id="${a.id}" aria-pressed="${a.on}"${main ? ' title="The main metric is always on"' : ''}>${svg(actIcon(a))}<strong>${esc(a.name)}</strong></button>${main ? '<span class="maintag">Main metric</span>' : `<span class="state">${a.on ? 'ON' : 'OFF'}</span>`}${a.custom ? `<button class="x rm" data-act="delact" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button>` : ''}${!main && a.on ? `<button class="mk" data-act="main" data-id="${a.id}">Make main</button>` : ''}<input class="tdesc" data-bind="adesc" data-id="${a.id}" value="${esc(a.desc || '')}" placeholder="Brief description" maxlength="90" aria-label="Description of ${esc(a.name)}"></div>`;
+}
+function actGroup(label, list, fid) {
+  const acts = [...list].sort((a, b) => (b.id === S.main) - (a.id === S.main));
+  return `<section class="sec"><span class="lbl">${esc(label)}${acts.length ? '' : ' · no actions yet'}</span><div class="tiles">${acts.map(actTile).join('')}<form class="tile add" data-addact="${fid}"><span class="lbl" style="margin:0">Your own action</span><input placeholder="e.g. Turn on notifications" maxlength="40" autocomplete="off" aria-label="New action for ${esc(label)}"><button class="btn sm" type="submit">+ Add action</button></form></div></section>`;
+}
 function pgActions() {
-  const acts = [...S.actions].sort((a, b) => (b.id === S.main) - (a.id === S.main));
-  return `<div class="head"><h1 class="ask">What can they do?</h1><p class="hint">Press in every action a participant is allowed to take. Pick one as the main metric: it decides the winner. Then ask them why.</p></div>
-  <section class="sec"><div class="tiles">${acts.map(a => {
-    const main = a.id === S.main;
-    return `<div class="tile${a.on ? ' on' : ''}${main ? ' main' : ''}"><button class="tile-press" data-act="toggle" data-id="${a.id}" aria-pressed="${a.on}"${main ? ' title="The main metric is always on"' : ''}>${svg(actIcon(a))}<strong>${esc(a.name)}</strong></button>${main ? '<span class="maintag">Main metric</span>' : `<span class="state">${a.on ? 'ON' : 'OFF'}</span>`}${a.custom ? `<button class="x rm" data-act="delact" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button>` : ''}${!main && a.on ? `<button class="mk" data-act="main" data-id="${a.id}">Make main</button>` : ''}</div>`;
-  }).join('')}<form class="tile add" id="addact"><label class="lbl" for="newact" style="margin:0">Your own action</label><input id="newact" placeholder="e.g. Turn on notifications" maxlength="40" autocomplete="off"><button class="btn sm" type="submit">+ Add action</button></form></div></section>
-  <section class="sec"><span class="lbl">Then ask them</span><div class="qs">${S.questions.map(q => `<div class="q"><span class="q-mark">?</span><input class="q-text" data-bind="qtext" data-id="${q.id}" value="${esc(q.text)}" maxlength="160" aria-label="Question"><button class="each" data-act="qeach" data-id="${q.id}" aria-pressed="${q.each}" title="Ask once for every action they took">Per action</button><button class="x" data-act="qdel" data-id="${q.id}" aria-label="Remove question">✕</button></div>`).join('')}
-    <form class="q add" id="addq"><span class="q-mark">+</span><input class="q-text" id="newq" placeholder="e.g. What would you not like about this?" maxlength="160" autocomplete="off"><button class="btn sm" type="submit">Add question</button></form></div></section>
-  ${foot('profiles', 'run', 'Continue to Run')}`;
+  const cp = S.copy || {}, ids = S.fields.map(f => f.id);
+  const shared = S.actions.filter(a => !a.fields || !a.fields.some(x => ids.includes(x)));
+  const groups = S.fields.length < 2 ? actGroup((S.fields[0] || { name: 'Actions' }).name, S.actions, '')
+    : (shared.length ? actGroup(`Every ${fw()}`, shared, '') : '') + S.fields.map(f => actGroup(f.name, S.actions.filter(a => a.fields && a.fields.includes(f.id)), f.id)).join('');
+  return `<div class="head mtop"><div class="mhead"><h1 class="ask">${esc(cp.acts || 'What can they do?')}</h1><p class="hint">${esc(cp.actsHint || `Each ${fw()} from Treatments gets its own actions. Add them, press in the ones a participant may take, and pick one as the main metric: it decides the winner.`)}</p></div>${upBtnHtml('actions')}</div>
+  ${groups}
+  ${judgeHtml()}
+  ${foot('profiles', 'audit', 'Continue to Audit')}`;
 }
 
-/* ---------- 4 run ---------- */
+/* when outcomes are scored rather than chosen: the judge that scores them, and the labels it can give (S.judge) */
+function judgeHtml() {
+  const j = S.judge; if (!j) return '';
+  const max = Math.max(...j.labels.map(l => l.share || 0), 1);
+  return `<section class="sec"><span class="lbl">Who decides the outcome</span><div class="judge"><div><strong class="hname">${esc(j.name)}</strong><p class="ai-note">${esc(j.why || '')}</p><textarea class="jtext" data-bind="jtext" spellcheck="false" aria-label="Instructions for the judge">${esc(j.text)}</textarea></div>
+    <div><div class="spread jl">${j.labels.map(l => `<div class="row"${l.note ? ` title="${esc(l.note)}"` : ''}><span><strong>${esc(l.name)}</strong><em>${esc(l.group)}${l.cases && l.cases.length ? ' · right for: ' + esc(l.cases.join(', ')) : ''}</em></span><i class="rb c-ink" style="transform:scaleX(${l.share ? Math.max(.015, l.share / max).toFixed(3) : 0})"></i><b>${l.share != null ? l.share + '%' : '–'}</b></div>`).join('')}</div>${j.src ? `<p class="ai-note">${esc(j.src)}</p>` : ''}</div></div></section>`;
+}
+
+/* ---------- 4 audit ---------- */
+function pgAudit() {
+  return `<div class="head mtop"><div class="mhead"><h1 class="ask">What do you ask them after?</h1><p class="hint">Once a participant has acted, a second prompt asks them about it. Asking separately stops the questions from steering what they do. “Per action” asks the question once for every action they took.</p></div>${upBtnHtml('audit')}</div>
+  <section class="sec"><span class="lbl">Questions</span><div class="qs">${S.questions.map(q => `<div class="q"><span class="q-mark">?</span><input class="q-text" data-bind="qtext" data-id="${q.id}" value="${esc(q.text)}" maxlength="160" aria-label="Question"><button class="each" data-act="qeach" data-id="${q.id}" aria-pressed="${q.each}" title="Ask once for every action they took">Per action</button><button class="x" data-act="qdel" data-id="${q.id}" aria-label="Remove question">✕</button></div>`).join('')}
+    <form class="q add" id="addq"><span class="q-mark">+</span><input class="q-text" id="newq" placeholder="e.g. What would you not like about this?" maxlength="160" autocomplete="off"><button class="btn sm" type="submit">Add question</button></form></div></section>
+  ${foot('actions', 'prompt', 'Continue to Prompt')}`;
+}
+
+/* ---------- 5 prompt ---------- */
+/* the models a run can use. All take an effort level; the current Claude API accepts no temperature on any model */
+const LLMS = [
+  { id: 'claude-opus-5-5', name: 'Claude Opus 5.5', effort: true }, { id: 'claude-sonnet-5-5', name: 'Claude Sonnet 5.5', effort: true },
+  { id: 'claude-haiku-5-5', name: 'Claude Haiku 5.5', effort: true }, { id: 'claude-fable-5-2', name: 'Claude Fable 5.2', effort: true }
+];
+const EFFORTS = ['low', 'medium', 'high', 'xhigh', 'max'];
+const llm = () => S.llm || (S.llm = { model: LLMS[0].id, effort: 'medium', temp: 1, runs: 3 });
+const llmModel = () => LLMS.find(x => x.id === llm().model) || LLMS[0];
+function pgPrompt() {
+  /* the prompt is a template until "Preview" fills it in for one random participant and one version */
+  const L = llm(), m = llmModel(), p = person(S.seed), on = !!S.pfill, v = on ? S.variants.find(x => x.id === S.pv) || S.variants[0] : null;
+  const opt = (val, label, cur) => `<option value="${val}"${String(val) === String(cur) ? ' selected' : ''}>${label}</option>`;
+  const limits = [m.effort ? '' : `${m.name} has no effort setting.`, 'The Claude API no longer accepts a temperature on any model; variation comes from repeated runs.'].filter(Boolean).join(' ');
+  const settings = `<div class="llm">
+    <label class="lf"><span class="lbl">Model</span><select class="sel" data-bind="llm-model">${LLMS.map(x => opt(x.id, x.name, m.id)).join('')}</select></label>
+    <label class="lf"><span class="lbl">Effort</span><select class="sel" data-bind="llm-effort"${m.effort ? '' : ' disabled'}>${m.effort ? EFFORTS.map(e => opt(e, e, L.effort)).join('') : '<option>Not available</option>'}</select></label>
+    <label class="lf"><span class="lbl">Temperature</span><select class="sel" data-bind="llm-temp"${m.temp ? '' : ' disabled'}>${m.temp ? Array.from({ length: 11 }, (_, i) => opt(i / 10, (i / 10).toFixed(1), L.temp)).join('') : '<option>Not accepted</option>'}</select></label>
+    <label class="lf"><span class="lbl">Runs per participant</span><select class="sel" data-bind="llm-runs">${Array.from({ length: 10 }, (_, i) => opt(i + 1, i ? `${i + 1} runs, averaged` : '1 run', L.runs)).join('')}</select></label>
+  </div>${limits ? `<p class="lnote">${esc(limits)}</p>` : ''}`;
+  /* the first prompt, split around its fill-in parts */
+  const rest = systemPrompt(p, v).slice(personaText(p).length).trim().split('\n'), i0 = rest.findIndex(l => l.startsWith('- ')), acts = rest.filter(l => l.startsWith('- '));
+  const fill = (label, text) => `<div class="fillin"><i>${esc(label)}</i>${esc(text)}</div>`;
+  const mat = v ? shown(v).map(f => { const x = sv(v, f).text.trim(); return x ? fill(f.name, x) : ''; }).join('') : '';
+  const first = `<article class="msg"><header class="msg-h"><b>1</b>Prompt to the participant<span>click the first paragraph to edit it</span></header>
+    <div class="strip" id="strip" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Participant prompt">${tplHtml()}</div>
+    <pre>${esc((i0 < 0 ? rest : rest.slice(0, i0)).join('\n'))}</pre>${acts.length ? fill('actions', acts.join('\n')) + `<pre>${esc(rest.slice(i0 + acts.length).join('\n'))}</pre>` : ''}
+    ${v ? (mat || fill('treatment', '(empty)'))
+      : `<div class="rawmat">${S.split ? `<span class="ph">${esc(S.fields.map(f => f.name.toLowerCase()).join(' / '))}</span>` : S.fields.map(f => `${esc(f.name)}: <span class="ph">${esc(f.name.toLowerCase())}</span>`).join('<br>')}</div>`}</article>`;
+  /* the follow-up: the chat forks, one branch per question, all asked in parallel */
+  const cols = Math.min(S.questions.length, 3);
+  const second = S.questions.length ? `<details class="sys"><summary><b>2</b>Instructions sent with each follow-up: how to answer<span></span></summary><pre>${esc(auditSystem())}</pre></details>
+    <div class="forknote">${S.questions.length > 1 ? `The chat branches here: ${S.questions.length} follow-ups asked in parallel, each in its own copy of the chat` : 'One follow-up, asked in its own copy of the chat'}</div>
+    ${cols > 1 ? `<div class="fork" style="--n:${cols}"></div>` : ''}
+    <div class="branches" style="--n:${cols}">${S.questions.map((q, i) => `<div class="branch"><article class="msg"><header class="msg-h"><b>2${'abcdefghij'[i] || ''}</b>Follow-up</header>${fill(q.each ? 'question · for each action' : 'question', q.text)}</article></div>`).join('')}</div>` : '';
+  const judge = S.judge ? `<article class="msg"><header class="msg-h"><b>${S.questions.length ? 3 : 2}</b>To the judge, with the record of the first chat</header><pre>${esc(S.judge.text)}</pre></article>` : '';
+  const pick = on && S.variants.length > 1 ? `<span class="pvs"><span class="lbl">Version</span>${S.variants.map(x => `<button class="pv" data-act="pv" data-id="${x.id}" aria-pressed="${x === v}" title="${esc(x.name)}" aria-label="Show ${esc(x.name)}">${x.id}</button>`).join('')}</span>` : '';
+  return `<div class="head"><h1 class="ask">What are they told?</h1><p class="hint">Choose the model that plays the participants, then check the prompt they are sent. The chips are filled in for each participant and version; preview a random one to read it as sent.</p></div>
+  <section class="sec"><span class="lbl">Who plays them</span>${settings}</section>
+  <section class="sec chat${on ? ' filled' : ''}">
+    <div class="chat-top">${on ? `<strong>Participant ${p.n} of ${fmt(S.count)}</strong><button class="btn sm" data-act="shuffle">Another random one</button><button class="btn sm flat" data-act="praw">Back to placeholders</button>${pick}` : `<strong>Template</strong><button class="btn sm blue" data-act="shuffle">Preview a random participant</button>`}</div>
+    ${first}${second}${judge}
+    <div class="palette" id="palette">${paletteHtml()}</div>
+  </section>
+  ${foot('audit', 'run', 'Continue to Run')}`;
+}
+
+/* ---------- 6 run ---------- */
 let runTimer = null;
 function pgRun() {
-  const acts = onActs();
+  const acts = onActs(), L = llm(), lm = llmModel(), cur = curRun(), real = isReal(S.rid);
   return `<div class="head"><h1 class="ask">Ready to run?</h1><p class="hint">Check the setup. Each participant sees every version and reacts on their own.</p></div>
-  <section class="sec"><div class="sum">
-    <div class="sumbox"><header><h3>Material</h3><a class="btn sm flat" href="#/dataset">Edit</a></header><div class="big">${S.variants.length}<small>${S.variants.length === 1 ? 'version' : 'versions'}</small></div><ul class="vlist">${S.variants.map(v => `<li><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</li>`).join('')}</ul><div class="chips">${S.fields.map(f => `<span>${esc(f.name)}</span>`).join('')}</div></div>
+  <section class="sec"><div class="sum" style="grid-template-columns:repeat(5,minmax(0,1fr))">
+    <div class="sumbox"><header><h3>Treatments</h3><a class="btn sm flat" href="#/dataset">Edit</a></header><div class="big">${S.variants.length}<small>${S.variants.length === 1 ? 'version' : 'versions'}</small></div><ul class="vlist">${S.variants.map(v => `<li><span class="badge c-${vcol(v)}">${v.id}</span>${esc(v.name)}</li>`).join('')}</ul><div class="chips">${S.fields.map(f => `<span>${esc(f.name)}</span>`).join('')}</div></div>
     <div class="sumbox"><header><h3>Participants</h3><a class="btn sm flat" href="#/profiles">Edit</a></header><div class="big">${fmt(S.count)}<small>participants</small></div><ul class="vlist">${S.vars.map(v => `<li><span class="nm">${esc(v.name)}</span>${filled(v) ? `<span class="mini">${v.opts.map((o, i) => `<i class="c-${SEG[i % SEG.length]}" style="width:${o.pct}%"></i>`).join('')}</span>` : '<span class="mini none" title="Not set, will be skipped"></span>'}</li>`).join('')}</ul></div>
-    <div class="sumbox"><header><h3>Actions</h3><a class="btn sm flat" href="#/actions">Edit</a></header><div class="big">${acts.length}<small>allowed</small></div><div class="chips">${acts.map(a => `<span class="${a.id === S.main ? 'm' : ''}">${esc(a.name)}${a.id === S.main ? ' · main' : ''}</span>`).join('')}</div>${S.questions.length ? `<div class="chips">${S.questions.map(q => `<span class="qchip" title="${esc(q.text)}">? ${esc(q.text.length > 36 ? q.text.slice(0, 35) + '…' : q.text)}</span>`).join('')}</div>` : ''}</div>
+    <div class="sumbox"><header><h3>Actions</h3><a class="btn sm flat" href="#/actions">Edit</a></header><div class="big">${acts.length}<small>allowed</small></div><div class="chips">${acts.map(a => `<span class="${a.id === S.main ? 'm' : ''}">${esc(a.name)}${a.id === S.main ? ' · main' : ''}</span>`).join('')}</div></div>
+    <div class="sumbox"><header><h3>Audit</h3><a class="btn sm flat" href="#/audit">Edit</a></header><div class="big">${S.questions.length}<small>${S.questions.length === 1 ? 'question' : 'questions'}</small></div><div class="chips">${S.questions.map(q => `<span class="qchip" title="${esc(q.text)}">? ${esc(q.text.length > 30 ? q.text.slice(0, 29) + '…' : q.text)}</span>`).join('')}</div></div>
+    <div class="sumbox"><header><h3>Prompt</h3><a class="btn sm flat" href="#/prompt">Edit</a></header><div class="big">${L.runs}<small>${L.runs === 1 ? 'run' : 'runs'} each</small></div><div class="chips"><span class="m">${esc(lm.name)}</span>${lm.effort ? `<span>effort ${L.effort}</span>` : ''}</div></div>
   </div>
-  <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run">Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions = ${fmt(S.count * S.variants.length)} reactions. Takes a few seconds.</p></div>` : `<div class="go"><p>Add at least one version in Material before running.</p></div>`}</div></section>
-  ${foot('actions', null)}`;
+  ${real ? apiHtml() : ''}${cur && cur.err ? `<div class="gap check" role="alert"><strong>Last run:</strong><span>${esc(cur.err)}</span></div>` : ''}
+  <div id="runzone">${S.variants.length ? `<div class="go"><button class="runbtn" data-act="run"${real && !(API && API.ready) ? ' disabled' : ''}>Run simulation</button><p>${fmt(S.count)} participants × ${S.variants.length} versions${L.runs > 1 ? ` × ${L.runs} runs` : ''} = ${fmt(S.count * S.variants.length * L.runs)} reactions${real ? `, up to ${fmt(S.count * S.variants.length * L.runs * (1 + S.questions.length))} calls to ${esc(lm.name)}` : ''}. It runs in the background; you will find it on the home page.</p></div>` : `<div class="go"><p>Add at least one version in Treatments before running.</p></div>`}</div></section>
+  ${foot('prompt', null)}`;
 }
+/* ---------- real runs: every participant and version goes to the model through the local server ---------- */
+let API = null;
+function apiHtml() {
+  return `<div class="gap check${API && API.ready ? ' ok' : ''}" id="apistate" role="status">${!API ? '<strong>Checking the model connection…</strong>' : API.ready ? `<strong>Model connection ready.</strong><span>${API.fake ? 'Test mode: answers are random and no model is called.' : 'This run goes through the claude command on this machine and counts against your Claude subscription.'}</span>` : `<strong>Cannot run yet.</strong><span>${esc(API.why)}</span>`}</div>`;
+}
+async function apiStatus() {
+  try { API = await (await fetch('api/status')).json(); } catch (e) { API = { ready: false, why: 'Open this page through the local server (scripts/serve.py) to run a real model.' }; }
+  const el = $('#apistate'); if (el) el.outerHTML = apiHtml();
+  const b = $('.runbtn'); if (b && isReal(S.rid)) b.disabled = !API.ready;
+}
+function answerSchema(q, ids) {
+  return { type: 'object', additionalProperties: false, required: ['answers'], properties: { answers: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['question', 'action', 'full', 'short'], properties: {
+    question: { type: 'string', enum: [q.id] }, action: ids.length ? { anyOf: [{ type: 'string', enum: ids }, { type: 'null' }] } : { type: 'null' }, full: { type: 'string' }, short: { type: 'string' } } } } } };
+}
+/* everything each call needs is worked out up front, so the run does not depend on which scenario is open later */
+function realJobs() {
+  const L = llm(), jobs = [];
+  for (let i = 1; i <= S.count; i++) {
+    const p = person(i), persona = cite(p);
+    S.variants.forEach(v => {
+      const ids = actsFor(v).map(a => a.id);
+      const body = { llm: { model: L.model, effort: L.effort }, system: systemPrompt(p, v), first: stage1Message(v), schema1: ids.length ? stage1Schema(v) : null, audit: auditSystem(),
+        questions: S.questions.map(q => ({ id: q.id, each: !!q.each, message: stage2Message(q), schema: answerSchema(q, ids) })) };
+      for (let r = 0; r < L.runs; r++) jobs.push({ variant: v.id, participant: i, persona, profile: p.pick, body });
+    });
+  }
+  return jobs;
+}
+const REALRUN = {};
+function startReal(run) {
+  const jobs = realJobs(), st = REALRUN[run.id] = { list: [], done: 0, fail: 0, total: jobs.length, last: null, err: '' };
+  delete IMP[run.id]; Object.assign(run, { status: 'running', prog: 0, err: '', t0: null });
+  let next = 0;
+  const worker = async () => {
+    while (next < jobs.length && !st.stop) {
+      const j = jobs[next++];
+      try {
+        const res = await fetch('api/participant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(j.body) }), d = await res.json();
+        if (!res.ok || d.error) { st.fail++; st.err = d.error || 'HTTP ' + res.status; if ([401, 503].includes(res.status)) st.stop = true; }
+        else if (d.refused) { st.fail++; st.err = 'The model declined some requests.'; }
+        else { st.last = { variant: j.variant, participant: j.participant, persona: j.persona, profile: j.profile, actions: d.actions || [], answers: (d.answers || []).filter(a => a && a.short) }; st.list.push(st.last); }
+      } catch (e) { st.fail++; st.err = 'The local server did not answer.'; }
+      st.done++; run.prog = Math.round(st.done / st.total * 100); paintHome();
+    }
+  };
+  Promise.all(Array.from({ length: Math.min(4, jobs.length) }, worker)).then(() => {
+    const lost = st.total - st.list.length;
+    if (st.list.length) { IMP[run.id] = { responses: () => st.list }; run.status = 'done'; run.err = lost ? `${fmt(lost)} of ${fmt(st.total)} reactions are missing. ${st.err}` : ''; }
+    else { run.status = 'draft'; run.stage = 'run'; run.err = st.err || 'No call succeeded.'; }
+    paintHome(); if (S.rid === run.id && route() === 'run') render();
+  });
+}
+/* the progress view of a real run: what has actually come back */
+function watchReal(run) {
+  const zone = $('#runzone'), N = 100, st = REALRUN[run.id] || { done: 0, total: 0 };
+  zone.innerHTML = `<div class="prog" role="status"><div class="prog-top"><div class="big" id="pc">${fmt(st.done)}<small>of ${fmt(st.total)} reactions in</small></div><span class="tag">Running</span></div><div class="cells">${'<i></i>'.repeat(N)}</div><p class="tick" id="tick"></p></div>`;
+  const cells = $$('.cells i', zone);
+  clearInterval(runTimer);
+  runTimer = setInterval(() => {
+    const k = st.total ? st.done / st.total : 0; cells.forEach((c, i) => { if (i < Math.round(k * N) && !c.className) c.className = 'f c-cobalt'; });
+    $('#pc').firstChild.textContent = fmt(st.done);
+    if (st.last) { const v = S.variants.find(x => x.id === st.last.variant) || S.variants[0]; $('#tick').innerHTML = `${esc(st.last.persona.split(', ').slice(0, 2).join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> ${esc(st.last.actions.map(actName).join(', ') || 'no action')}`; }
+    if (run.status !== 'running') { clearInterval(runTimer); runTimer = null; if (route() === 'run') { if (run.status === 'done') go('results'); else render(); } }
+  }, 300);
+}
+
+const RUN_MS = 7000; /* how long a made-up run takes */
+/* shows the progress of the open run; the run itself keeps going in the background (see the ticker below) */
 function startRun() {
-  const zone = $('#runzone'), N = 100, total = S.count, dur = 3000, t0 = performance.now();
+  if (curRun() && curRun().real) return watchReal(curRun());
+  const cur = curRun(), zone = $('#runzone'), N = 100, total = S.count, dur = (cur && cur.dur) || RUN_MS, t0 = (cur && cur.t0) || Date.now();
   zone.innerHTML = `<div class="prog" role="status"><div class="prog-top"><div class="big" id="pc">0<small>of ${fmt(total)} responded</small></div><span class="tag">Running</span></div><div class="cells">${'<i></i>'.repeat(N)}</div><p class="tick" id="tick"></p></div>`;
   const cells = $$('.cells i', zone), order = cells.map((_, i) => i).sort((a, b) => hash('c' + a) - hash('c' + b));
   let done = 0, lastTick = 0;
   clearInterval(runTimer);
   runTimer = setInterval(() => {
-    const k = Math.min(1, (performance.now() - t0) / dur), target = Math.round(k * N);
+    const k = Math.min(1, (Date.now() - t0) / dur), target = Math.round(k * N);
     while (done < target) { const c = cells[order[done]], v = S.variants[done % S.variants.length]; c.className = 'f c-' + vcol(v); done++; }
     $('#pc').firstChild.textContent = fmt(Math.round(k * total));
     if (performance.now() - lastTick > 380 && k < 1) {
@@ -1290,45 +1708,62 @@ function startRun() {
       const p = person(r.participant), v = S.variants.find(x => x.id === r.variant) || S.variants[0];
       const ans = r.answers.find(x => x.action) || r.answers[0], a = act((ans && ans.action) || r.actions[0] || S.main);
       const age = S.vars.find(x => x.id === 'age'), bits = [p.name]; if (age && p.pick.age != null) bits.push(sayOpt(age, p.pick.age, r.participant));
-      $('#tick').innerHTML = `${esc(bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> <span class="tk" title="${esc(a.name)}">${svg(actIcon(a))}</span>${ans ? ` “${esc(ans.short)}”` : ''}`;
+      $('#tick').innerHTML = `${esc(IMP[S.rid] ? r.persona.split(', ').slice(0, 2).join(', ') : bits.join(', '))} <span class="badge c-${vcol(v)}">${v.id}</span> <span class="tk" title="${esc(a.name)}">${svg(actIcon(a))}</span>${ans ? ` “${esc(ans.short)}”` : ''}`;
     }
     if (k >= 1) { clearInterval(runTimer); runTimer = null; setStatus('done'); setTimeout(() => { if (route() === 'run') go('results'); }, 250); }
   }, 40);
 }
 
-/* ---------- 5 results ---------- */
+/* ---------- 7 results ---------- */
 function pgResults() {
+  if (isReal(S.rid) && !IMP[S.rid]) return `<div class="head"><h1 class="ask">Not run yet</h1><p class="hint">This scenario has no answers yet. Run it to see results.</p></div>${foot('run', null)}`;
   const acts = onActs();
   if (!acts.some(a => a.id === S.metric)) S.metric = (acts.find(a => a.id === S.main) || acts[0] || {}).id;
   if (!S.variants.length || !acts.length) return `<div class="head"><h1 class="ask">Nothing to show yet</h1><p class="hint">Add at least one version and one action, then run the simulation.</p></div>${foot('run', null)}`;
-  const mainId = acts.some(a => a.id === S.main) ? S.main : acts[0].id;
-  const ctrl = `<div class="ctrl"><span class="lbl">Showing</span><div class="pills" id="metrics">${acts.map(a => `<button class="pill ico" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === S.metric}" title="${esc(a.name)}" aria-label="${esc(a.name)}${a.id === mainId ? ', main metric' : ''}">${a.id === mainId ? '<span class="star">★</span>' : ''}${svg(actIcon(a))}</button>`).join('')}<span class="mname" id="mname">${esc(actName(S.metric))}</span></div></div>`;
+  /* a version's own page only offers the actions its type allows; with stages, only the current stage's */
+  const vid = routeArg(), one = !!vid && S.variants.some(v => v.id === vid);
+  if (one && stageOf(vid)) S.stage = stageOf(vid).id;
+  const st = curStage(), sActs = stageActs(), mainId = stageMain(), shown = one ? sActs.filter(a => overall(vid, a.id) != null) : sActs;
+  if (!shown.some(a => a.id === S.metric)) S.metric = (shown.find(a => a.id === mainId) || shown[0] || {}).id;
+  const stnav = st ? `<nav class="rstages" aria-label="Stages">${stages().map((x, i) => `<button class="rstage" data-act="stage" data-id="${x.id}" aria-pressed="${x === st}"><b>${i + 1}</b><span><strong>${esc(x.name)}</strong><small>${esc(x.ask)}</small></span></button>`).join('')}</nav>` : '';
+  const named = shown.length <= 4;   /* few enough scores to spell each one out */
+  const caveat = S.caveat ? `<p class="cap caveat"><span class="tag">Note</span>${esc(S.caveat)}</p>` : '';
+  const ctrl = `<div class="ctrl"><span class="lbl">Showing</span><div class="pills" id="metrics">${shown.map(a => `<button class="pill ico${named ? ' named' : ''}" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === S.metric}" title="${esc(a.name)}" aria-label="${esc(a.name)}${a.id === mainId ? ', main metric' : ''}">${a.id === mainId ? '<span class="star">★</span>' : ''}${svg(actIcon(a))}${named ? `<span>${esc(a.name)}</span>` : ''}</button>`).join('')}<span class="mname" id="mname"${named ? ' hidden' : ''}>${esc(actName(S.metric))}</span><span class="lnote" id="mdesc">${esc(act(S.metric).desc || '')}</span></div></div>`;
   /* #/results/B: one version on its own page */
-  const vid = routeArg();
-  if (vid && S.variants.some(v => v.id === vid)) {
-    return `<div class="vtop"><a class="btn" href="#/results">← Ranking</a><div class="vsw">${S.variants.map(x => `<a class="vpick" href="#/results/${x.id}" aria-current="${x.id === vid ? 'page' : 'false'}"><span class="badge c-${vcol(x)}">${x.id}</span>${esc(x.name)}</a>`).join('')}</div>${S.variants.length > 1 ? `<span class="vstep"><button class="x" data-act="vstep" data-d="-1" aria-label="Previous version">←</button><button class="x" data-act="vstep" data-d="1" aria-label="Next version">→</button></span>` : ''}</div>
-    ${ctrl}<div id="board">${versionView(vid, mainId)}</div>`;
+  if (one) {
+    return `${stnav}<div class="vtop"><a class="btn" href="#/results">← Ranking</a><div class="vsw">${stageVariants().map(x => `<a class="vpick" href="#/results/${x.id}" aria-current="${x.id === vid ? 'page' : 'false'}"><span class="badge c-${vcol(x)}">${x.id}</span>${esc(x.name)}</a>`).join('')}</div>${stageVariants().length > 1 ? `<span class="vstep"><button class="x" data-act="vstep" data-d="-1" aria-label="Previous version">←</button><button class="x" data-act="vstep" data-d="1" aria-label="Next version">→</button></span>` : ''}</div>
+    ${ctrl}${caveat}<div id="board">${versionView(vid, mainId)}</div>`;
   }
   /* #/results: the ranking fills the page; each version opens on its own page */
-  const rank = ranked(mainId), w = rank[0], s = rank[1], wv = overall(w.id, mainId);
-  const sub = s ? `${wv}% of ${fmt(S.count)} participants, ${Math.abs(wv - overall(s.id, mainId))} points ${isBad(mainId) ? 'below' : 'ahead of'} ${esc(s.name)}.` : `${wv}% of ${fmt(S.count)} participants.`;
-  return `<div class="res-head"><div><h1 class="ask">${esc(w.name)} comes top</h1><p class="hint">For “${esc(actName(mainId))}”: ${sub}</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
-  ${ctrl}<div id="board">${leaderboard()}</div>`;
+  const rank = ranked(mainId), w = rank[0], s = rank[1]; if (!w) return `<div class="head"><h1 class="ask">Nothing to show yet</h1><p class="hint">The main metric does not apply to any version.</p></div>${foot('actions', null)}`;
+  /* a version can be a control or a reference (version.role): it is ranked with the rest, but the headline names the best candidate */
+  const cand = rank.filter(v => !v.role), ctl = rank.find(v => v.role === 'control');
+  if (cand.length && cand.length < rank.length) {
+    const b = cand[0], bv = overall(b.id, mainId), cv = ctl ? overall(ctl.id, mainId) : null, d = ctl ? Math.abs(bv - cv) : 0;
+    const vs = ctl ? `, ${d === 0 ? 'level with' : d + (d === 1 ? ' point ' : ' points ') + (bv < cv ? 'below' : 'above')} ${esc(ctl.name)} at ${cv}%, the control` : '';
+    return `${stnav}<div class="res-head"><div><h1 class="ask">${esc(b.name)} is the best candidate</h1><p class="hint">For “${esc(actName(mainId))}”: ${bv}% of ${fmt(nFor(b.id))} participants${vs}.</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
+  ${ctrl}${caveat}<div id="board">${leaderboard()}</div>`;
+  }
+  const wv = overall(w.id, mainId);
+  const sub = s ? `${wv}% of ${fmt(nFor(w.id))} participants, ${Math.abs(wv - overall(s.id, mainId))} ${Math.abs(wv - overall(s.id, mainId)) === 1 ? 'point' : 'points'} ${isBad(mainId) ? 'below' : 'ahead of'} ${esc(s.name)}.` : `${wv}% of ${fmt(S.count)} participants.`;
+  return `${stnav}<div class="res-head"><div><h1 class="ask">${esc(w.name)} comes top</h1><p class="hint">For “${esc(actName(mainId))}”: ${sub}</p></div><div class="res-tools"><a class="btn" href="#/dataset">Edit setup</a><a class="btn pri" href="#/run">Run again</a></div></div>
+  ${ctrl}${caveat}<div id="board">${leaderboard()}</div>`;
 }
 function niceMax(m) { return [5, 10, 20, 25, 40, 50, 60, 80, 100].find(x => x >= m * 1.18) || 100; }
 /* one version: chart and every metric on the left, everything about why on the right */
 function versionView(vid, mainId) {
-  const acts = onActs(), m = S.metric, order = ranked(m);
+  const acts = onActs().filter(a => overall(vid, a.id) != null), m = S.metric, order = ranked(m);
   const v = S.variants.find(x => x.id === vid), col = vcol(v), o = overall(v.id, m), rank = order.indexOf(v) + 1;
-  const max = niceMax(Math.max(...S.variants.map(x => overall(x.id, m)), 1));
-  const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id))), 1);
+  const max = niceMax(Math.max(...order.map(x => overall(x.id, m)), 1));
+  const rowMax = Math.max(...S.variants.flatMap(x => acts.map(a => overall(x.id, a.id) || 0)), 1);
   const eachQs = S.questions.filter(q => q.each), others = S.questions.filter(q => !q.each);
   const lift = `<div class="lift${o / max < .34 ? ' low' : ''}"${/cobalt|tomato|leaf|ink/.test(col) ? ' data-light' : ''} style="transform:translateY(${(100 - o / max * 100).toFixed(2)}%)"><div class="fill c-${col}"></div><span class="num">${o}<small>%</small></span></div>`;
-  const notes = (isDemo(S.rid) && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
+  /* a scenario that carries its own notes (even none) is shown exactly those */
+  const notes = S.notes ? (S.notes[v.id] || []) : (isDemo(S.rid) && NOTES[v.id]) || [{ t: 'No strong pattern yet', p: 'Reactions to this version were spread evenly. Open a reason to see who gave it.', q: '', by: '', m: mainId, s: 'none' }];
   const rcard = eachQs.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head">${svg(actIcon(act(m)))}<span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, m, col)}</div>`).join('');
-  const qcards = others.map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
+  const qcards = others.filter(q => !IMP[S.rid] || reasons(v.id, q.id, null).length).map(q => `<div class="rs" style="border-top-color:var(--${col})"><div class="rs-head"><span class="q-mark">?</span><span>${esc(q.text)}</span></div>${reasonList(v.id, q.id, null, col)}</div>`).join('');
   return `<section class="vd" id="vd">
-    <article class="vd-head"><div class="vd-letter c-${col}">${v.id}</div><div class="vd-title"><h2>${esc(v.name)}${rank === 1 ? '<span class="tag win">Best</span>' : ''}</h2><p>${esc(S.fields.map(f => sv(v, f).text.trim()).find(Boolean) || '')}</p></div><div class="vd-rank"><b>${rank}</b><small>of ${S.variants.length}</small></div></article>
+    <article class="vd-head"><div class="vd-letter c-${col}">${v.id}</div><div class="vd-title"><h2>${esc(v.name)}${v.role ? `<span class="tag role">${v.role === 'control' ? 'Control' : 'Reference'}</span>` : v === (order.find(x => !x.role) || order[0]) ? '<span class="tag win">Best</span>' : ''}</h2><p>${esc(v.note || shown(v).map(f => sv(v, f).text.trim()).find(Boolean) || '')}</p></div><div class="vd-rank"><b>${rank}</b><small>of ${order.length}</small></div></article>
     <div class="vd-grid">
       <div><div class="track"><div class="sub">${lift}</div></div><p class="cap">${esc(actName(m))} · scale 0 to ${max}%</p>
         <div class="spread">${acts.map(a => `<button class="row" data-act="metric" data-id="${a.id}" aria-pressed="${a.id === m}" title="${esc(a.name)}" aria-label="${esc(a.name)}, ${overall(v.id, a.id)}%"><span class="ri">${svg(actIcon(a))}</span><i class="rb c-${col}" style="transform:scaleX(${Math.max(.015, overall(v.id, a.id) / rowMax).toFixed(3)})"></i><b>${overall(v.id, a.id)}%</b></button>`).join('')}</div></div>
@@ -1339,17 +1774,17 @@ function versionView(vid, mainId) {
 /* the ranking: big rows that fill the page; each row opens that version on its own page */
 function leaderboard() {
   const m = S.metric, order = ranked(m), wq = S.questions.find(q => q.each);
-  const vals = order.map(v => overall(v.id, m)), max = niceMax(Math.max(...vals, 1));
+  const vals = order.map(v => overall(v.id, m)), max = niceMax(Math.max(...vals, 1)), best = order.find(v => !v.role) || order[0];
   const rows = order.map((v, i) => {
     const col = vcol(v), x = vals[i], d = x - vals[0], tags = wq ? reasons(v.id, wq.id, m).slice(0, 3) : [];
     const why = tags.length ? `<div class="lb-why">${tags.map(t => `<button class="rz" data-act="tag" data-k="${esc([v.id, wq.id, m, t.short].join('|'))}" title="${esc(wq.text)}">${esc(t.short)}</button>`).join('')}</div>` : '';
     return `<li class="lb-row${i === 0 ? ' first' : ''}" data-act="view" data-id="${v.id}"><span class="lb-rank">${i + 1}</span><button class="lb-letter c-${col}" data-act="view" data-id="${v.id}" aria-label="Open ${esc(v.name)}">${v.id}</button>
-      <div class="lb-body"><div class="lb-name"><strong>${esc(v.name)}</strong>${i === 0 ? '<span class="tag win">Best</span>' : ''}</div>
+      <div class="lb-body"><div class="lb-name"><strong>${esc(v.name)}</strong>${v.role ? `<span class="tag role">${v.role === 'control' ? 'Control' : 'Reference'}</span>` : v === best ? '<span class="tag win">Best</span>' : ''}</div>
         <div class="lb-score"><span class="lb-bar"><u class="c-${col}" style="width:${(x / max * 100).toFixed(1)}%"></u></span><b>${x}<small>%</small></b></div>${why}</div>
       <span class="lb-delta">${i === 0 ? '—' : d === 0 ? '0' : (d > 0 ? '+' : '−') + Math.abs(d)}<small>${i === 0 ? 'leader' : 'pts'}</small></span>
       <span class="lb-go" aria-hidden="true">→</span></li>`;
   }).join('');
-  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span><span class="lb-tip">Click a version for the details</span></div><ol class="lb" style="--n:${order.length}">${rows}</ol></section>`;
+  return `<section class="lb-wrap"><div class="lb-head"><span class="lbl">Leaderboard</span><span class="lb-by">${svg(actIcon(act(m)))}${esc(actName(m))}${isBad(m) ? ' · lower is better' : ''}</span><span class="lb-tip">${order.length < stageVariants().length ? `Applies to ${order.length} of ${stageVariants().length} versions. ` : ''}Click a version for the details</span></div><ol class="lb${order.length > 5 ? ' many' : ''}" style="--n:${order.length}">${rows}</ol></section>`;
 }
 /* ---------- who gave a reason: profile icons ---------- */
 const isGender = v => v.id === 'gender' || /gender|sex/i.test(v.name);
@@ -1386,7 +1821,8 @@ function reasonPanel(r) {
     const here = pctOf(who, v), all = pctOf(r.base, v);
     here.forEach((x, i) => { const d = x - all[i]; if (r.n >= 5 && d >= .1 && (!top || d > top.d)) top = { v, i, d, x, all: all[i] }; });
     const segs = here.map((x, i) => x ? `<span class="c-${SEG[i % SEG.length]}" style="flex:${x.toFixed(3)}" title="${esc(v.opts[i].name)}: ${Math.round(x * 100)}% here, ${Math.round(all[i] * 100)}% overall">${x >= .14 && optIcon(v, i) ? svg(optIcon(v, i)) : ''}${x >= .1 ? `<b>${Math.round(x * 100)}</b>` : ''}</span>` : '').join('');
-    const leg = v.opts.map((o, i) => `<span><i class="c-${SEG[i % SEG.length]}"></i>${optIcon(v, i) ? svg(optIcon(v, i)) : ''}${esc(o.name)}</span>`).join('');
+    /* a variable with no icon of its own is named in words */
+    const leg = (varIcon(v) === ICON.tag ? `<span><b>${esc(v.name)}:</b></span>` : '') + v.opts.map((o, i) => `<span><i class="c-${SEG[i % SEG.length]}"></i>${optIcon(v, i) ? svg(optIcon(v, i)) : ''}${esc(o.name)}</span>`).join('');
     return `<div class="wv"><span class="wv-ic" title="${esc(v.name)}">${svg(varIcon(v))}</span><div class="wv-bar" role="img" aria-label="${esc(v.name)}: ${v.opts.map((o, i) => `${o.name} ${Math.round(here[i] * 100)}%`).join(', ')}">${segs}</div><div class="wv-leg">${leg}</div></div>`;
   }).join('');
   const lift = top ? `<span class="over" title="${Math.round(top.x * 100)}% of the people giving this reason, against ${Math.round(top.all * 100)}% overall">${optIcon(top.v, top.i) ? svg(optIcon(top.v, top.i)) : ''}${esc(top.v.name)}: ${esc(top.v.opts[top.i].name)} <b>${Math.round(top.x * 100)}%</b><em>vs ${Math.round(top.all * 100)}%</em></span>` : '';
@@ -1414,9 +1850,10 @@ function toggleTag(k, reveal) {
   if (t) t.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 function refreshBoard() {
-  const acts = onActs(), mainId = acts.some(a => a.id === S.main) ? S.main : acts[0].id;
+  const mainId = stageMain();
   $$('#metrics .pill').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === S.metric));
   const mn = $('#mname'); if (mn) mn.textContent = actName(S.metric);
+  const md = $('#mdesc'); if (md) md.textContent = act(S.metric).desc || '';
   const vid = routeArg();
   $('#board').innerHTML = vid && S.variants.some(v => v.id === vid) ? versionView(vid, mainId) : leaderboard();
 }
@@ -1434,21 +1871,31 @@ function scenario(o) {
   Object.assign(s, { rid: o.id, name: o.name, count: o.count, metric: null, open: null, confirm: null, seed: 1 + Math.floor(hash(o.id) * o.count) });
   s.fields = o.fields.map((name, i) => ({ id: 'f' + (i + 1), name, type: 'text' }));
   s.nextField = s.fields.length + 1; s.tab = s.dropField = (s.fields[0] || {}).id;
-  s.variants = (o.variants || []).map(([name, vals], i) => ({ id: 'ABCDEFGHIJ'[i], name, vals: Object.fromEntries(s.fields.map((f, j) => [f.id, { text: (vals || [])[j] || '', file: '' }])) }));
+  s.variants = (o.variants || []).map(([name, vals], i) => ({ id: LETTERS[i], name, vals: Object.fromEntries(s.fields.map((f, j) => [f.id, { text: (vals || [])[j] || '', file: '' }])) }));
   s.vars = s.vars.filter(v => v.id !== 'pet');
   s.vars.forEach(v => v.opts.forEach((op, i) => { op.pct = empty.includes(v.id) ? null : AI[v.id][i]; }));
   s.prompt = 'You are {name}, a {age}-year-old {gender} participant in {region}. You will be shown one version at a time. React the way you honestly would.';
   s.actions = o.actions.map(([id, name, on = true]) => ({ id, name, on, bad: id === 'away' || id === 'dislike' || BAD_RE.test(name) }));
   s.questions = [{ id: 'why', text: 'Why did you make these choices?', each: true }]; s.nextQ = 1;
-  s.main = o.actions[0][0];
+  s.main = (o.actions[0] || [])[0];
   return s;
 }
 const RUNS = [
   { id: 'hike', status: 'done', date: 'Today', s: clone(S) }
 ];
+/* imported runs are the ones already on the home page; the YouTube demo is then made live: New scenario, Upload dataset, Run.
+   Without the data file the hiking run stays, so the page still works. */
+const IMPORTS = window.STANDIN_IMPORTS || [], HOME = IMPORTS.filter(m => m.preload !== false);
+if (HOME.length) RUNS.length = 0;
+HOME.forEach(m => { IMP[m.id] = m; RUNS.push({ id: m.id, status: m.status || 'done', date: m.date || 'Today', s: Object.assign(clone(DEMO), clone(m.s), { rid: m.id }) }); });
+if (HOME.length) loadS(RUNS[0].s);
+/* what the mock "Upload dataset" button fills a new scenario with, in this order: the YouTube demo, then imports kept off the home page */
+const UPLOADS = [{ id: 'hike' }, ...IMPORTS.filter(m => m.preload === false && !m.toggle).map(m => ({ id: m.id, m }))];
+/* imports with their own switch at the bottom of the home page (the control set): off the list until switched on */
+const TOGGLES = IMPORTS.filter(m => m.toggle);
 const curRun = () => RUNS.find(x => x.id === S.rid);
 function loadS(o) { Object.keys(S).forEach(k => delete S[k]); Object.assign(S, clone(o)); }
-function setStatus(st) { const c = curRun(); if (c) { c.status = st; if (st === 'running' && !c.prog) c.prog = 35; } }
+function setStatus(st) { const c = curRun(); if (c) c.status = st; }
 let autoRun = false, runSeq = 1;
 function openRun(id) {
   const run = RUNS.find(x => x.id === id); if (!run) return;
@@ -1456,22 +1903,36 @@ function openRun(id) {
   autoRun = run.status === 'running';
   go(run.status === 'done' ? 'results' : run.status === 'running' ? 'run' : run.stage || 'dataset');
 }
-function newRun() {
+/* "New scenario" makes a real experiment: your own data, answered by a real model through the local server.
+   "Demo" makes a mock one: its Upload dataset buttons fill in prepared data and prepared results. */
+function newRun(demo) {
   const id = 'new' + runSeq++;
-  const s = scenario({ id, name: '', count: 500, fields: ['Text'], variants: [['First version', []], ['Second version', []]], empty: ['gender', 'age', 'region'], actions: [['like', 'Like'], ['dislike', 'Dislike'], ['comment', 'Comment'], ['share', 'Share'], ['away', 'Walk away']] });
-  RUNS.unshift({ id, status: 'draft', stage: 'dataset', date: 'Just now', s });
+  const s = scenario({ id, name: '', count: demo ? 500 : 30, fields: ['Text'], variants: [['First version', []], ['Second version', []]], empty: ['gender', 'age', 'region'], actions: [] });
+  RUNS.unshift({ id, status: 'draft', stage: 'dataset', date: 'Just now', s, demo: !!demo, real: !demo });
   loadS(s); go('dataset');
 }
 function winner(run) {
   const s = run.s, a = s.actions.filter(x => x.on), m = a.find(x => x.id === s.main) || a[0];
-  if (!m || !s.variants.length) return null;
-  const rank = [...s.variants].sort((x, y) => ov(run.id, y.id, m.id) - ov(run.id, x.id, m.id));
+  const vs = m ? s.variants.filter(v => ov(run.id, v.id, m.id) != null) : [];
+  if (!vs.length) return null;
+  const rank = [...vs].sort((x, y) => ov(run.id, y.id, m.id) - ov(run.id, x.id, m.id));
   return { v: rank[0], pct: ov(run.id, rank[0].id, m.id), metric: m.name, mid: m.id, rank };
 }
 const runName = s => s.name.trim() || 'Untitled scenario';
 const runSub = s => s.fields.map(f => f.name).join(' · ');
 const counts = s => `${s.variants.length} ${s.variants.length === 1 ? 'version' : 'versions'} · ${fmt(s.count)} participants`;
-const stTag = run => `<span class="tag st-${run.status}">${{ done: 'Done', running: 'Running', draft: 'Draft' }[run.status]}</span>`;
+const stLabel = run => run.status === 'running' ? `Running ${run.prog || 0}%` : { done: 'Done', draft: 'Draft' }[run.status];
+const stTag = run => `<span class="tag st-${run.status}">${stLabel(run)}</span>`;
+/* background runs: move each one on, and keep the home page's tags current without redrawing the rows */
+setInterval(() => {
+  let any = false;
+  RUNS.forEach(run => {
+    if (run.status !== 'running' || !run.t0) return;
+    run.prog = Math.min(100, Math.round((Date.now() - run.t0) / (run.dur || RUN_MS) * 100)); if (run.prog >= 100) run.status = 'done'; any = true;
+  });
+  if (any) paintHome();
+}, 300);
+function paintHome() { if (route() === 'home') $$('.hrow').forEach(b => { const run = RUNS.find(x => x.id === b.dataset.id), t = $('.tag', b); if (run && t) { t.className = 'tag st-' + run.status; t.textContent = stLabel(run); } }); }
 function outcome(run) {
   if (run.status === 'done') { const w = winner(run); return w ? `<span class="badge c-${vcol(w.v)}">${w.v.id}</span><span class="hwin">${esc(w.v.name)}</span><b class="hscore">${w.pct}%</b>` : ''; }
   if (run.status === 'running') return `<span class="hprog"><i style="width:${run.prog}%"></i></span><b class="hpc">${run.prog}%</b>`;
@@ -1479,7 +1940,7 @@ function outcome(run) {
 }
 function rowHtml(run) {
   const s = run.s;
-  return `<button class="hrow" data-act="open" data-id="${run.id}">${stTag(run)}<span class="hrow-name"><strong>${esc(runName(s))}</strong></span><span class="hrow-out">${outcome(run)}</span></button>`;
+  return `<button class="hrow" data-act="open" data-id="${run.id}">${stTag(run)}${run.demo ? '<span class="tag dm">Demo</span>' : ''}<span class="hrow-name"><strong>${esc(runName(s))}</strong></span></button>`;
 }
 function homeFeatured() {
   const [f, ...rest] = RUNS, s = f.s, w = f.status === 'done' ? winner(f) : null;
@@ -1499,12 +1960,27 @@ function homeFeatured() {
   ${rest.length ? `<section class="hearlier"><span class="lbl">Earlier</span><div class="hrows">${rest.map(rowHtml).join('')}</div></section>` : ''}`;
 }
 function pgHome() {
-  return `<div class="res-head"><div><h1 class="ask">Pick up where you left off</h1><p class="hint">Open a run to jump back to its stage, or start a new one.</p></div><div class="res-tools"><button class="btn pri" data-act="new">+ New scenario</button></div></div>
-  ${homeFeatured()}`;
+  return `<div class="res-head"><div><h1 class="ask">Pick up where you left off</h1><p class="hint">Open a run to jump back to its stage, or start a new one.</p></div><div class="res-tools"><button class="btn" data-act="newdemo">+ Demo</button><button class="btn pri" data-act="new">+ New scenario</button></div></div>
+  <div class="hrows">${RUNS.map(rowHtml).join('')}</div>
+  <div class="hfoot"><button class="pill" data-act="demorun" aria-pressed="${RUNS.some(r => r.id === 'hike')}">Show demo run</button>${TOGGLES.map(m => `<button class="pill" data-act="imprun" data-id="${m.id}" aria-pressed="${RUNS.some(r => r.id === m.id)}">Show ${esc((m.label || m.id).split(':')[0].toLowerCase())} run</button>`).join('')}<span>Finished runs, with setup and results already filled in.</span></div>`;
+}
+/* the switch at the bottom of the home page: puts the finished YouTube demo on the list, or takes it off again,
+   so it can be shown without going through + Demo and the Upload dataset buttons */
+function toggleDemoRun() {
+  const i = RUNS.findIndex(r => r.id === 'hike');
+  if (i >= 0) RUNS.splice(i, 1);
+  else RUNS.unshift({ id: 'hike', status: 'done', date: 'Today', demo: true, data: 'hike', s: Object.assign(clone(DEMO), { rid: 'hike', up: { dataset: true, profiles: true, actions: true, audit: true } }) });
+  render();
+}
+function toggleImport(id) {
+  const i = RUNS.findIndex(r => r.id === id), m = TOGGLES.find(x => x.id === id);
+  if (i >= 0) RUNS.splice(i, 1);
+  else if (m) { IMP[m.id] = m; RUNS.push({ id: m.id, status: m.status || 'done', date: m.date || 'Today', s: Object.assign(clone(DEMO), clone(m.s), { rid: m.id }) }); }
+  render();
 }
 
 /* ---------- render + events ---------- */
-const PAGES = { home: pgHome, dataset: pgDataset, profiles: pgProfiles, actions: pgActions, run: pgRun, results: pgResults };
+const PAGES = { home: pgHome, dataset: pgDataset, profiles: pgProfiles, actions: pgActions, audit: pgAudit, prompt: pgPrompt, run: pgRun, results: pgResults };
 let lastRoute = null;
 function render() {
   const r = route(), key = location.hash, same = key === lastRoute, y = same ? scrollY : 0;
@@ -1513,11 +1989,12 @@ function render() {
   if (cur) { if (r === 'home') cur.s = clone(S); else if (cur.status === 'draft' && r !== 'results') cur.stage = r; }
   $('#app').innerHTML = shell(PAGES[r]());
   if (r === 'profiles') S.vars.forEach(paintVar);
-  if (r === 'dataset') refreshDiff();
+  if (r === 'dataset') { refreshDiff(); const fr = $('#vizf'); if (fr) fr.addEventListener('load', vizSend); }
   if (same) { $$('#page>*').forEach(e => e.style.animation = 'none'); }
   scrollTo(0, y); lastRoute = key;
   if (reveal) { const t = $$('.rsn').find(e => e.dataset.k === reveal); reveal = null; if (t) t.scrollIntoView({ block: 'center', behavior: smooth() }); }
-  if (r === 'run' && autoRun && S.variants.length) { setStatus('running'); startRun(); }
+  if (r === 'run' && S.variants.length && (autoRun || (cur && cur.status === 'running'))) { setStatus('running'); startRun(); }
+  else if (r === 'run' && isReal(S.rid)) apiStatus();
   autoRun = false;
 }
 addEventListener('hashchange', render);
@@ -1525,16 +2002,23 @@ addEventListener('hashchange', render);
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, id = b.dataset.id, V = () => S.vars.find(v => v.id === id);
-  if (a === 'new') newRun();
-  else if (a === 'demo') { DEMO_IDS.add(S.rid); loadS({ ...DEMO, rid: S.rid }); render(); }
+  if (a === 'new') newRun(false);
+  else if (a === 'newdemo') newRun(true);
+  else if (a === 'demorun') toggleDemoRun();
+  else if (a === 'imprun') toggleImport(id);
+  else if (a === 'demo') uploadPart(b.dataset.part);
   else if (a === 'open') openRun(id);
   else if (a === 'go') go(b.dataset.to);
   else if (a === 'pick') { pendingSlot = null; $('#file').multiple = true; $('#file').click(); }
+  else if (a === 'vizpick') { pendingSlot = { viz: id }; const inp = $('#file'); inp.multiple = false; inp.accept = '.html,.htm,text/html'; inp.click(); }
+  else if (a === 'vizdel') { delete fieldOf(id).viz; render(); }
+  else if (a === 'vsel') { S.vsel = id; render(); const z = $('.viz'); if (z) z.scrollIntoView({ block: 'nearest', behavior: smooth() }); }
   else if (a === 'spick') { pendingSlot = { vid: id, fid: b.dataset.f }; $('#file').multiple = false; $('#file').click(); }
+  else if (a === 'more') { const on = b.closest('.sfile').classList.toggle('open'); b.textContent = on ? 'Show less' : 'Show all'; }
+  else if (a === 'impvar') { pendingSlot = { csv: true }; $('#file').multiple = false; $('#file').click(); }
   else if (a === 'sclear') { S.variants.find(v => v.id === id).vals[b.dataset.f] = { text: '', file: '' }; render(); }
   else if (a === 'vadd') { const v = addVariant('New version'); render(); if (v) { const inp = $(`[data-bind="vname"][data-id="${v.id}"]`); inp.focus(); inp.select(); } }
-  else if (a === 'fadd') { const f = { id: 'f' + S.nextField++, name: 'New field', type: 'text' }; S.fields.push(f); S.tab = f.id; S.confirm = null; render(); const inp = $(`.fname[data-id="${f.id}"]`); if (inp) { inp.focus(); inp.select(); } }
-  else if (a === 'ftype') { fieldOf(id).type = b.dataset.t; render(); }
+  else if (a === 'fadd') { const f = { id: 'f' + S.nextField++, name: `New ${fw()}`, type: 'text' }; S.fields.push(f); S.tab = f.id; S.confirm = null; render(); const inp = $(`.fname[data-id="${f.id}"]`); if (inp) { inp.focus(); inp.select(); } }
   else if (a === 'fleft' || a === 'fright') { const i = S.fields.findIndex(f => f.id === id), j = i + (a === 'fleft' ? -1 : 1); if (S.fields[j]) { [S.fields[i], S.fields[j]] = [S.fields[j], S.fields[i]]; render(); } }
   else if (a === 'fdel') { if (anyIn(fieldOf(id))) { S.confirm = id; render(); } else removeField(id); }
   else if (a === 'fdelyes') removeField(id);
@@ -1544,7 +2028,7 @@ document.addEventListener('click', e => {
   else if (a === 'diff') { S.diff = !S.diff; b.setAttribute('aria-pressed', S.diff); refreshDiff(); }
   else if (a === 'vdel') { S.variants = S.variants.filter(v => v.id !== id); render(); }
   else if (a === 'vup' || a === 'vdown') { const i = S.variants.findIndex(v => v.id === id), j = i + (a === 'vup' ? -1 : 1); if (S.variants[j]) { [S.variants[i], S.variants[j]] = [S.variants[j], S.variants[i]]; render(); } }
-  else if (a === 'count') { S.count = Math.max(50, Math.min(5000, S.count + +b.dataset.d)); $('#count').value = S.count; refreshWho(); }
+  else if (a === 'count') { const real = isReal(S.rid), d = +b.dataset.d / (real ? 10 : 1); S.count = Math.max(real ? 5 : 50, Math.min(5000, S.count + d)); $('#count').value = S.count; refreshWho(); }
   else if (a === 'aifill') aiFill(V());
   else if (a === 'even') { const v = V(); evenSplit(v); v.fresh = true; refreshVar(v); }
   else if (a === 'delvar') { S.vars = S.vars.filter(v => v.id !== id); render(); }
@@ -1552,15 +2036,23 @@ document.addEventListener('click', e => {
   else if (a === 'addopt') { const v = V(); if (filled(v)) { const big = v.opts.reduce((m, o) => o.pct > m.pct ? o : m), take = Math.max(1, Math.min(10, Math.floor(big.pct / 2))); big.pct -= take; v.opts.push({ name: 'Option ' + (v.opts.length + 1), pct: take }); } else v.opts.push({ name: 'Option ' + (v.opts.length + 1), pct: null }); refreshVar(v); const ins = $$(`[data-var="${v.id}"] .opt input`), last = ins[ins.length - 1]; last.focus(); last.select(); }
   else if (a === 'delopt') { const v = V(), i = +b.dataset.i, gone = v.opts.splice(i, 1)[0]; if (gone.pct != null) v.opts.reduce((m, o) => o.pct > m.pct ? o : m).pct += gone.pct; refreshVar(v); }
   else if (a === 'ph') insertPh(b.dataset.ph);
-  else if (a === 'shuffle') { S.seed = 1 + Math.floor(Math.random() * S.count); refreshWho(); }
+  else if (a === 'pv') { S.pv = id; render(); }
+  else if (a === 'shuffle') { S.pfill = true; S.seed = 1 + Math.floor(Math.random() * S.count); render(); }
+  else if (a === 'praw') { S.pfill = false; render(); }
   else if (a === 'toggle') { const x = S.actions.find(q => q.id === id); if (x.id === S.main) return; x.on = !x.on; render(); }
   else if (a === 'main') { S.main = id; render(); }
   else if (a === 'delact') { S.actions = S.actions.filter(q => q.id !== id); if (S.main === id) S.main = (S.actions.find(q => q.on) || {}).id; render(); }
-  else if (a === 'run') { setStatus('running'); startRun(); }
+  else if (a === 'run') {
+    /* running leaves the setup: the run shows as Running on the home page, and opens its results once it is done */
+    const c = curRun(); if (!c) { startRun(); return; }
+    if (c.real) { if (API && API.ready) { startReal(c); go('home'); } return; }
+    Object.assign(c, { status: 'running', t0: Date.now(), dur: RUN_MS, prog: 0 }); go('home');
+  }
   else if (a === 'metric') { S.metric = id; refreshBoard(); }
   else if (a === 'tag') { if (b.closest('.lb')) openVersion(b.dataset.k.split('|')[0], b.dataset.k); else toggleTag(b.dataset.k); }
   else if (a === 'view') openVersion(id);
-  else if (a === 'vstep') { const i = S.variants.findIndex(v => v.id === routeArg()), n = S.variants.length; openVersion(S.variants[(i + +b.dataset.d + n) % n].id); }
+  else if (a === 'vstep') { const vs = stageVariants(), i = vs.findIndex(v => v.id === routeArg()), n = vs.length; openVersion(vs[(i + +b.dataset.d + n) % n].id); }
+  else if (a === 'stage') { S.stage = id; S.metric = null; S.open = null; if (routeArg()) go('results'); else render(); }
   else if (a === 'qeach') { const q = S.questions.find(x => x.id === id); q.each = !q.each; b.setAttribute('aria-pressed', q.each); }
   else if (a === 'qdel') { S.questions = S.questions.filter(x => x.id !== id); render(); }
   else if (a === 'see') {
@@ -1575,25 +2067,31 @@ document.addEventListener('input', e => {
   if (t.id === 'strip') { readStrip(); refreshWho(); return; }
   if (!b) return;
   if (b === 'name') { S.name = t.value; $('#topName').textContent = t.value; }
-  else if (b === 'slot') { const v = S.variants.find(x => x.id === t.dataset.id), f = fieldOf(t.dataset.f); sv(v, f).text = t.value; t.closest('.slot').classList.toggle('empty', !t.value.trim()); refreshCheck(); refreshDiff(); }
+  else if (b === 'slot') { const v = S.variants.find(x => x.id === t.dataset.id), f = fieldOf(t.dataset.f); sv(v, f).text = t.value; t.closest('.slot').classList.toggle('empty', !t.value.trim()); refreshCheck(); refreshDiff(); vizSend(); }
   else if (b === 'fname') { fieldOf(t.dataset.id).name = t.value; $$(`[data-flabel="${t.dataset.id}"]`).forEach(e => e.textContent = t.value); refreshCheck(); }
   else if (b === 'vname') S.variants.find(v => v.id === t.dataset.id).name = t.value;
   else if (b === 'count') { const n = parseInt(t.value, 10); if (n > 0) { S.count = Math.min(5000, n); refreshWho(); } }
   else if (b === 'optname') { const v = S.vars.find(x => x.id === t.dataset.id), o = v.opts[+t.dataset.i]; o.name = t.value; delete o.say; if (filled(v)) paintVar(v); refreshWho(); }
   else if (b === 'varname') S.vars.find(x => x.id === t.dataset.id).name = t.value;
   else if (b === 'qtext') S.questions.find(x => x.id === t.dataset.id).text = t.value;
+  else if (b === 'jtext') S.judge.text = t.value;
+  else if (b === 'adesc') act(t.dataset.id).desc = t.value;
 });
 document.addEventListener('change', e => {
-  const t = e.target;
-  if (t.id === 'file') { if (pendingSlot) readInto(pendingSlot, t.files[0]); else readFiles(t.files); pendingSlot = null; t.value = ''; }
+  const t = e.target, lb = t.dataset && t.dataset.bind;
+  if (lb === 'llm-model') { llm().model = t.value; render(); return; }
+  if (lb === 'llm-effort') { llm().effort = t.value; return; }
+  if (lb === 'llm-temp') { llm().temp = +t.value; return; }
+  if (lb === 'llm-runs') { llm().runs = +t.value; return; }
+  if (t.id === 'file') { if (pendingSlot && pendingSlot.viz) readViz(pendingSlot.viz, t.files[0]); else if (pendingSlot && pendingSlot.csv) readSplits(t.files[0]); else if (pendingSlot) readInto(pendingSlot, t.files[0]); else readFiles(t.files); pendingSlot = null; t.value = ''; t.accept = FILE_ACCEPT; }
   else if (t.dataset.bind === 'qtext' && !t.value.trim()) { S.questions = S.questions.filter(x => x.id !== t.dataset.id); render(); }
-  else if (t.dataset.bind === 'fname') { const f = fieldOf(t.dataset.id); if (f && !f.name.trim()) { f.name = 'Field'; render(); } }
-  else if (t.dataset.bind === 'count') { S.count = Math.max(10, Math.min(5000, parseInt(t.value, 10) || 500)); t.value = S.count; refreshWho(); }
+  else if (t.dataset.bind === 'fname') { const f = fieldOf(t.dataset.id); if (f && !f.name.trim()) { f.name = Fw(); render(); } }
+  else if (t.dataset.bind === 'count') { S.count = Math.max(isReal(S.rid) ? 1 : 10, Math.min(5000, parseInt(t.value, 10) || 500)); t.value = S.count; refreshWho(); }
   else if (t.dataset.bind === 'varname') {
     const v = S.vars.find(x => x.id === t.dataset.id); if (!v.name.trim()) { v.name = 'Variable'; t.value = v.name; }
     let k = slug(v.name); if (v.id === 'pet' && k === 'owns_a_pet') k = 'pet_status';
     while (k === 'name' || S.vars.some(x => x !== v && x.key === k)) k += '_2';
-    if (k !== v.key) { S.prompt = S.prompt.split('{' + v.key + '}').join('{' + k + '}'); v.key = k; $('#strip').innerHTML = tplHtml(); $('#palette').innerHTML = paletteHtml(); refreshWho(); }
+    if (k !== v.key) { S.prompt = S.prompt.split('{' + v.key + '}').join('{' + k + '}'); v.key = k; const st = $('#strip'); if (st) { st.innerHTML = tplHtml(); $('#palette').innerHTML = paletteHtml(); refreshWho(); } }
   }
 });
 document.addEventListener('focusout', e => { if (e.target.id === 'strip') { readStrip(); e.target.innerHTML = tplHtml(); } });
@@ -1605,9 +2103,11 @@ document.addEventListener('submit', e => {
     S.questions.push({ id: 'q' + S.nextQ++, text, each: /\b(why|choice|chose|choose|decid)/i.test(text) }); render(); $('#newq').focus();
     return;
   }
-  if (e.target.id !== 'addact') return; e.preventDefault();
-  const name = $('#newact').value.trim(); if (!name) { $('#newact').focus(); return; }
-  S.actions.push({ id: 'x' + S.nextAct++, name, on: true, custom: true, bad: BAD_RE.test(name) }); render(); $('#newact').focus();
+  const form = e.target.closest('[data-addact]'); if (!form) return; e.preventDefault();
+  const inp = $('input', form), name = inp.value.trim(), fid = form.dataset.addact; if (!name) { inp.focus(); return; }
+  const x = { id: 'x' + S.nextAct++, name, on: true, custom: true, bad: BAD_RE.test(name) }; if (fid) x.fields = [fid];
+  S.actions.push(x); if (!S.actions.some(q => q.id === S.main)) S.main = x.id;
+  render(); const again = $(`[data-addact="${fid}"] input`); if (again) again.focus();
 });
 
 /* divider drag + keys */

@@ -1,0 +1,125 @@
+{
+  "note": "Scenario 1 versions. Each version is one text file in data/versions/. Form files are generated from form_questions.json by scripts/build_versions.py; the others are edited directly.",
+  "classes": [
+    {
+      "id": "self",
+      "label": "No tool",
+      "what_varies": "Nothing. Baseline and knowledge-leak probe."
+    },
+    {
+      "id": "form",
+      "label": "Online form",
+      "what_varies": "Question wording and answer format. Questions, order and logic are identical."
+    },
+    {
+      "id": "chat",
+      "label": "AI chat",
+      "what_varies": "The chatbot's system prompt. Model, turn limit and engine are identical."
+    },
+    {
+      "id": "call",
+      "label": "Simulated 111 call",
+      "what_varies": "Nothing. Benchmark the other arms are compared against."
+    }
+  ],
+  "arms": [
+    {
+      "id": "T0",
+      "class": "self",
+      "label": "Self-triage",
+      "one_line": "Patient picks the service with no tool.",
+      "changes_from_baseline": null,
+      "hypothesis": "Sits near the human lay benchmark (61%). Stoic profiles under-triage, anxious profiles over-triage.",
+      "type": "question",
+      "file": "versions/T0.txt"
+    },
+    {
+      "id": "F0",
+      "class": "form",
+      "label": "Form — baseline",
+      "one_line": "Short clinical wording, yes/no answers, unanchored severity scales.",
+      "changes_from_baseline": null,
+      "hypothesis": "Patients who describe symptoms in other words (tightness, funny turn) answer No and are under-triaged.",
+      "form_variant": "F0",
+      "type": "form",
+      "file": "versions/F0.txt"
+    },
+    {
+      "id": "F1",
+      "class": "form",
+      "label": "Form — plain language",
+      "one_line": "Same questions rewritten with lay synonyms, examples and explicit time frames.",
+      "changes_from_baseline": "Wording only.",
+      "hypothesis": "Fewer false No answers. Largest gain for low health literacy and limited English.",
+      "form_variant": "F1",
+      "type": "form",
+      "file": "versions/F1.txt"
+    },
+    {
+      "id": "F2",
+      "class": "form",
+      "label": "Form — anchored severity",
+      "one_line": "Severity questions ask what the patient can no longer do, not mild / moderate / severe.",
+      "changes_from_baseline": "Answer options on the 3 scale questions (pain, how unwell, breathing).",
+      "hypothesis": "Narrows the gap between stoic and anxious profiles: less under-triage for stoic, less over-triage for anxious.",
+      "form_variant": "F2",
+      "type": "form",
+      "file": "versions/F2.txt"
+    },
+    {
+      "id": "F3",
+      "class": "form",
+      "label": "Form — describe it",
+      "one_line": "Baseline form plus two free-text boxes: describe the problem, and anything else.",
+      "changes_from_baseline": "Adds 2 free-text fields. The closed questions are unchanged.",
+      "hypothesis": "Recovers facts the closed questions never ask about. Costs more abandonment for low digital confidence.",
+      "form_variant": "F3",
+      "type": "form",
+      "file": "versions/F3.txt"
+    },
+    {
+      "id": "C0",
+      "class": "chat",
+      "label": "Chat — neutral",
+      "one_line": "Chatbot asks questions one at a time with no guidance on probing.",
+      "changes_from_baseline": null,
+      "hypothesis": "Better than the forms on vague openers, but accepts hedged answers at face value.",
+      "type": "agent_prompt",
+      "file": "versions/C0.txt"
+    },
+    {
+      "id": "C1",
+      "class": "chat",
+      "label": "Chat — probing",
+      "one_line": "C0 plus instructions to follow up on vague or hedged answers.",
+      "changes_from_baseline": "Adds the probing block to the C0 prompt.",
+      "hypothesis": "Closes most of the gap to the call for stoic profiles, who hedge rather than deny.",
+      "type": "agent_prompt",
+      "file": "versions/C1.txt"
+    },
+    {
+      "id": "C2",
+      "class": "chat",
+      "label": "Chat — probing + reassurance",
+      "one_line": "C1 plus instructions that make it easier to admit symptoms.",
+      "changes_from_baseline": "Adds the disclosure block to the C1 prompt.",
+      "hypothesis": "Extra gain on embarrassing or minimised symptoms (bowel, pelvic). Risk: anxious profiles amplify and over-triage rises.",
+      "type": "agent_prompt",
+      "file": "versions/C2.txt"
+    },
+    {
+      "id": "CALL",
+      "class": "call",
+      "label": "Simulated 111 call",
+      "one_line": "LLM health adviser follows a script, can probe freely, and reads a summary back.",
+      "changes_from_baseline": null,
+      "hypothesis": "Upper bound. The best form or chat arm should match it on under-triage in the worst segment.",
+      "type": "agent_prompt",
+      "file": "versions/CALL.txt"
+    }
+  ],
+  "engine": {
+    "note": "Fixed across all arms. Reads the transcript only: it never sees the vignette or the profile. Temperature 0.",
+    "prompt": "You decide which NHS service a patient needs. You are given only the record of a triage contact (form answers or a conversation). Use only what is in the record.\n\nChoose exactly one:\n- ambulance: call 999. Any sign of an immediately life-threatening problem.\n- ae: go to A&E now, by their own means.\n- utc: urgent treatment centre today (injuries, problems needing hands-on care but not A&E).\n- urgent_gp: GP today or out of hours, within 6 hours.\n- callback: a 111 nurse or doctor should ring them to assess further.\n- mental_health: urgent mental health line today.\n- dental: urgent dental service within 24 hours.\n- gp: routine GP appointment in the next few days.\n- pharmacy: a pharmacist can assess and treat this.\n- self_care: can be managed at home with no contact.\n\nRules:\n- A red-flag question answered \"Not sure\" or skipped counts as Yes.\n- Do not assume a symptom is absent because it was never asked about. Do not assume it is present either.\n- Take answers at face value. Do not guess at what the patient left unsaid.\n\nReturn JSON: {\"service\": \"...\", \"facts_used\": [\"...\"], \"missing\": [\"what you would have wanted to know\"]}"
+  }
+}

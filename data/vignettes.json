@@ -1,0 +1,1151 @@
+{
+  "gold_source": "Authored for this experiment against nhs.uk condition pages. Not clinician-reviewed.",
+  "note": "The participant sees only: opening, belief, facts[].lay. Never condition, gold_service or the critical flag. Age and sex come from the participant variables; eligible limits which cases a participant can be given.",
+  "concept_labels_note": "Neutral lay heading for each fact in the patient prompt. Concept ids (e.g. stroke_signs) must never reach the patient agent: they leak the diagnosis.",
+  "concept_labels": {
+    "bladder_bowel_loss": "bladder and bowel control",
+    "bleeding_controlled": "whether it is bleeding",
+    "bleeding_duration": "how long it has been going on",
+    "blood_in_urine": "the colour of your pee",
+    "bowel_habit_change": "toilet habits",
+    "breathlessness": "your breathing",
+    "calf_swelling": "your legs",
+    "cant_swallow": "swallowing",
+    "cold_extremities": "hands and feet",
+    "cough_duration": "how long you have had a cough",
+    "coughing_blood": "what you cough up",
+    "crushing_chest_pain": "your chest",
+    "drowsy_confused": "how awake they are",
+    "dysuria": "peeing",
+    "faintness": "dizziness",
+    "fever": "temperature",
+    "flank_pain": "your back and sides",
+    "heavy_bleeding": "how much blood",
+    "how_unwell": "how you are in yourself",
+    "immunocompromised": "other health conditions",
+    "leg_weakness": "your legs",
+    "neck_stiffness": "neck and bright light",
+    "non_blanching_rash": "spots or rash",
+    "not_drinking": "drinking and weeing",
+    "numbness_distal": "feeling and movement",
+    "one_sided_pain": "where the pain is",
+    "onset_sudden": "how it started",
+    "pain_radiation": "whether it spreads",
+    "pain_severity": "how bad it is",
+    "pleuritic_pain": "pain when you breathe in",
+    "possible_pregnancy": "periods and pregnancy",
+    "rectal_bleeding": "blood when you go to the toilet",
+    "saddle_numbness": "numbness down below",
+    "shoulder_tip_pain": "your shoulder",
+    "significant_trauma": "how it happened",
+    "spreading_redness": "the red area",
+    "stroke_signs": "your face, arm and speech",
+    "sweating_nausea": "feeling sweaty or sick",
+    "thunderclap": "headache",
+    "vaginal_bleeding": "bleeding",
+    "vision_change": "your eyesight",
+    "vomiting": "being sick",
+    "weight_loss": "your weight",
+    "wound_gaping": "the cut or wound",
+    "facial_swelling": "your face and jaw",
+    "swelling_airway": "swallowing, breathing and opening your mouth",
+    "dental_bleeding": "bleeding",
+    "dental_trauma": "how it happened",
+    "self_harm_thoughts": "thoughts of harming yourself",
+    "self_harm_plan": "whether you would act on them",
+    "self_harm_act": "whether you have hurt yourself",
+    "alone_now": "who is with you"
+  },
+  "vignettes": [
+    {
+      "id": "E1",
+      "condition": "Heart attack (acute coronary syndrome)",
+      "respondent": "self",
+      "gold_service": "ambulance",
+      "opening": "I've had a tight feeling in my chest for about 40 minutes. I think it's probably indigestion.",
+      "belief": "Indigestion from a heavy lunch. Doesn't want to make a fuss.",
+      "correct_modules": [
+        "chest"
+      ],
+      "facts": [
+        {
+          "concept": "crushing_chest_pain",
+          "value": true,
+          "critical": true,
+          "lay": "It's a tightness, like a band round my chest or someone sitting on it. I wouldn't call it pain."
+        },
+        {
+          "concept": "pain_radiation",
+          "value": true,
+          "critical": true,
+          "lay": "There's a dull ache down my left arm and up into my jaw."
+        },
+        {
+          "concept": "sweating_nausea",
+          "value": true,
+          "critical": true,
+          "lay": "I've gone clammy and I feel a bit sick."
+        },
+        {
+          "concept": "breathlessness",
+          "value": true,
+          "critical": false,
+          "lay": "A bit short of breath, but I can talk fine."
+        },
+        {
+          "concept": "onset_sudden",
+          "value": true,
+          "critical": false,
+          "lay": "It came on over a few minutes while I was carrying the shopping in."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "moderate",
+          "critical": false,
+          "lay": "Uncomfortable rather than agony. I had to sit down."
+        },
+        {
+          "concept": "calf_swelling",
+          "value": false,
+          "critical": false,
+          "lay": "No, my legs are fine."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you have tightness in your chest that spreads to your arm and jaw, and that you feel clammy and sick. Together these can be signs of a heart attack, even when it doesn't feel like pain.",
+        "safety_net": "While you wait: sit down and rest, unlock your front door, and chew one 300mg aspirin if you have it and are not allergic. If you collapse or the pain gets worse, whoever is with you should call 999 again."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 40,
+        "age_max": 90
+      }
+    },
+    {
+      "id": "E2",
+      "condition": "Stroke / TIA with partly resolved symptoms",
+      "respondent": "self",
+      "gold_service": "ambulance",
+      "opening": "I had a funny turn this morning and I still feel washed out.",
+      "belief": "Overdid it yesterday and is just tired. It has mostly passed, so it can't be serious.",
+      "correct_modules": [
+        "head_neuro"
+      ],
+      "facts": [
+        {
+          "concept": "stroke_signs",
+          "value": true,
+          "critical": true,
+          "lay": "My partner said the left side of my mouth dropped for about 20 minutes. My left arm felt heavy and I couldn't find my words. It's mostly better now, though my speech is still a bit slow."
+        },
+        {
+          "concept": "thunderclap",
+          "value": false,
+          "critical": false,
+          "lay": "No headache to speak of."
+        },
+        {
+          "concept": "vision_change",
+          "value": false,
+          "critical": false,
+          "lay": "My eyesight seems normal."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "none",
+          "critical": false,
+          "lay": "Nothing hurts."
+        }
+      ],
+      "advice": {
+        "reason": "You told us your face dropped on one side, your arm felt heavy and your speech was affected. These are signs of a stroke or a mini-stroke, and that is still true when the symptoms have got better.",
+        "safety_net": "Do not eat, drink or take any tablets while you wait. If the weakness or speech problem comes back, tell the 999 call handler straight away."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 55,
+        "age_max": 90
+      }
+    },
+    {
+      "id": "E3",
+      "condition": "Meningococcal sepsis in a child",
+      "respondent": "parent",
+      "gold_service": "ambulance",
+      "opening": "My son's had a temperature since last night and he's really not himself.",
+      "belief": "Probably the virus going round school. Wondering whether to give more Calpol.",
+      "correct_modules": [
+        "fever_rash"
+      ],
+      "facts": [
+        {
+          "concept": "fever",
+          "value": true,
+          "critical": false,
+          "lay": "39.4 on the ear thermometer."
+        },
+        {
+          "concept": "non_blanching_rash",
+          "value": true,
+          "critical": true,
+          "lay": "A few small purple-red spots on his tummy and legs that I noticed an hour ago. If I press a glass on them, they don't fade."
+        },
+        {
+          "concept": "drowsy_confused",
+          "value": true,
+          "critical": true,
+          "lay": "He keeps falling asleep and it's hard to wake him properly."
+        },
+        {
+          "concept": "neck_stiffness",
+          "value": true,
+          "critical": false,
+          "lay": "He says his neck hurts and he wants the light off."
+        },
+        {
+          "concept": "cold_extremities",
+          "value": true,
+          "critical": true,
+          "lay": "His hands and feet are cold even though his forehead is burning."
+        },
+        {
+          "concept": "not_drinking",
+          "value": true,
+          "critical": false,
+          "lay": "He's had a few sips since this morning and hasn't had a wee since last night."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "severe",
+          "critical": false,
+          "lay": "He's just lying on the sofa, not interested in anything."
+        }
+      ],
+      "advice": {
+        "reason": "You told us your son has spots that don't fade under a glass, is very sleepy and hard to wake, and has cold hands and feet with a high temperature. Together these can be signs of sepsis or meningitis.",
+        "safety_net": "Stay with him. If he becomes floppy, stops responding, or has a fit before help arrives, call 999 again and say so."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 25,
+        "age_max": 44
+      },
+      "respondent_line": "You are answering for your 6-year-old son. You report what you can see, not what he feels."
+    },
+    {
+      "id": "E4",
+      "condition": "Ectopic pregnancy",
+      "respondent": "self",
+      "gold_service": "ae",
+      "opening": "I've got bad cramps low down in my tummy, on the right, since yesterday.",
+      "belief": "A bad period. It was late and has just started, lightly.",
+      "correct_modules": [
+        "tummy_pelvic"
+      ],
+      "facts": [
+        {
+          "concept": "possible_pregnancy",
+          "value": true,
+          "critical": true,
+          "lay": "My period was about two weeks late. I'm on the mini pill but I've missed a few."
+        },
+        {
+          "concept": "one_sided_pain",
+          "value": true,
+          "critical": true,
+          "lay": "It's definitely on the right side, low down."
+        },
+        {
+          "concept": "shoulder_tip_pain",
+          "value": true,
+          "critical": true,
+          "lay": "There's an odd ache at the tip of my right shoulder. I assumed I'd slept funny."
+        },
+        {
+          "concept": "vaginal_bleeding",
+          "value": true,
+          "critical": false,
+          "lay": "Brownish spotting, lighter than my normal period."
+        },
+        {
+          "concept": "faintness",
+          "value": true,
+          "critical": true,
+          "lay": "I went dizzy when I stood up this morning and had to sit back down."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "severe",
+          "critical": false,
+          "lay": "It comes in waves. I've had to lie down with a hot water bottle."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you have pain low down on one side, a late period, a pain at the tip of your shoulder and dizziness. Together these can be signs of a pregnancy growing outside the womb, which needs checking today.",
+        "safety_net": "Do not drive yourself. If you feel faint, the pain suddenly gets much worse, or you bleed heavily, call 999."
+      },
+      "eligible": {
+        "sex": "female",
+        "age_min": 16,
+        "age_max": 44
+      }
+    },
+    {
+      "id": "E5",
+      "condition": "Pulmonary embolism",
+      "respondent": "self",
+      "gold_service": "ae",
+      "opening": "I've been getting out of breath since this afternoon and it hurts when I breathe in.",
+      "belief": "A pulled muscle or the start of a chest infection. Possibly anxiety.",
+      "correct_modules": [
+        "chest",
+        "breathing"
+      ],
+      "facts": [
+        {
+          "concept": "breathlessness",
+          "value": true,
+          "critical": true,
+          "lay": "I get out of breath just walking to the kitchen. It came on suddenly."
+        },
+        {
+          "concept": "pleuritic_pain",
+          "value": true,
+          "critical": true,
+          "lay": "A sharp pain on my right side when I take a deep breath."
+        },
+        {
+          "concept": "calf_swelling",
+          "value": true,
+          "critical": true,
+          "lay": "My left calf has been sore and a bit swollen since I flew back from Thailand four days ago. I thought it was cramp."
+        },
+        {
+          "concept": "onset_sudden",
+          "value": true,
+          "critical": false,
+          "lay": "Out of nowhere, about three hours ago."
+        },
+        {
+          "concept": "coughing_blood",
+          "value": false,
+          "critical": false,
+          "lay": "No, I'm not coughing anything up."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": false,
+          "lay": "No temperature."
+        },
+        {
+          "concept": "crushing_chest_pain",
+          "value": false,
+          "critical": false,
+          "lay": "It's not a tight or heavy feeling, it's sharp and only when I breathe in."
+        },
+        {
+          "concept": "pain_radiation",
+          "value": false,
+          "critical": false,
+          "lay": "It stays in one spot on the right."
+        },
+        {
+          "concept": "sweating_nausea",
+          "value": false,
+          "critical": false,
+          "lay": "Not really."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "moderate",
+          "critical": false,
+          "lay": "It catches me when I breathe in. Fine if I keep my breathing shallow."
+        },
+        {
+          "concept": "cough_duration",
+          "value": "none",
+          "critical": false,
+          "lay": "No cough."
+        },
+        {
+          "concept": "cant_swallow",
+          "value": false,
+          "critical": false,
+          "lay": "Swallowing is fine."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "moderate",
+          "critical": false,
+          "lay": "I've come home from work and I'm sitting on the sofa."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you became breathless suddenly, have a sharp pain when you breathe in, and have a sore, swollen calf after a long flight. Together these can be signs of a blood clot in the lung.",
+        "safety_net": "Do not drive yourself. If you cough up blood, feel faint, or the breathlessness gets worse, call 999."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 18,
+        "age_max": 64
+      }
+    },
+    {
+      "id": "U1",
+      "condition": "Kidney infection (pyelonephritis)",
+      "respondent": "self",
+      "gold_service": "urgent_gp",
+      "opening": "I think I've got a water infection. It burns when I pee.",
+      "belief": "Cystitis, which she has had before. Wants to pick up something from the chemist.",
+      "correct_modules": [
+        "urinary"
+      ],
+      "facts": [
+        {
+          "concept": "dysuria",
+          "value": true,
+          "critical": false,
+          "lay": "It stings and I'm going every half hour."
+        },
+        {
+          "concept": "fever",
+          "value": true,
+          "critical": true,
+          "lay": "I've been hot and shivery since last night. It was 38.6."
+        },
+        {
+          "concept": "flank_pain",
+          "value": true,
+          "critical": true,
+          "lay": "There's an aching pain in the right side of my back, under my ribs."
+        },
+        {
+          "concept": "vomiting",
+          "value": true,
+          "critical": true,
+          "lay": "I've been sick twice this morning."
+        },
+        {
+          "concept": "possible_pregnancy",
+          "value": false,
+          "critical": false,
+          "lay": "No, I've got the implant."
+        },
+        {
+          "concept": "blood_in_urine",
+          "value": false,
+          "critical": false,
+          "lay": "It's cloudy but there's no blood."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "severe",
+          "critical": false,
+          "lay": "I've been in bed all day."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you have a temperature, pain in your side and have been sick, as well as burning when you pee. That suggests the infection may have reached your kidneys, which needs antibiotics today.",
+        "safety_net": "Call 999 if you become confused, very drowsy, can't keep any fluids down, or your skin turns pale and blotchy."
+      },
+      "eligible": {
+        "sex": "female",
+        "age_min": 16,
+        "age_max": 64
+      }
+    },
+    {
+      "id": "U2",
+      "condition": "Cellulitis in a person with diabetes",
+      "respondent": "self",
+      "gold_service": "urgent_gp",
+      "opening": "My lower leg has gone red and sore over the last two days.",
+      "belief": "Knocked it gardening. A rash that will settle on its own.",
+      "correct_modules": [
+        "skin_wound"
+      ],
+      "facts": [
+        {
+          "concept": "spreading_redness",
+          "value": true,
+          "critical": true,
+          "lay": "It was a patch near my ankle yesterday. Today it's most of the way to my knee."
+        },
+        {
+          "concept": "fever",
+          "value": true,
+          "critical": true,
+          "lay": "I was shivery last night."
+        },
+        {
+          "concept": "immunocompromised",
+          "value": true,
+          "critical": true,
+          "lay": "I've got type 2 diabetes. I take metformin."
+        },
+        {
+          "concept": "wound_gaping",
+          "value": false,
+          "critical": false,
+          "lay": "There's no cut, just a scratch that's scabbed over."
+        },
+        {
+          "concept": "bleeding_controlled",
+          "value": true,
+          "critical": false,
+          "lay": "It isn't bleeding."
+        },
+        {
+          "concept": "numbness_distal",
+          "value": false,
+          "critical": false,
+          "lay": "My foot feels normal."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "moderate",
+          "critical": false,
+          "lay": "Hot, tight and sore to touch. I can walk on it."
+        }
+      ],
+      "advice": {
+        "reason": "You told us the redness is spreading up your leg, you've been shivery, and you have diabetes. A skin infection that is spreading needs antibiotics today, and diabetes makes that more urgent.",
+        "safety_net": "Draw round the edge of the red area with a pen so you can see if it spreads. Call 999 if you become confused, very drowsy or breathless, or the skin turns purple or black."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 45,
+        "age_max": 90
+      }
+    },
+    {
+      "id": "U3",
+      "condition": "Hand laceration needing closure",
+      "respondent": "self",
+      "gold_service": "utc",
+      "opening": "I cut my hand with a kitchen knife about an hour ago.",
+      "belief": "It has mostly stopped bleeding, so a plaster should do.",
+      "correct_modules": [
+        "skin_wound"
+      ],
+      "facts": [
+        {
+          "concept": "wound_gaping",
+          "value": true,
+          "critical": true,
+          "lay": "It's about 3cm across my palm. It opens up when I move my hand and I can see yellowish stuff underneath."
+        },
+        {
+          "concept": "bleeding_controlled",
+          "value": true,
+          "critical": false,
+          "lay": "It stops if I press on it and oozes when I let go."
+        },
+        {
+          "concept": "numbness_distal",
+          "value": false,
+          "critical": false,
+          "lay": "My fingers feel normal and I can move them all."
+        },
+        {
+          "concept": "spreading_redness",
+          "value": false,
+          "critical": false,
+          "lay": "No redness, it only just happened."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": false,
+          "lay": "No."
+        },
+        {
+          "concept": "immunocompromised",
+          "value": false,
+          "critical": false,
+          "lay": "No, I'm healthy."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "moderate",
+          "critical": false,
+          "lay": "It throbs. I can't grip anything."
+        }
+      ],
+      "advice": {
+        "reason": "You told us the cut is deep and its edges don't stay together. Cuts like that need closing by a nurse within a few hours to heal properly and avoid infection.",
+        "safety_net": "Keep pressing on it with a clean cloth and hold your hand up. Go to A&E if the bleeding won't stop after 10 minutes of pressure, or your fingers go numb or won't move."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 16,
+        "age_max": 64
+      }
+    },
+    {
+      "id": "G1",
+      "condition": "Persistent cough over 3 weeks in a smoker",
+      "respondent": "self",
+      "gold_service": "gp",
+      "opening": "I've had a cough that won't shift.",
+      "belief": "Smoker's cough left over from a cold. Hoping for a stronger cough mixture.",
+      "correct_modules": [
+        "breathing"
+      ],
+      "facts": [
+        {
+          "concept": "cough_duration",
+          "value": "over_3_weeks",
+          "critical": true,
+          "lay": "About five weeks now."
+        },
+        {
+          "concept": "coughing_blood",
+          "value": false,
+          "critical": true,
+          "lay": "No blood, just a bit of clear phlegm."
+        },
+        {
+          "concept": "breathlessness",
+          "value": false,
+          "critical": true,
+          "lay": "No more out of breath than usual. I smoke, so I'm never brilliant on the stairs."
+        },
+        {
+          "concept": "pleuritic_pain",
+          "value": false,
+          "critical": false,
+          "lay": "No pain."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": false,
+          "lay": "No temperature."
+        },
+        {
+          "concept": "cant_swallow",
+          "value": false,
+          "critical": false,
+          "lay": "Swallowing is fine."
+        },
+        {
+          "concept": "calf_swelling",
+          "value": false,
+          "critical": false,
+          "lay": "No."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "mild",
+          "critical": false,
+          "lay": "I'm at work as normal."
+        }
+      ],
+      "advice": {
+        "reason": "You told us the cough has lasted more than three weeks. A cough that long should be checked by a GP, who may arrange a chest X-ray. You told us there is no blood and no new breathlessness, so it does not need emergency care.",
+        "safety_net": "Call 111 or get an urgent appointment if you cough up blood, become short of breath, get chest pain, or lose weight without trying."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 45,
+        "age_max": 90
+      }
+    },
+    {
+      "id": "G2",
+      "condition": "Rectal bleeding with change in bowel habit over 3 weeks",
+      "respondent": "self",
+      "gold_service": "gp",
+      "opening": "I've got a bit of a problem with my bowels.",
+      "belief": "Piles from straining. Embarrassed and would rather sort it with a cream.",
+      "correct_modules": [
+        "bowel"
+      ],
+      "facts": [
+        {
+          "concept": "rectal_bleeding",
+          "value": true,
+          "critical": true,
+          "lay": "Bright red blood on the paper and in the bowl, most days."
+        },
+        {
+          "concept": "bleeding_duration",
+          "value": "over_3_weeks",
+          "critical": true,
+          "lay": "About four weeks."
+        },
+        {
+          "concept": "bowel_habit_change",
+          "value": true,
+          "critical": true,
+          "lay": "It's looser and I'm going three or four times a day. That's been about a month too."
+        },
+        {
+          "concept": "weight_loss",
+          "value": false,
+          "critical": false,
+          "lay": "Not that I've noticed."
+        },
+        {
+          "concept": "heavy_bleeding",
+          "value": false,
+          "critical": true,
+          "lay": "It's streaks, not a lot. Nothing black."
+        },
+        {
+          "concept": "faintness",
+          "value": false,
+          "critical": false,
+          "lay": "No dizziness."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you've had bleeding and looser, more frequent bowel movements for about four weeks. It is usually something minor like piles, but any bleeding or change lasting more than three weeks should be examined by a GP.",
+        "safety_net": "Go to A&E or call 999 if the bleeding becomes heavy or won't stop, your poo turns black and sticky, or you feel faint."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 45,
+        "age_max": 79
+      }
+    },
+    {
+      "id": "P1",
+      "condition": "Uncomplicated urinary tract infection",
+      "respondent": "self",
+      "gold_service": "pharmacy",
+      "opening": "It burns when I pee and I keep needing to go.",
+      "belief": "Cystitis. Worried it will reach her kidneys if it isn't treated quickly.",
+      "correct_modules": [
+        "urinary"
+      ],
+      "facts": [
+        {
+          "concept": "dysuria",
+          "value": true,
+          "critical": false,
+          "lay": "It stings and I'm going constantly. Two days now."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": true,
+          "lay": "No temperature, I checked."
+        },
+        {
+          "concept": "flank_pain",
+          "value": false,
+          "critical": true,
+          "lay": "No back pain, just a dull ache low down at the front."
+        },
+        {
+          "concept": "vomiting",
+          "value": false,
+          "critical": true,
+          "lay": "No, I'm eating and drinking fine."
+        },
+        {
+          "concept": "possible_pregnancy",
+          "value": false,
+          "critical": true,
+          "lay": "No, my period finished last week."
+        },
+        {
+          "concept": "blood_in_urine",
+          "value": false,
+          "critical": false,
+          "lay": "No blood."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "mild",
+          "critical": false,
+          "lay": "I'm at work, it's just really uncomfortable."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you have burning and frequent peeing with no temperature, no pain in your side and no sickness, and that you are not pregnant. That fits a simple urine infection, which a pharmacist can treat.",
+        "safety_net": "Call 111 if you get a high temperature, pain in your back or side, start being sick, or see blood in your pee."
+      },
+      "eligible": {
+        "sex": "female",
+        "age_min": 16,
+        "age_max": 64
+      }
+    },
+    {
+      "id": "P2",
+      "condition": "Acute sore throat",
+      "respondent": "self",
+      "gold_service": "pharmacy",
+      "opening": "My throat's been really sore for three days.",
+      "belief": "Tonsillitis. Expects to need antibiotics from a GP.",
+      "correct_modules": [
+        "breathing"
+      ],
+      "facts": [
+        {
+          "concept": "cant_swallow",
+          "value": false,
+          "critical": true,
+          "lay": "It hurts to swallow but I can drink fine."
+        },
+        {
+          "concept": "breathlessness",
+          "value": false,
+          "critical": true,
+          "lay": "My breathing's normal."
+        },
+        {
+          "concept": "fever",
+          "value": true,
+          "critical": false,
+          "lay": "37.9, I felt a bit hot last night."
+        },
+        {
+          "concept": "cough_duration",
+          "value": "none",
+          "critical": false,
+          "lay": "No cough."
+        },
+        {
+          "concept": "coughing_blood",
+          "value": false,
+          "critical": false,
+          "lay": "No."
+        },
+        {
+          "concept": "pleuritic_pain",
+          "value": false,
+          "critical": false,
+          "lay": "No chest pain."
+        },
+        {
+          "concept": "calf_swelling",
+          "value": false,
+          "critical": false,
+          "lay": "No."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "mild",
+          "critical": false,
+          "lay": "I'm up and about, just tired."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you can still swallow drinks and your breathing is normal. A sore throat like this usually clears in about a week, and a pharmacist can check it and supply treatment if it's needed.",
+        "safety_net": "Call 999 if you have difficulty breathing or can't swallow your own spit. Call 111 if it is no better after a week or you get a high temperature."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 16,
+        "age_max": 44
+      }
+    },
+    {
+      "id": "P3",
+      "condition": "Infected insect bite, localised",
+      "respondent": "self",
+      "gold_service": "pharmacy",
+      "opening": "Something bit me on my forearm three days ago and it's gone red and itchy.",
+      "belief": "It might be infected. Wondering if it needs antibiotics.",
+      "correct_modules": [
+        "skin_wound"
+      ],
+      "facts": [
+        {
+          "concept": "spreading_redness",
+          "value": false,
+          "critical": true,
+          "lay": "It's a red patch about the size of a 50p. It hasn't really grown since yesterday."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": true,
+          "lay": "No, I feel fine in myself."
+        },
+        {
+          "concept": "immunocompromised",
+          "value": false,
+          "critical": true,
+          "lay": "No health problems."
+        },
+        {
+          "concept": "wound_gaping",
+          "value": false,
+          "critical": false,
+          "lay": "It's just a little bump with a dot in the middle."
+        },
+        {
+          "concept": "bleeding_controlled",
+          "value": true,
+          "critical": false,
+          "lay": "It's not bleeding."
+        },
+        {
+          "concept": "numbness_distal",
+          "value": false,
+          "critical": false,
+          "lay": "No numbness."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "mild",
+          "critical": false,
+          "lay": "Itchy and a bit warm more than painful."
+        }
+      ],
+      "advice": {
+        "reason": "You told us the red area is small and not spreading, you have no temperature and no condition that weakens your immune system. A pharmacist can treat an infected bite like this.",
+        "safety_net": "Call 111 if the redness spreads, you get a temperature or feel unwell, or a red line appears running up your arm."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 16,
+        "age_max": 79
+      }
+    },
+    {
+      "id": "S1",
+      "condition": "Common cold",
+      "respondent": "self",
+      "gold_service": "self_care",
+      "opening": "I've had a streaming nose, a sore throat and a bit of a cough for three days.",
+      "belief": "Worried it's turning into a chest infection. Has an important event on Saturday.",
+      "correct_modules": [
+        "breathing"
+      ],
+      "facts": [
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": true,
+          "lay": "No temperature, I'm just a bit achy."
+        },
+        {
+          "concept": "breathlessness",
+          "value": false,
+          "critical": true,
+          "lay": "I'm blocked up but not out of breath."
+        },
+        {
+          "concept": "coughing_blood",
+          "value": false,
+          "critical": true,
+          "lay": "No, it's a tickly cough."
+        },
+        {
+          "concept": "cough_duration",
+          "value": "under_3_weeks",
+          "critical": false,
+          "lay": "Three days."
+        },
+        {
+          "concept": "cant_swallow",
+          "value": false,
+          "critical": false,
+          "lay": "I can swallow fine."
+        },
+        {
+          "concept": "pleuritic_pain",
+          "value": false,
+          "critical": false,
+          "lay": "No chest pain."
+        },
+        {
+          "concept": "calf_swelling",
+          "value": false,
+          "critical": false,
+          "lay": "No."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "mild",
+          "critical": false,
+          "lay": "I'm working from home."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you have a runny nose, sore throat and cough for three days, with no temperature and no breathlessness. That fits a cold, which gets better on its own in one to two weeks.",
+        "safety_net": "Call 111 if you become short of breath, get chest pain, cough up blood, or you're no better after three weeks."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 16,
+        "age_max": 79
+      }
+    },
+    {
+      "id": "S2",
+      "condition": "Simple mechanical lower back pain",
+      "respondent": "self",
+      "gold_service": "self_care",
+      "opening": "I did my back in lifting a sofa two days ago.",
+      "belief": "Worried it's a slipped disc and that he's done lasting damage.",
+      "correct_modules": [
+        "back"
+      ],
+      "facts": [
+        {
+          "concept": "saddle_numbness",
+          "value": false,
+          "critical": true,
+          "lay": "No numbness down there."
+        },
+        {
+          "concept": "bladder_bowel_loss",
+          "value": false,
+          "critical": true,
+          "lay": "No, the toilet's all normal."
+        },
+        {
+          "concept": "leg_weakness",
+          "value": false,
+          "critical": true,
+          "lay": "My legs are fine. The pain stays in my lower back."
+        },
+        {
+          "concept": "significant_trauma",
+          "value": false,
+          "critical": false,
+          "lay": "I just lifted a sofa, there was no fall or accident."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": false,
+          "lay": "No."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "moderate",
+          "critical": false,
+          "lay": "Stiff and sore when I bend. I can walk, and I sleep with paracetamol."
+        }
+      ],
+      "advice": {
+        "reason": "You told us the pain started after lifting, stays in your lower back, and that you have no numbness, no leg weakness and no bladder or bowel problems. Back pain like this usually improves within a few weeks, and keeping moving helps.",
+        "safety_net": "Go to A&E or call 999 if you get numbness around your bottom or genitals, lose control of your pee or poo, or your legs become weak."
+      },
+      "eligible": {
+        "sex": "any",
+        "age_min": 25,
+        "age_max": 64
+      }
+    },
+    {
+      "id": "D1",
+      "condition": "Dental abscess with facial swelling",
+      "respondent": "self",
+      "gold_service": "dental",
+      "eligible": {
+        "sex": "any",
+        "age_min": 18,
+        "age_max": 79
+      },
+      "opening": "I've had terrible toothache for three days and now my cheek has gone puffy.",
+      "belief": "Needs antibiotics from the GP. Has no regular dentist.",
+      "correct_modules": [
+        "dental"
+      ],
+      "facts": [
+        {
+          "concept": "facial_swelling",
+          "value": true,
+          "critical": true,
+          "lay": "My left cheek is swollen and feels warm."
+        },
+        {
+          "concept": "swelling_airway",
+          "value": false,
+          "critical": true,
+          "lay": "No, I can swallow and breathe fine, and I can open my mouth."
+        },
+        {
+          "concept": "fever",
+          "value": false,
+          "critical": false,
+          "lay": "I felt a bit hot last night but it was 37.6."
+        },
+        {
+          "concept": "dental_bleeding",
+          "value": false,
+          "critical": false,
+          "lay": "No bleeding."
+        },
+        {
+          "concept": "dental_trauma",
+          "value": false,
+          "critical": false,
+          "lay": "No, nothing hit me. It just started aching."
+        },
+        {
+          "concept": "pain_severity",
+          "value": "severe",
+          "critical": false,
+          "lay": "Throbbing. Paracetamol barely touches it and I can't sleep."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you have toothache with a swollen cheek, and that you can still swallow, breathe and open your mouth. That fits a tooth infection, which a dentist needs to treat within a day.",
+        "safety_net": "Go to A&E or call 999 if the swelling spreads to your eye or neck, or you find it hard to swallow, breathe or open your mouth."
+      }
+    },
+    {
+      "id": "H1",
+      "condition": "Mental health crisis, passive thoughts, no plan",
+      "respondent": "self",
+      "gold_service": "mental_health",
+      "eligible": {
+        "sex": "any",
+        "age_min": 16,
+        "age_max": 44
+      },
+      "opening": "I can't cope any more. I haven't slept properly in days and I keep panicking.",
+      "belief": "Thinks they are being dramatic and should just get on with it. Does not want to bother a GP.",
+      "correct_modules": [
+        "mental_health"
+      ],
+      "facts": [
+        {
+          "concept": "self_harm_thoughts",
+          "value": true,
+          "critical": true,
+          "lay": "Sometimes I think it would be easier if I didn't wake up. I haven't told anyone that."
+        },
+        {
+          "concept": "self_harm_plan",
+          "value": false,
+          "critical": true,
+          "lay": "No, I haven't thought about doing anything. I wouldn't."
+        },
+        {
+          "concept": "self_harm_act",
+          "value": false,
+          "critical": true,
+          "lay": "No, I haven't hurt myself or taken anything."
+        },
+        {
+          "concept": "alone_now",
+          "value": false,
+          "critical": false,
+          "lay": "My flatmate is in the next room."
+        },
+        {
+          "concept": "how_unwell",
+          "value": "severe",
+          "critical": false,
+          "lay": "I haven't been to work this week and I'm barely eating."
+        }
+      ],
+      "advice": {
+        "reason": "You told us you are not coping, are not sleeping, and have had thoughts that it would be easier not to wake up. You have not made a plan or hurt yourself. That needs a conversation with a mental health professional today.",
+        "safety_net": "Call 999 or go to A&E if you feel you might act on these thoughts, or if you hurt yourself or take an overdose. Tell the person you live with how you are feeling, so you are not on your own tonight."
+      }
+    }
+  ]
+}

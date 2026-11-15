@@ -1,0 +1,253 @@
+NHS 111 ONLINE CHECK
+
+You can answer "Not sure" to any question, or skip it.
+
+1. EMERGENCY CHECK
+Do you have any of the following? Tick all that apply.
+[ ] Chest pain
+[ ] Facial droop, arm weakness or speech difficulty
+[ ] Severe difficulty breathing
+[ ] Heavy bleeding that will not stop
+[ ] Loss of consciousness, seizure or new confusion
+[ ] Rash that does not fade under pressure
+
+2. MAIN SYMPTOM
+Select your main symptom.
+( ) Chest pain
+( ) Breathing problems, cough or sore throat
+( ) Headache, dizziness or neurological symptoms
+( ) Fever or rash
+( ) Abdominal or pelvic pain
+( ) Urinary symptoms
+( ) Wounds, bites or skin infection
+( ) Bowel symptoms or rectal bleeding
+( ) Back pain
+( ) Dental problems
+( ) Mental health
+
+3. QUESTIONS
+Only the section for the chosen symptom is shown.
+
+--- Chest pain ---
+Describe what you are feeling in your chest in your own words. Where is it, what does it feel like, and does it go anywhere else?
+[free text]
+
+Q1. Does the pain radiate to the arm, neck, jaw or back?
+    ( ) Yes   ( ) No
+Q2. Is the pain associated with sweating, nausea or vomiting?
+    ( ) Yes   ( ) No
+Q3. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+Q4. Are you short of breath?
+    ( ) Yes   ( ) No
+Q5. Was the onset sudden?
+    ( ) Yes   ( ) No
+Q6. Do you have swelling or pain in one leg?
+    ( ) Yes   ( ) No
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Breathing problems, cough or sore throat ---
+Describe your breathing, cough or throat problem in your own words. When did it start and what makes it worse?
+[free text]
+
+Q1. Are you short of breath?
+    ( ) Yes   ( ) No
+Q2. Do you have chest pain on inspiration?
+    ( ) Yes   ( ) No
+Q3. Do you have swelling or pain in one leg?
+    ( ) Yes   ( ) No
+Q4. Have you coughed up blood?
+    ( ) Yes   ( ) No
+Q5. Duration of cough?
+    ( ) No cough   ( ) Under 3 weeks   ( ) 3 weeks or more
+Q6. Are you unable to swallow fluids or saliva?
+    ( ) Yes   ( ) No
+Q7. Do you have a fever?
+    ( ) Yes   ( ) No
+Q8. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Headache, dizziness or neurological symptoms ---
+Describe what happened in your own words, including anything other people noticed about you.
+[free text]
+
+Q1. Do you have facial droop, limb weakness or speech difficulty?
+    ( ) Yes   ( ) No
+Q2. Was there a sudden-onset severe headache?
+    ( ) Yes   ( ) No
+Q3. Any visual disturbance?
+    ( ) Yes   ( ) No
+Q4. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Fever or rash ---
+Describe how they are in your own words. What is different from how they normally are?
+[free text]
+
+Q1. Is there a fever?
+    ( ) Yes   ( ) No
+Q2. Is there a non-blanching rash?
+    ( ) Yes   ( ) No
+Q3. Is the patient drowsy or confused?
+    ( ) Yes   ( ) No
+Q4. Is there neck stiffness or photophobia?
+    ( ) Yes   ( ) No
+Q5. Are the extremities cold or mottled?
+    ( ) Yes   ( ) No
+Q6. Is there reduced fluid intake or urine output?
+    ( ) Yes   ( ) No
+Q7. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Abdominal or pelvic pain ---
+Describe the pain in your own words. Where exactly is it, and have you noticed anything else unusual anywhere in your body?
+[free text]
+
+Q1. Could you be pregnant?
+    ( ) Yes   ( ) No
+Q2. Is the pain localised to one side?
+    ( ) Yes   ( ) No
+Q3. Do you have shoulder tip pain?
+    ( ) Yes   ( ) No
+Q4. Any abnormal vaginal bleeding?
+    ( ) Yes   ( ) No
+Q5. Have you felt faint or collapsed?
+    ( ) Yes   ( ) No
+Q6. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Urinary symptoms ---
+Describe the problem in your own words, and how you have been feeling in yourself since it started.
+[free text]
+
+Q1. Is there pain on passing urine or increased frequency?
+    ( ) Yes   ( ) No
+Q2. Do you have a fever?
+    ( ) Yes   ( ) No
+Q3. Do you have loin or flank pain?
+    ( ) Yes   ( ) No
+Q4. Are you vomiting?
+    ( ) Yes   ( ) No
+Q5. Could you be pregnant?
+    ( ) Yes   ( ) No
+Q6. Is there visible blood in the urine?
+    ( ) Yes   ( ) No
+Q7. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Wounds, bites or skin infection ---
+Describe what it looks like in your own words, and how it has changed since you first noticed it.
+[free text]
+
+Q1. Is the redness spreading?
+    ( ) Yes   ( ) No
+Q2. Do you have a fever?
+    ( ) Yes   ( ) No
+Q3. Are you diabetic or immunosuppressed?
+    ( ) Yes   ( ) No
+Q4. Is the wound gaping or deeper than the skin surface?
+    ( ) Yes   ( ) No
+Q5. Is bleeding controlled with pressure?
+    ( ) Yes   ( ) No
+Q6. Is there loss of sensation or movement beyond the wound?
+    ( ) Yes   ( ) No
+Q7. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Bowel symptoms or rectal bleeding ---
+Describe what has changed in your own words. Everything you tell us is confidential and we hear about this every day.
+[free text]
+
+Q1. Have you had rectal bleeding?
+    ( ) Yes   ( ) No
+Q2. Duration of symptoms?
+    ( ) Under 3 weeks   ( ) 3 weeks or more
+Q3. Has there been a change in bowel habit?
+    ( ) Yes   ( ) No
+Q4. Any unintentional weight loss?
+    ( ) Yes   ( ) No
+Q5. Is the bleeding heavy, or are stools black and tarry?
+    ( ) Yes   ( ) No
+Q6. Have you felt faint or collapsed?
+    ( ) Yes   ( ) No
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Back pain ---
+Describe the pain in your own words. Where is it, how did it start, and have you noticed anything unusual in your legs or when using the toilet?
+[free text]
+
+Q1. Is there numbness around the genitals or anus?
+    ( ) Yes   ( ) No
+Q2. Any new urinary retention or incontinence?
+    ( ) Yes   ( ) No
+Q3. Is there leg weakness or numbness?
+    ( ) Yes   ( ) No
+Q4. Was there significant trauma?
+    ( ) Yes   ( ) No
+Q5. Do you have a fever?
+    ( ) Yes   ( ) No
+Q6. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Dental problems ---
+Describe the problem with your teeth, mouth or face in your own words, and how it has changed since it started.
+[free text]
+
+Q1. Is there facial or jaw swelling?
+    ( ) Yes   ( ) No
+Q2. Is swelling affecting swallowing, breathing or eye opening?
+    ( ) Yes   ( ) No
+Q3. Do you have a fever?
+    ( ) Yes   ( ) No
+Q4. Is there uncontrolled oral bleeding?
+    ( ) Yes   ( ) No
+Q5. Was there facial trauma or an avulsed tooth?
+    ( ) Yes   ( ) No
+Q6. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]
+
+--- Mental health ---
+Tell us how you have been feeling, in your own words. Everything you say is confidential and we ask everyone the same questions.
+[free text]
+
+Q1. Are you having thoughts of self-harm or suicide?
+    ( ) Yes   ( ) No
+Q2. Do you have a plan or intent to act?
+    ( ) Yes   ( ) No
+Q3. Have you self-harmed or taken an overdose?
+    ( ) Yes   ( ) No
+Q4. Are you alone?
+    ( ) Yes   ( ) No
+Q5. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+Is there anything else you have noticed, even if it seems small or unrelated?
+[free text]

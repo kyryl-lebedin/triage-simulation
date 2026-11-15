@@ -1,0 +1,187 @@
+NHS 111 ONLINE CHECK
+
+You can answer "Not sure" to any question, or skip it.
+
+1. EMERGENCY CHECK
+Is any of this happening right now, or has it happened today? Tick all that apply.
+[ ] Pain, tightness, pressure or a heavy feeling in your chest
+[ ] Your face dropping on one side, an arm going weak or heavy, or slurred or muddled speech, even if it has now passed
+[ ] Struggling to breathe, or too breathless to finish a sentence
+[ ] Bleeding that is still pouring or spurting after pressing on it for 10 minutes
+[ ] Passing out, having a fit, being very hard to wake, or not making sense
+[ ] Spots or bruise-like marks that stay visible when you press a clear glass firmly on them
+
+2. MAIN SYMPTOM
+What is the main thing bothering you today? Pick the closest.
+( ) Chest pain, tightness or discomfort, including heartburn
+( ) Trouble breathing, a cough, a cold or a sore throat
+( ) Headache, dizziness, a funny turn, weakness, numbness or speech problems
+( ) A high temperature, a rash, or feeling generally unwell (you or your child)
+( ) Tummy pain, period pain or pregnancy problems
+( ) Problems peeing, such as burning or going more often
+( ) Cuts, bites, or skin that is red, hot or sore
+( ) Problems with your poo, or bleeding from your bottom
+( ) Back pain
+( ) Toothache, or a swollen gum, face or jaw
+( ) Feeling very low, anxious, panicky or unable to cope
+
+3. QUESTIONS
+Only the section for the chosen symptom is shown.
+
+--- Chest pain, tightness or discomfort, including heartburn ---
+Q1. Does the pain, tightness or ache spread anywhere else, such as your arm, neck, jaw, back or tummy?
+    ( ) Yes   ( ) No
+Q2. Since it started, have you felt sweaty, clammy, sick or light-headed?
+    ( ) Yes   ( ) No
+Q3. How bad is the pain or discomfort?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+Q4. Is it harder to breathe than normal, or are you getting out of breath doing things that are usually easy?
+    ( ) Yes   ( ) No
+Q5. Did it start suddenly, over seconds or minutes, rather than building up over days?
+    ( ) Yes   ( ) No
+Q6. Is one of your legs, usually the calf, painful, swollen, red or warm?
+    ( ) Yes   ( ) No
+
+--- Trouble breathing, a cough, a cold or a sore throat ---
+Q1. Is it harder to breathe than normal, or are you getting out of breath doing things that are usually easy?
+    ( ) Yes   ( ) No
+Q2. Do you get a sharp pain in your chest or side when you take a deep breath or cough?
+    ( ) Yes   ( ) No
+Q3. Is one of your legs, usually the calf, painful, swollen, red or warm?
+    ( ) Yes   ( ) No
+Q4. Have you coughed up any blood, or seen pink, red or rust-coloured streaks in what you cough up?
+    ( ) Yes   ( ) No
+Q5. How long have you been coughing?
+    ( ) I don't have a cough   ( ) Less than 3 weeks   ( ) 3 weeks or longer
+Q6. Is swallowing so hard that you can't get drinks down, or you are dribbling because you can't swallow your spit?
+    ( ) Yes   ( ) No
+Q7. Have you felt hot and shivery, or had a temperature of 38°C or more?
+    ( ) Yes   ( ) No
+Q8. How poorly do you (or they) feel overall?
+    ( ) A little   ( ) Quite   ( ) Very
+
+--- Headache, dizziness, a funny turn, weakness, numbness or speech problems ---
+Q1. In the last few days, has your face dropped on one side, an arm or leg gone weak or numb, or your speech gone slurred or muddled, even if it is back to normal now?
+    ( ) Yes   ( ) No
+Q2. Did a headache come on suddenly, like being hit on the head, and reach its worst within a minute or so?
+    ( ) Yes   ( ) No
+Q3. Have you lost any of your sight, or started seeing double?
+    ( ) Yes   ( ) No
+Q4. How bad is the pain or discomfort?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- A high temperature, a rash, or feeling generally unwell (you or your child) ---
+Q1. Do they feel hot and shivery, or have a temperature of 38°C or more?
+    ( ) Yes   ( ) No
+Q2. Is there a rash of spots or bruise-like marks that does NOT fade when you press a clear glass firmly against it?
+    ( ) Yes   ( ) No
+Q3. Are they much sleepier than normal, hard to wake, floppy, or not making sense?
+    ( ) Yes   ( ) No
+Q4. Does it hurt to bend their chin down to their chest, or do bright lights hurt their eyes?
+    ( ) Yes   ( ) No
+Q5. Are their hands and feet unusually cold, or is their skin pale, blotchy or bluish?
+    ( ) Yes   ( ) No
+Q6. Are they drinking much less than normal, or have they not had a wee in the last 12 hours?
+    ( ) Yes   ( ) No
+Q7. How poorly do you (or they) feel overall?
+    ( ) A little   ( ) Quite   ( ) Very
+
+--- Tummy pain, period pain or pregnancy problems ---
+Q1. Is there any chance you could be pregnant? For example a late or missed period, even if you use contraception.
+    ( ) Yes   ( ) No
+Q2. Is the pain mainly low down on one side of your tummy?
+    ( ) Yes   ( ) No
+Q3. Do you have an unusual pain where your shoulder ends and your arm begins?
+    ( ) Yes   ( ) No
+Q4. Have you had bleeding from your vagina that is different from your normal period? For example lighter, darker, or at the wrong time.
+    ( ) Yes   ( ) No
+Q5. Have you felt dizzy, faint, or as if you might pass out?
+    ( ) Yes   ( ) No
+Q6. How bad is the pain or discomfort?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Problems peeing, such as burning or going more often ---
+Q1. Does it burn or sting when you pee, or do you need to pee more often than normal?
+    ( ) Yes   ( ) No
+Q2. Have you felt hot and shivery, or had a temperature of 38°C or more?
+    ( ) Yes   ( ) No
+Q3. Do you have pain in your side or in your back, just under your ribs?
+    ( ) Yes   ( ) No
+Q4. Have you been sick, or are you unable to keep drinks down?
+    ( ) Yes   ( ) No
+Q5. Is there any chance you could be pregnant? For example a late or missed period, even if you use contraception.
+    ( ) Yes   ( ) No
+Q6. Is your pee pink, red or brown, or can you see blood in it?
+    ( ) Yes   ( ) No
+Q7. How poorly do you (or they) feel overall?
+    ( ) A little   ( ) Quite   ( ) Very
+
+--- Cuts, bites, or skin that is red, hot or sore ---
+Q1. Is the red area getting bigger? For example, has it grown past where it was yesterday?
+    ( ) Yes   ( ) No
+Q2. Have you felt hot and shivery, or had a temperature of 38°C or more?
+    ( ) Yes   ( ) No
+Q3. Do you have diabetes, or any condition or medicine that weakens your immune system, such as chemotherapy or steroid tablets?
+    ( ) Yes   ( ) No
+Q4. Is it a cut whose edges don't stay together on their own, or can you see anything underneath the skin?
+    ( ) Yes   ( ) No
+Q5. If it is bleeding, does it stop when you press firmly on it?
+    ( ) Yes   ( ) No
+Q6. Is the area past the cut or sore patch numb, tingly or hard to move?
+    ( ) Yes   ( ) No
+Q7. How bad is the pain or discomfort?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Problems with your poo, or bleeding from your bottom ---
+Q1. Have you seen blood when you poo? On the paper, in the toilet, or mixed in with the poo.
+    ( ) Yes   ( ) No
+Q2. How long has this been going on?
+    ( ) Less than 3 weeks   ( ) 3 weeks or longer
+Q3. Have your toilet habits changed? For example going more often, looser poo, or constipation that is new for you.
+    ( ) Yes   ( ) No
+Q4. Have you lost weight without trying to?
+    ( ) Yes   ( ) No
+Q5. Is there a lot of blood, more than a few streaks, or is your poo black and sticky like tar?
+    ( ) Yes   ( ) No
+Q6. Have you felt dizzy, faint, or as if you might pass out?
+    ( ) Yes   ( ) No
+
+--- Back pain ---
+Q1. Is there any numbness or tingling around your bottom or genitals, the area that would touch a saddle?
+    ( ) Yes   ( ) No
+Q2. Since the pain started, have you had trouble peeing, or lost control of your pee or poo?
+    ( ) Yes   ( ) No
+Q3. Do either of your legs feel weak, numb, or like pins and needles?
+    ( ) Yes   ( ) No
+Q4. Did it start after a serious accident, such as a car crash or a fall from a height?
+    ( ) Yes   ( ) No
+Q5. Have you felt hot and shivery, or had a temperature of 38°C or more?
+    ( ) Yes   ( ) No
+Q6. How bad is the pain or discomfort?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Toothache, or a swollen gum, face or jaw ---
+Q1. Is your face, cheek or jaw swollen?
+    ( ) Yes   ( ) No
+Q2. Is the swelling making it hard to swallow, breathe or open your mouth, or is it closing your eye?
+    ( ) Yes   ( ) No
+Q3. Have you felt hot and shivery, or had a temperature of 38°C or more?
+    ( ) Yes   ( ) No
+Q4. Is your mouth bleeding, and it won't stop after biting on a clean cloth for 20 minutes?
+    ( ) Yes   ( ) No
+Q5. Have you had a knock to the face, or has an adult tooth been knocked out?
+    ( ) Yes   ( ) No
+Q6. How bad is the pain or discomfort?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Feeling very low, anxious, panicky or unable to cope ---
+Q1. Have you had thoughts of hurting yourself, or that you would be better off not being here?
+    ( ) Yes   ( ) No
+Q2. Have you thought about how you would do it, or do you feel you might act on these thoughts today?
+    ( ) Yes   ( ) No
+Q3. Have you hurt yourself today, or taken more of any medicine than you should?
+    ( ) Yes   ( ) No
+Q4. Are you on your own right now?
+    ( ) Yes   ( ) No
+Q5. How poorly do you (or they) feel overall?
+    ( ) A little   ( ) Quite   ( ) Very

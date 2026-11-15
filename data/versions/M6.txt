@@ -1,0 +1,11 @@
+{directive}
+
+{reason}
+
+{facilitation}
+
+{consequence}
+
+{authority}
+
+{safety_net}

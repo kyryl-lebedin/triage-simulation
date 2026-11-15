@@ -1,0 +1,182 @@
+{
+  "note": "Scenario 2 versions. Each version is a text file of placeholders in data/versions/. reason and safety_net are filled per case (vignettes.json → advice); the other placeholders per service (by_service).",
+  "simulated_local_data": "Place names, distances, opening hours and waiting times are invented placeholders. Replace with live directory-of-services data in a real deployment.",
+  "setup_prompt": "You have just finished an NHS 111 online check about how you feel. This message appears on your screen:\n\n---\n{message}\n---\n\nWhat do you do next? Choose one:\n1. Proceed: do what it says, in the time it gives\n2. Escalate: go to A&E or call 999 anyway\n3. Downgrade: do less than it says (wait and see, or treat it yourself)\n4. Second opinion: phone 111, redo the form, or ask someone else first\n5. Ignore: do nothing\n\nAnswer as the person you are, not as the person you think you should be.",
+  "arms": [
+    {
+      "id": "M0",
+      "label": "Bare directive",
+      "components": [
+        "directive"
+      ],
+      "changes_from_baseline": null,
+      "hypothesis": "Baseline. Step-down cases escalate near the real-world 11%.",
+      "type": "message",
+      "file": "versions/M0.txt"
+    },
+    {
+      "id": "M1",
+      "label": "+ Personal reason",
+      "components": [
+        "directive",
+        "reason"
+      ],
+      "changes_from_baseline": "Adds why, quoting the patient's own answers.",
+      "hypothesis": "Largest gain for low-trust profiles on step-down cases.",
+      "type": "message",
+      "file": "versions/M1.txt"
+    },
+    {
+      "id": "M2",
+      "label": "+ Safety net",
+      "components": [
+        "directive",
+        "safety_net"
+      ],
+      "changes_from_baseline": "Adds what to watch for and what to do then.",
+      "hypothesis": "Cuts escalation among anxious profiles: they have a plan if it gets worse.",
+      "type": "message",
+      "file": "versions/M2.txt"
+    },
+    {
+      "id": "M3",
+      "label": "+ Friction removal",
+      "components": [
+        "directive",
+        "facilitation"
+      ],
+      "changes_from_baseline": "Adds where, when, and what has already been done for them.",
+      "hypothesis": "Largest gain for hard-access profiles. Little effect on trust-driven refusals.",
+      "type": "message",
+      "file": "versions/M3.txt"
+    },
+    {
+      "id": "M4",
+      "label": "+ Consequence",
+      "components": [
+        "directive",
+        "consequence"
+      ],
+      "changes_from_baseline": "Adds the cost of the alternative: waiting time for step-down cases, risk of delay for act-now cases.",
+      "hypothesis": "Moves stoic profiles on act-now cases. May backfire on anxious profiles.",
+      "type": "message",
+      "file": "versions/M4.txt"
+    },
+    {
+      "id": "M5",
+      "label": "+ Authority and social proof",
+      "components": [
+        "directive",
+        "authority"
+      ],
+      "changes_from_baseline": "Adds who stands behind the advice and what most people do.",
+      "hypothesis": "Removes the 'wasting their time' barrier for stoic profiles on act-now cases.",
+      "type": "message",
+      "file": "versions/M5.txt"
+    },
+    {
+      "id": "M6",
+      "label": "All combined",
+      "components": [
+        "directive",
+        "reason",
+        "facilitation",
+        "consequence",
+        "authority",
+        "safety_net"
+      ],
+      "changes_from_baseline": "All five components.",
+      "hypothesis": "Highest proceed rate overall, but long: comprehension may drop for limited English.",
+      "type": "message",
+      "file": "versions/M6.txt"
+    }
+  ],
+  "components": [
+    {
+      "id": "directive",
+      "label": "Directive",
+      "source": "service"
+    },
+    {
+      "id": "reason",
+      "label": "Personal reason",
+      "source": "vignette"
+    },
+    {
+      "id": "facilitation",
+      "label": "Friction removal",
+      "source": "service"
+    },
+    {
+      "id": "consequence",
+      "label": "Consequence",
+      "source": "service"
+    },
+    {
+      "id": "authority",
+      "label": "Authority and social proof",
+      "source": "service"
+    },
+    {
+      "id": "safety_net",
+      "label": "Safety net",
+      "source": "vignette"
+    }
+  ],
+  "by_service": {
+    "ambulance": {
+      "directive": "Call 999 now and ask for an ambulance. Do not drive yourself.",
+      "facilitation": "Tap here to call 999. Your answers are on this screen, so you can read them out to the call handler.",
+      "consequence": "Minutes matter. Treatment for problems like this works best the sooner it starts, and waiting to see if it settles can make it much harder to treat.",
+      "authority": "This is the same advice an NHS 111 clinician would give you. Ambulance crews expect calls for these symptoms. You are not wasting anyone's time."
+    },
+    "ae": {
+      "directive": "Go to A&E now. Get someone to take you, or call 999 if you cannot get there. Do not drive yourself.",
+      "facilitation": "Nearest A&E: Northgate General Hospital, 2.1 miles, open 24 hours. We have sent them your answers, so show this screen at reception.",
+      "consequence": "Minutes matter. Treatment for problems like this works best the sooner it starts, and waiting to see if it settles can make it much harder to treat.",
+      "authority": "This is the same advice an NHS 111 clinician would give you. A&E staff expect to see people with these symptoms. You are not wasting anyone's time."
+    },
+    "utc": {
+      "directive": "You need to be seen by a doctor or nurse today. Go to an urgent treatment centre within the next 4 hours.",
+      "facilitation": "Nearest: Riverside Urgent Treatment Centre, 1.4 miles, open until 10pm, no appointment needed. Current wait is about 50 minutes. We have sent them your answers, so you won't need to repeat them.",
+      "consequence": "This is treatable, but it can get worse quickly. Being seen today usually means treatment and going home. Leaving it can mean a hospital stay.",
+      "authority": "This advice follows the NHS clinical guidance used by 111 nurses and doctors. Urgent treatment centres see people with this problem every day."
+    },
+    "urgent_gp": {
+      "directive": "You need to be seen by a GP today, within the next 6 hours. Do not wait for a routine appointment.",
+      "facilitation": "We have asked the urgent GP service to ring you on this number within 2 hours. They can arrange a face-to-face appointment this evening. Keep your phone on.",
+      "consequence": "This is treatable, but it can get worse quickly. Being seen today usually means treatment and going home. Leaving it can mean a hospital stay.",
+      "authority": "This advice follows the NHS clinical guidance used by 111 nurses and doctors. The urgent GP service sees people with this problem every day."
+    },
+    "mental_health": {
+      "directive": "Speak to the urgent mental health team today. Call 111 and choose the mental health option. It is open 24 hours.",
+      "facilitation": "Tap here to be connected now. You will speak to a trained mental health professional, and you won't have to repeat what you have told us.",
+      "consequence": "How you are feeling can be helped, and talking to someone today is the quickest way to start. Waiting for a routine appointment can mean more nights like the last few.",
+      "authority": "This advice follows NHS clinical guidance. The mental health line takes calls like yours every day. You are not wasting anyone's time."
+    },
+    "dental": {
+      "directive": "You need an urgent dental appointment within 24 hours. A GP or A&E cannot treat this.",
+      "facilitation": "We can book you into an urgent dental clinic: Castlegate Dental Access Centre, 1.8 miles, tomorrow at 9:10am. Tap to confirm. You do not need to be registered with a dentist.",
+      "consequence": "A GP cannot treat teeth, and A&E will send you to a dentist unless the swelling affects your breathing or swallowing. Infections like this get harder to treat the longer they are left.",
+      "authority": "This advice follows the NHS clinical guidance used by 111 nurses and doctors. Urgent dental clinics treat this every day, and most people are out of pain after one visit."
+    },
+    "gp": {
+      "directive": "Contact your GP surgery and ask for an appointment in the next 3 working days. You do not need emergency care.",
+      "facilitation": "You can book in the NHS App now, or tap here and we will ask your surgery to call you back at a time you choose. We have attached your answers to the request.",
+      "consequence": "A&E would mean a long wait, currently about 5 hours for non-urgent problems, and they would send you back to your GP. But don't leave it: getting this checked early keeps any treatment simple.",
+      "authority": "This advice follows the NHS clinical guidance used by 111 nurses and doctors. Most people with these symptoms see their GP first, and that is the fastest route to any tests you need."
+    },
+    "pharmacy": {
+      "directive": "Speak to a pharmacist today. You do not need a GP appointment or A&E.",
+      "facilitation": "Nearest: Wellfield Pharmacy, 0.3 miles, open until 8pm, no appointment needed. The pharmacist can supply prescription medicine for this if you need it. We have sent them your answers.",
+      "consequence": "A pharmacist can see you today in about 10 minutes. The next routine GP appointment is in 6 days, and the A&E wait for non-urgent problems is currently about 5 hours.",
+      "authority": "This advice follows the NHS clinical guidance used by 111 nurses and doctors. Pharmacists train for five years and treat this every day. Most people with these symptoms never need a GP."
+    },
+    "self_care": {
+      "directive": "You can look after this yourself at home. You do not need to see anyone at the moment.",
+      "facilitation": "We have sent a short care plan to your phone: what to take, what to expect day by day, and when to get help. You can reply to that text if anything changes.",
+      "consequence": "This gets better on its own, and a GP or A&E visit would not speed that up. The A&E wait for non-urgent problems is currently about 5 hours.",
+      "authority": "This advice follows the NHS clinical guidance used by 111 nurses and doctors. Most people with these symptoms get better at home without seeing anyone."
+    }
+  }
+}

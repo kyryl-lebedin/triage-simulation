@@ -1,0 +1,105 @@
+<!doctype html>
+<!-- A researcher's visualisation for a video transcript: a presenter on the left, the transcript on the right,
+     each word lighting up as it is "spoken". Stand-in sends the selected version as { standin: { name, type, text } }. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talking head</title>
+<style>
+  :root { --ink: #17140f; --paper: #fffdf7; --mustard: #f2b52b; --tomato: #e5432a; --dim: #fffdf755; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ink); color: var(--paper); font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; }
+  .player { display: grid; grid-template-rows: 1fr auto; width: 100%; aspect-ratio: 16 / 9; max-height: 100vh; }
+  .stage { display: grid; grid-template-columns: 32% 1fr; min-height: 0; }
+  .who { position: relative; display: grid; place-items: end center; overflow: hidden; background: radial-gradient(120% 90% at 50% 20%, #3a3327 0%, #17140f 70%); border-right: 2px solid #fffdf722; }
+  .who svg { width: 92%; max-height: 96%; display: block; }
+  .chip { position: absolute; left: 14px; top: 14px; padding: 4px 9px; border: 1.5px solid var(--paper); border-radius: 4px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .chip i { display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--tomato); }
+  .playing .chip i { animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: .2; } }
+  .text { display: flex; align-items: center; min-width: 0; min-height: 0; padding: 4% 5%; overflow: hidden; }
+  .text p { margin: 0; font-weight: 800; line-height: 1.22; letter-spacing: -.01em; }
+  .text span { color: var(--dim); transition: color 120ms; border-radius: .18em; padding: 0 .08em; margin: 0 -.08em; }
+  .text span.said { color: var(--paper); }
+  .text span.now { color: var(--ink); background: var(--mustard); }
+  .bar { display: flex; align-items: center; gap: 12px; padding: 8px 14px; border-top: 2px solid #fffdf722; font-size: 12px; font-weight: 700; }
+  button { display: grid; place-items: center; width: 34px; height: 34px; border: 1.5px solid var(--paper); border-radius: 6px; background: transparent; color: var(--paper); cursor: pointer; }
+  button:hover { background: var(--paper); color: var(--ink); }
+  button svg { width: 14px; height: 14px; fill: currentColor; }
+  .line { flex: 1; height: 6px; border-radius: 3px; background: #fffdf733; overflow: hidden; cursor: pointer; }
+  .line u { display: block; height: 100%; width: 0; background: var(--mustard); }
+  .name { max-width: 34%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #mouth { transition: d 70ms; }
+  @media (prefers-reduced-motion: reduce) { .text span { transition: none; } }
+</style>
+</head>
+<body>
+<div class="player" id="player">
+  <div class="stage">
+    <div class="who">
+      <span class="chip"><i></i>First 30 seconds</span>
+      <svg viewBox="0 0 300 360" aria-hidden="true">
+        <path d="M30 360c0-70 50-112 120-112s120 42 120 112z" fill="#2b46d6"/>
+        <path d="M118 236h64v34c-10 14-54 14-64 0z" fill="#e9b38f"/>
+        <ellipse cx="150" cy="150" rx="78" ry="92" fill="#f2c4a0"/>
+        <path d="M70 150c-8-70 30-112 80-112s90 40 80 112c-6-40-30-64-80-64s-74 24-80 64z" fill="#3a2a1c"/>
+        <g id="eyes"><ellipse cx="120" cy="150" rx="8" ry="9" fill="#17140f"/><ellipse cx="180" cy="150" rx="8" ry="9" fill="#17140f"/></g>
+        <path d="M104 128q16-10 32 0M164 128q16-10 32 0" stroke="#3a2a1c" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M150 158q-8 22 2 26" stroke="#d99a76" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path id="mouth" d="M126 204q24 6 48 0q-24 6 -48 0z" fill="#8f2a1c" stroke="#8f2a1c" stroke-width="3" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="text" id="text"><p id="words"></p></div>
+  </div>
+  <div class="bar">
+    <button id="play" aria-label="Play or pause"><svg viewBox="0 0 14 14"><path id="icon" d="M2 1l11 6-11 6z"/></svg></button>
+    <div class="line" id="line"><u id="fill"></u></div>
+    <span id="time">0:00</span>
+    <span class="name" id="name"></span>
+  </div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const MOUTHS = ['M126 204q24 6 48 0q-24 6 -48 0z', 'M128 200q22 4 44 0q-22 22 -44 0z', 'M132 198q18 2 36 0q-18 34 -36 0z', 'M130 202q20 6 40 0q-20 14 -40 0z'];
+let spans = [], at = [], total = 0, t = 0, playing = false, last = 0;
+
+function fit() {   /* the transcript fills the right half: the largest type that still fits */
+  const box = $('text'), p = $('words'); let lo = 10, hi = 120;
+  while (hi - lo > 1) { const m = (lo + hi) / 2; p.style.fontSize = m + 'px'; (p.scrollHeight <= box.clientHeight * .92 && p.scrollWidth <= box.clientWidth) ? lo = m : hi = m; }
+  p.style.fontSize = lo + 'px';
+}
+function draw(d) {
+  const words = (d.text || '').trim().split(/\s+/).filter(Boolean);
+  $('name').textContent = d.name || '';
+  $('words').innerHTML = words.map(w => `<span>${w.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</span>`).join(' ');
+  spans = [...$('words').children]; at = []; total = 0;
+  words.forEach(w => { at.push(total); total += 190 + w.length * 42 + (/[.!?]$/.test(w) ? 420 : /[,;:]$/.test(w) ? 180 : 0); });   /* about 165 words a minute */
+  t = 0; fit(); paint(); play(true);
+}
+function paint() {
+  let i = at.findIndex((a, k) => t < (at[k + 1] ?? total)); if (i < 0 || t >= total) i = spans.length;
+  spans.forEach((s, k) => { s.className = k < i ? 'said' : k === i && playing ? 'now' : ''; });
+  $('fill').style.width = (total ? Math.min(1, t / total) * 100 : 0) + '%';
+  $('time').textContent = `0:${String(Math.floor(t / 1000)).padStart(2, '0')}`;
+  const open = playing && i < spans.length && (t - at[i]) < 150 + spans[i].textContent.length * 30;
+  $('mouth').setAttribute('d', open ? MOUTHS[1 + Math.floor(t / 110) % 3] : MOUTHS[0]);
+  $('eyes').style.transform = Math.floor(t / 100) % 34 === 0 ? 'scaleY(.1)' : ''; $('eyes').style.transformOrigin = '150px 150px';
+}
+function play(on) {
+  playing = on && total > 0; if (playing && t >= total) t = 0;
+  $('player').classList.toggle('playing', playing);
+  $('icon').setAttribute('d', playing ? 'M2 1h4v12H2zM8 1h4v12H8z' : 'M2 1l11 6-11 6z');
+  last = performance.now(); paint();
+}
+function tick(now) { if (playing) { t += now - last; if (t >= total) { t = total; play(false); } paint(); } last = now; requestAnimationFrame(tick); }
+$('play').onclick = () => play(!playing);
+$('line').onclick = e => { const r = $('line').getBoundingClientRect(); t = (e.clientX - r.left) / r.width * total; paint(); };
+addEventListener('resize', () => { fit(); });
+addEventListener('message', e => { if (e.data && e.data.standin) draw(e.data.standin); });
+requestAnimationFrame(tick);
+if (parent !== window) { parent.postMessage({ standinReady: true }, '*'); parent.postMessage({ standinHeight: Math.round(innerWidth * 9 / 16) }, '*'); addEventListener('resize', () => parent.postMessage({ standinHeight: Math.round(innerWidth * 9 / 16) }, '*')); }
+else draw({ name: 'Sample', text: 'Wind is hitting forty. Pepper, stay close. Ten more minutes and nobody gets off this ridge tonight.' });
+</script>
+</body>
+</html>

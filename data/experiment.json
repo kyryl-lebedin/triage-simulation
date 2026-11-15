@@ -1,0 +1,360 @@
+{
+  "id": "triage-111-v1",
+  "name": "111 triage substitution + advice commitment",
+  "status": "design — no real runs yet",
+  "question": "Which substitute for a 111 call sends synthetic patients to the right NHS service, and which advice message makes them act on it?",
+  "stages": [
+    {
+      "id": "triage",
+      "label": "Stage 1 — Triage channel",
+      "unit": "vignette × profile × triage arm",
+      "treatment": "How the patient's information is collected (form wording, chatbot prompt, call script).",
+      "held_fixed": "One fixed engine reads every transcript and picks the service, so versions differ only in what the patient discloses.",
+      "outcome": "Service assigned vs gold service."
+    },
+    {
+      "id": "message",
+      "label": "Stage 2 — Commitment message",
+      "unit": "vignette × profile × message arm",
+      "treatment": "Wording of the advice message. One component is added to the bare directive per arm.",
+      "held_fixed": "Every message tells the patient the correct service for their case, so a wrong triage cannot blur the message effect.",
+      "outcome": "Patient action: proceed / escalate / downgrade / second opinion / ignore."
+    }
+  ],
+  "services": [
+    {
+      "id": "ambulance",
+      "label": "999 ambulance",
+      "level": "emergency",
+      "rank": 9,
+      "real_share": 11.9
+    },
+    {
+      "id": "ae",
+      "label": "A&E",
+      "level": "emergency",
+      "rank": 8,
+      "real_share": 7.1,
+      "real_note": "type 1 and 2 emergency departments"
+    },
+    {
+      "id": "utc",
+      "label": "Urgent treatment centre",
+      "level": "non_emergency",
+      "rank": 7,
+      "real_share": 6.5,
+      "real_note": "other emergency treatment centres, mostly UTCs"
+    },
+    {
+      "id": "urgent_gp",
+      "label": "Urgent GP (same day / out of hours)",
+      "level": "non_emergency",
+      "rank": 6,
+      "real_share": null,
+      "real_note": "counted inside primary care"
+    },
+    {
+      "id": "callback",
+      "label": "111 clinician call-back",
+      "level": "non_emergency",
+      "rank": 5,
+      "real_share": null
+    },
+    {
+      "id": "mental_health",
+      "label": "Urgent mental health line (111 option)",
+      "level": "non_emergency",
+      "rank": 4,
+      "real_share": null,
+      "real_note": "reported in a separate crisis-line statistic"
+    },
+    {
+      "id": "dental",
+      "label": "Urgent dental service",
+      "level": "non_emergency",
+      "rank": 3,
+      "real_share": 5.9
+    },
+    {
+      "id": "gp",
+      "label": "GP appointment (routine)",
+      "level": "non_emergency",
+      "rank": 2,
+      "real_share": 42.7,
+      "real_note": "contact or speak to primary care, any timeframe"
+    },
+    {
+      "id": "pharmacy",
+      "label": "Pharmacy",
+      "level": "self_care",
+      "rank": 1,
+      "real_share": 0.4,
+      "real_note": "plus 3.4% repeat prescriptions"
+    },
+    {
+      "id": "self_care",
+      "label": "Self-care at home",
+      "level": "self_care",
+      "rank": 0,
+      "real_share": 8.5
+    }
+  ],
+  "levels": [
+    {
+      "id": "emergency",
+      "label": "Emergency",
+      "rank": 2
+    },
+    {
+      "id": "non_emergency",
+      "label": "Non-emergency care",
+      "rank": 1
+    },
+    {
+      "id": "self_care",
+      "label": "Self-care",
+      "rank": 0
+    }
+  ],
+  "metrics": {
+    "triage": [
+      {
+        "id": "correct",
+        "label": "Correct",
+        "definition": "Assigned level = gold level (3 levels)."
+      },
+      {
+        "id": "under",
+        "label": "Under-triage",
+        "definition": "Assigned level below gold level. Safety metric."
+      },
+      {
+        "id": "over",
+        "label": "Over-triage",
+        "definition": "Assigned level above gold level. Demand metric."
+      },
+      {
+        "id": "abandoned",
+        "label": "Abandoned",
+        "definition": "Patient quit before a service was assigned."
+      },
+      {
+        "id": "exact_service",
+        "label": "Exact service",
+        "definition": "Assigned service = gold service (5 classes)."
+      },
+      {
+        "id": "worst_segment_under",
+        "label": "Worst-segment under-triage",
+        "definition": "Highest under-triage rate across profile segments. Headline number: averages hide harm."
+      }
+    ],
+    "message": [
+      {
+        "id": "proceed",
+        "label": "Proceed",
+        "definition": "Does what the message says, in the timeframe given."
+      },
+      {
+        "id": "escalate",
+        "label": "Escalate",
+        "definition": "Goes to a higher service than advised (A&E / 999 anyway)."
+      },
+      {
+        "id": "downgrade",
+        "label": "Downgrade",
+        "definition": "Does less than advised (waits, self-treats)."
+      },
+      {
+        "id": "second_opinion",
+        "label": "Second opinion",
+        "definition": "Phones 111, redoes the form, or asks someone else before acting."
+      },
+      {
+        "id": "ignore",
+        "label": "Ignore",
+        "definition": "Takes no action."
+      }
+    ]
+  },
+  "case_types": [
+    {
+      "id": "act_now",
+      "label": "Act-now cases",
+      "services": [
+        "ambulance",
+        "ae",
+        "utc",
+        "urgent_gp",
+        "callback",
+        "mental_health",
+        "dental"
+      ],
+      "failure": "downgrade or ignore"
+    },
+    {
+      "id": "step_down",
+      "label": "Step-down cases",
+      "services": [
+        "gp",
+        "pharmacy",
+        "self_care"
+      ],
+      "failure": "escalate"
+    }
+  ],
+  "validity_checks": [
+    {
+      "id": "leak_self_triage",
+      "label": "Knowledge-leak probe",
+      "test": "Arm T0 (self-triage) accuracy should sit near the human lay benchmark of 61% (Schmieding 2021). Far above means the patient agent knows the diagnosis.",
+      "benchmark": 0.609
+    },
+    {
+      "id": "leak_volunteering",
+      "label": "Unprompted disclosure",
+      "test": "In arm F0, share of critical facts disclosed without a matching question should be about 0.",
+      "benchmark": 0.0
+    },
+    {
+      "id": "manipulation_persona",
+      "label": "Persona manipulation check",
+      "test": "Stoic profiles must report lower severity than anxious profiles on the same vignette.",
+      "benchmark": null
+    },
+    {
+      "id": "anchor_symptom_checker",
+      "label": "Form baseline anchor",
+      "test": "F0 accuracy vs published symptom-checker average of 58% (Semigran / Schmieding).",
+      "benchmark": 0.58
+    },
+    {
+      "id": "anchor_compliance",
+      "label": "Compliance anchor",
+      "test": "M0 escalation on step-down cases vs 11% of 111 callers who attend ED after being told self-care or primary care (Lewis 2021).",
+      "benchmark": 0.11
+    }
+  ],
+  "claims_policy": "Report rankings of arms, not effect sizes. Gold labels were authored against nhs.uk guidance and need clinician review before any external claim.",
+  "sources": [
+    {
+      "label": "Schmieding et al. 2021, JMIR — laypeople vs symptom checkers",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7991983"
+    },
+    {
+      "label": "Lewis et al. 2021, PLoS ONE — compliance with 111 advice",
+      "url": "https://eprints.whiterose.ac.uk/id/eprint/173973"
+    },
+    {
+      "label": "NHS — how 111 online works",
+      "url": "https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-use-111/how-nhs-111-online-works"
+    },
+    {
+      "label": "NHS England IUC ADC 2025/26 (outcome shares)",
+      "url": "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/11/IUCADC-Apr25-to-Sep26-xxvm5.csv"
+    },
+    {
+      "label": "Nakubulwa et al. 2022, PLoS ONE — age and sex of 111 callers, London",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9022858/"
+    },
+    {
+      "label": "NHS — when to use 111 (services 111 directs to)",
+      "url": "https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-use-111/"
+    }
+  ],
+  "version_types": [
+    {
+      "id": "question",
+      "label": "Direct question",
+      "what": "One question put straight to the participant."
+    },
+    {
+      "id": "form",
+      "label": "Form",
+      "what": "Fixed questions with answer options, filled in by the participant."
+    },
+    {
+      "id": "agent_prompt",
+      "label": "Agent prompt",
+      "what": "Instructions for an AI agent that then talks to the participant."
+    },
+    {
+      "id": "message",
+      "label": "Message",
+      "what": "Text shown to the participant once."
+    }
+  ],
+  "services_source": {
+    "label": "NHS England IUC ADC, Apr 2025 to Mar 2026, phone calls, 17.6M final dispositions",
+    "url": "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/11/IUCADC-Apr25-to-Sep26-xxvm5.csv",
+    "note": "Category sums computed from the published CSV, not quoted from a table. Not shown: other outcome 14.3%, another service 0.8%."
+  },
+  "service_list_source": {
+    "label": "NHS: when to use 111",
+    "url": "https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-use-111/"
+  },
+  "case_mix": {
+    "real": {
+      "emergency": 23,
+      "non_emergency": 66,
+      "self_care": 11
+    },
+    "source": {
+      "label": "IUC ADC 2025/26",
+      "url": "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/11/IUCADC-Apr25-to-Sep26-xxvm5.csv",
+      "note": "outcome shares grouped by urgency and rescaled to 100. The experiment default is balanced, so each level has enough cases."
+    }
+  },
+  "pathway_shares": {
+    "items": [
+      [
+        "Dental problems",
+        10.7
+      ],
+      [
+        "Abdominal pain",
+        7.3
+      ],
+      [
+        "Skin",
+        3.7
+      ],
+      [
+        "Flank pain",
+        3.4
+      ],
+      [
+        "Chest or upper back pain",
+        3.1
+      ],
+      [
+        "Headache",
+        2.7
+      ],
+      [
+        "Sore throat",
+        2.6
+      ],
+      [
+        "Breathing",
+        2.6
+      ],
+      [
+        "Urinary",
+        2.4
+      ],
+      [
+        "Lower back",
+        2.3
+      ],
+      [
+        "Mental health",
+        1.7
+      ]
+    ],
+    "source": {
+      "label": "Turnbull et al., NIHR HS&DR, 111 online starting pathways, about 470k contacts",
+      "url": "https://journalslibrary.nihr.ac.uk/sites/journalslibrary/files/journal_data/hsdr09210/NIHR127655-supp1.docx"
+    }
+  }
+}

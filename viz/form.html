@@ -1,0 +1,110 @@
+<!doctype html>
+<!-- A researcher's visualisation for a form treatment: the plain-text form drawn as the form a patient would fill in.
+     It reads the text as written: "1. HEADING" starts a step, "[ ] x" is a tick box, "( ) x" a choice,
+     "- - - Name - - -" (three dashes each side) a set of questions shown only for that main symptom, "Q1. ..." a question,
+     "[free text]" a text box. Nothing typed here is sent anywhere.
+     Stand-in sends the selected version as { standin: { name, type, text } }. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form</title>
+<style>
+  :root { --ink: #0b0c0c; --muted: #505a5f; --line: #b1b4b6; --blue: #1d4ed8; --focus: #ffdd00; --bg: #f3f2f1; --ok: #00703c; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.45 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  .top { display: flex; align-items: center; gap: 12px; padding: 12px 24px; background: #0b0c0c; color: #fff; }
+  .top strong { font-size: 17px; letter-spacing: .01em; }
+  .top span { margin-left: auto; padding: 2px 8px; border: 1px solid #ffffff88; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .steps { display: flex; gap: 0; padding: 0 24px; background: #fff; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .steps a { display: flex; align-items: center; gap: 8px; padding: 12px 16px 10px 0; margin-right: 16px; border-bottom: 4px solid transparent; color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .steps a b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--muted); color: #fff; font-size: 12px; }
+  .steps a.on { color: var(--ink); border-bottom-color: var(--blue); } .steps a.on b { background: var(--blue); }
+  main { max-width: 760px; margin: 0 auto; padding: 22px 24px 28px; }
+  .intro { margin: 0 0 18px; padding: 12px 14px; border-left: 6px solid var(--blue); background: #fff; font-size: 15px; }
+  section { margin-bottom: 18px; padding: 20px 22px 8px; background: #fff; border: 1px solid var(--line); border-radius: 4px; }
+  section > h2 { margin: 0 0 4px; font-size: 22px; line-height: 1.2; }
+  section > h2 small { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .hint { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
+  fieldset { margin: 0 0 20px; padding: 0; border: 0; min-width: 0; }
+  legend { padding: 0; margin-bottom: 8px; font-size: 17px; font-weight: 700; line-height: 1.3; }
+  legend i { font-style: normal; color: var(--muted); font-weight: 600; margin-right: 6px; }
+  .opts { display: flex; flex-direction: column; gap: 8px; } .opts.row { flex-direction: row; flex-wrap: wrap; gap: 8px 22px; }
+  label.opt { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 16px; }
+  label.opt input { appearance: none; flex: none; width: 28px; height: 28px; margin: 0; border: 2px solid var(--ink); background: #fff; cursor: pointer; }
+  label.opt input[type=radio] { border-radius: 50%; }
+  label.opt input:checked { box-shadow: inset 0 0 0 5px #fff; background: var(--ink); }
+  label.opt input[type=checkbox]:checked { box-shadow: none; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center/20px no-repeat; }
+  label.opt input:focus-visible { outline: 3px solid var(--focus); outline-offset: 0; box-shadow: inset 0 0 0 2px var(--ink); }
+  label.opt span { padding-top: 3px; }
+  label.opt.ns span { color: var(--muted); }
+  textarea { display: block; width: 100%; min-height: 96px; padding: 8px; border: 2px solid var(--ink); border-radius: 0; font: inherit; resize: vertical; }
+  textarea:focus { outline: 3px solid var(--focus); }
+  .module { display: none; } .module.on { display: block; }
+  .module h3 { margin: 0 0 14px; padding: 6px 10px; background: var(--bg); border-left: 4px solid var(--blue); font-size: 16px; }
+  .foot { display: flex; align-items: center; gap: 14px; }
+  .foot button { padding: 9px 18px; border: 0; border-radius: 3px; background: var(--ok); color: #fff; font: 700 17px/1.2 inherit; box-shadow: 0 2px 0 #002d18; cursor: pointer; }
+  .foot span { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="top"><strong id="title">Online check</strong><span>Research prototype · not a live service</span></div>
+<nav class="steps" id="steps"></nav>
+<main id="main"></main>
+<script>
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let uid = 0;
+function parse(text) {
+  const lines = text.replace(/\r/g, '').split('\n'), form = { title: '', intro: [], steps: [] };
+  let step = null, mod = null, q = null;
+  const home = () => mod || step;
+  const options = l => [...l.matchAll(/([(\[]) ?[)\]]\s*(.+?)(?=\s{2,}[(\[] ?[)\]]|$)/g)].map(m => ({ kind: m[1] === '[' ? 'checkbox' : 'radio', label: m[2].trim() }));
+  for (const raw of lines) {
+    const l = raw.trim(); let m;
+    if (!l) { if (q && q.opts.length) q = null; continue; }
+    if (!form.title) { form.title = l; continue; }
+    if ((m = /^(\d+)\.\s+([A-Z][A-Z ,'&\/-]+)$/.exec(l))) { step = { n: m[1], name: m[2][0] + m[2].slice(1).toLowerCase(), items: [], mods: [] }; form.steps.push(step); mod = q = null; continue; }
+    if (!step) { form.intro.push(l); continue; }
+    if ((m = /^-{3}\s*(.+?)\s*-{3}$/.exec(l))) { mod = { name: m[1], items: [] }; step.mods.push(mod); q = null; continue; }
+    if ((m = /^Q(\d+)\.\s*(.+)$/.exec(l))) { q = { n: m[1], text: m[2], opts: [] }; home().items.push(q); continue; }
+    if (/^\[free text\]$/i.test(l)) { home().items.push({ free: true, text: q && !q.opts.length ? home().items.pop().text : (home().items.length && home().items[home().items.length - 1].hint ? home().items.pop().hint : 'Tell us in your own words') }); q = null; continue; }
+    if (/^[(\[] ?[)\]]/.test(l)) {
+      if (!q) { const prev = home().items[home().items.length - 1]; q = { n: '', text: prev && prev.hint ? home().items.pop().hint : '', opts: [] }; home().items.push(q); }
+      q.opts.push(...options(l)); continue;
+    }
+    q = null; home().items.push({ hint: l });
+  }
+  return form;
+}
+function question(x) {
+  const name = 'q' + uid++;
+  if (x.hint) return `<p class="hint">${esc(x.hint)}</p>`;
+  if (x.free) return `<fieldset><legend>${esc(x.text)}</legend><textarea aria-label="${esc(x.text)}"></textarea></fieldset>`;
+  const kind = x.opts[0] ? x.opts[0].kind : 'radio', short = x.opts.every(o => o.label.length <= 12) && x.opts.length <= 4;
+  const opts = x.opts.map(o => `<label class="opt"><input type="${kind}" name="${name}"><span>${esc(o.label)}</span></label>`).join('');
+  const ns = kind === 'radio' && x.n ? `<label class="opt ns"><input type="radio" name="${name}"><span>Not sure</span></label>` : '';
+  return `<fieldset><legend>${x.n ? `<i>${esc(x.n)}.</i>` : ''}${esc(x.text)}</legend><div class="opts${short ? ' row' : ''}">${opts}${ns}</div></fieldset>`;
+}
+function draw(d) {
+  uid = 0;
+  const f = parse(d.text || '');
+  document.getElementById('title').textContent = f.title || d.name || 'Online check';
+  document.getElementById('steps').innerHTML = f.steps.map((s, i) => `<a href="#s${i}" class="${i ? '' : 'on'}"><b>${esc(s.n)}</b>${esc(s.name)}</a>`).join('');
+  document.getElementById('main').innerHTML = (f.intro.length ? `<p class="intro">${esc(f.intro.join(' '))}</p>` : '') + f.steps.map((s, i) =>
+    `<section id="s${i}"><h2><small>Step ${esc(s.n)} of ${f.steps.length}</small>${esc(s.name)}</h2>${s.items.map(question).join('')}${s.mods.map((m, k) => `<div class="module${k ? '' : ' on'}" data-name="${esc(m.name)}"><h3>${esc(m.name)}</h3>${m.items.map(question).join('')}</div>`).join('')}</section>`).join('')
+    + `<div class="foot"><button type="button">Continue</button><span>Nothing you enter here is saved or sent.</span></div>`;
+  /* choosing the main symptom shows that symptom's questions, as the form says it does */
+  const mods = [...document.querySelectorAll('.module')];
+  if (mods.length) document.querySelectorAll('section').forEach(sec => { if (sec.querySelector('.module')) return;
+    sec.querySelectorAll('input[type=radio]').forEach((r, i, all) => { if (all.length !== mods.length) return;
+      r.addEventListener('change', () => { const lab = r.parentNode.textContent.trim(); const hit = mods.find(m => m.dataset.name === lab) || mods[i]; mods.forEach(m => m.classList.toggle('on', m === hit)); size(); });
+      if (i === 0) r.checked = true; }); });
+  size();
+}
+function size() { if (parent !== window) parent.postMessage({ standinHeight: document.documentElement.scrollHeight }, '*'); }
+addEventListener('message', e => { if (e.data && e.data.standin) draw(e.data.standin); });
+if (parent !== window) parent.postMessage({ standinReady: true }, '*');
+else draw({ name: 'Sample', text: 'ONLINE CHECK\n\nYou can skip any question.\n\n1. MAIN SYMPTOM\nSelect one.\n( ) Chest pain\n( ) Back pain\n\n2. QUESTIONS\n--- Chest pain ---\nQ1. How severe?\n    ( ) Mild   ( ) Severe\n--- Back pain ---\nQ1. Since when?\n[free text]' });
+</script>
+</body>
+</html>

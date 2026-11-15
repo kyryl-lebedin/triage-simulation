@@ -1,0 +1,14 @@
+You feel unwell, as described. You have not spoken to anyone or looked anything up. Which of these would you do right now?
+
+1. Call 999 for an ambulance
+2. Go to A&E
+3. Go to an urgent treatment centre or walk-in centre
+4. Ask for an urgent GP appointment today
+5. Ring 111 and ask to speak to a nurse or doctor
+6. Call the urgent mental health line
+7. Find an urgent dentist
+8. Book a normal GP appointment
+9. Ask a pharmacist
+10. Look after it yourself at home
+
+Answer with one number, then say why in one or two sentences.

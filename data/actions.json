@@ -1,0 +1,384 @@
+{
+  "note": "Allowed moves and follow-up questions, keyed by version type. A version only gets the moves of its own type. Follow-ups are asked by a researcher voice after the action is locked, so they cannot change it.",
+  "classes": [
+    {
+      "id": "question",
+      "label": "Direct question",
+      "arms": [
+        "T0"
+      ],
+      "actions": [
+        {
+          "id": "choose_service",
+          "label": "Choose one of the 5 services",
+          "when": "once",
+          "records": "service"
+        }
+      ],
+      "followups": [
+        {
+          "id": "why_service",
+          "ask": "Why did you choose that?",
+          "type": "text",
+          "why": "Shows which symptom the patient weighted and which they dismissed."
+        },
+        {
+          "id": "self_diagnosis",
+          "ask": "What do you think is wrong with you?",
+          "type": "text",
+          "why": "Leak check. The answer should be the lay belief, not the true condition."
+        },
+        {
+          "id": "confidence",
+          "ask": "How sure are you that this is the right place to go?",
+          "type": "scale_1_5",
+          "why": "Low confidence predicts who would use a tool at all."
+        }
+      ],
+      "type": "question"
+    },
+    {
+      "id": "form",
+      "label": "Form",
+      "arms": [
+        "F0",
+        "F1",
+        "F2",
+        "F3"
+      ],
+      "actions": [
+        {
+          "id": "tick_items",
+          "label": "Tick any emergency-screen items",
+          "when": "emergency screen",
+          "records": "item ids"
+        },
+        {
+          "id": "pick_topic",
+          "label": "Pick a main-symptom topic",
+          "when": "topic question",
+          "records": "module id"
+        },
+        {
+          "id": "select_option",
+          "label": "Select an answer option",
+          "when": "each closed question",
+          "records": "option"
+        },
+        {
+          "id": "not_sure",
+          "label": "Answer \"Not sure\"",
+          "when": "each closed question",
+          "records": "flag"
+        },
+        {
+          "id": "skip",
+          "label": "Skip the question",
+          "when": "each question",
+          "records": "flag"
+        },
+        {
+          "id": "write_text",
+          "label": "Write free text",
+          "when": "free-text fields (F3 only)",
+          "records": "text"
+        },
+        {
+          "id": "submit",
+          "label": "Submit the form",
+          "when": "end",
+          "records": "transcript goes to the engine"
+        },
+        {
+          "id": "abandon",
+          "label": "Abandon and do something else",
+          "when": "any point",
+          "records": "what instead: go to A&E / phone 111 / phone GP / do nothing"
+        },
+        {
+          "id": "restart",
+          "label": "Go back and change answers",
+          "when": "after seeing the outcome",
+          "records": "which answers changed. Capped at one restart."
+        }
+      ],
+      "followups": [
+        {
+          "id": "think_aloud",
+          "ask": "In your own words, what was this question asking?",
+          "type": "text",
+          "when": "after every closed question",
+          "why": "Question-level misreading map. Compare with the concept the question targets."
+        },
+        {
+          "id": "why_not_sure",
+          "ask": "What made that hard to answer?",
+          "type": "text",
+          "when": "after each Not sure or Skip",
+          "why": "Separates did-not-understand from does-not-know from did-not-want-to-say."
+        },
+        {
+          "id": "unasked",
+          "ask": "Was there anything about how you feel that the form never asked about?",
+          "type": "text",
+          "when": "after submit",
+          "why": "Lists facts the form had no question for. Feeds the never-asked tag."
+        },
+        {
+          "id": "held_back",
+          "ask": "Was there anything you chose not to mention, or played down? Why?",
+          "type": "text",
+          "when": "after submit",
+          "why": "Feeds the downplayed tag."
+        },
+        {
+          "id": "why_abandon",
+          "ask": "What made you stop, and what will you do now?",
+          "type": "text",
+          "when": "after abandon",
+          "why": "Abandonment turns into phone or A&E demand, so the destination matters."
+        },
+        {
+          "id": "why_restart",
+          "ask": "Why did you change your answers?",
+          "type": "text",
+          "when": "after restart",
+          "why": "Detects gaming the form to get a preferred outcome."
+        },
+        {
+          "id": "effort",
+          "ask": "How much effort was the form?",
+          "type": "scale_1_5",
+          "when": "after submit or abandon",
+          "why": "Cost side of the longer variants."
+        }
+      ],
+      "type": "form"
+    },
+    {
+      "id": "agent_prompt",
+      "type": "agent_prompt",
+      "label": "Agent prompt",
+      "arms": [
+        "C0",
+        "C1",
+        "C2",
+        "CALL"
+      ],
+      "actions": [
+        {
+          "id": "reply",
+          "label": "Reply in free text",
+          "when": "each turn",
+          "records": "text"
+        },
+        {
+          "id": "ask_clarification",
+          "label": "Ask what the question means",
+          "when": "each turn",
+          "records": "text"
+        },
+        {
+          "id": "not_sure",
+          "label": "Say they don't know",
+          "when": "each turn",
+          "records": "flag"
+        },
+        {
+          "id": "decline",
+          "label": "Decline to answer",
+          "when": "each turn",
+          "records": "flag"
+        },
+        {
+          "id": "correct_summary",
+          "label": "Correct the agent's summary",
+          "when": "when the agent reads a summary back",
+          "records": "text"
+        },
+        {
+          "id": "abandon",
+          "label": "Leave the conversation",
+          "when": "any point",
+          "records": "what instead: go to A&E / phone 111 / phone GP / do nothing"
+        }
+      ],
+      "followups": [
+        {
+          "id": "unasked",
+          "ask": "Was there anything about how you feel that the agent never asked about?",
+          "type": "text",
+          "when": "after the chat ends",
+          "why": "Feeds the never-asked tag."
+        },
+        {
+          "id": "held_back",
+          "ask": "Was there anything you chose not to mention, or played down? Why?",
+          "type": "text",
+          "when": "after the chat ends",
+          "why": "Feeds the downplayed tag."
+        },
+        {
+          "id": "felt_heard",
+          "ask": "Did the agent understand what you were telling it?",
+          "type": "scale_1_5",
+          "when": "after the chat ends",
+          "why": "Predicts whether the advice in stage 2 will be trusted."
+        },
+        {
+          "id": "why_abandon",
+          "ask": "What made you leave, and what will you do now?",
+          "type": "text",
+          "when": "after abandon",
+          "why": "Destination of abandoned contacts."
+        },
+        {
+          "id": "effort",
+          "ask": "How much effort was the conversation?",
+          "type": "scale_1_5",
+          "when": "after the chat ends",
+          "why": "Cost side of the probing variants."
+        }
+      ]
+    },
+    {
+      "id": "message",
+      "label": "Message",
+      "arms": [
+        "M0",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "actions": [
+        {
+          "id": "proceed",
+          "label": "Proceed",
+          "detail": "Do what the message says, within the time it gives.",
+          "when": "once",
+          "records": "action"
+        },
+        {
+          "id": "escalate",
+          "label": "Escalate",
+          "detail": "Go to a higher service than advised: A&E or 999 anyway.",
+          "when": "once",
+          "records": "action + where"
+        },
+        {
+          "id": "downgrade",
+          "label": "Downgrade",
+          "detail": "Do less than advised: wait and see, or treat it yourself.",
+          "when": "once",
+          "records": "action + what instead"
+        },
+        {
+          "id": "second_opinion",
+          "label": "Second opinion",
+          "detail": "Phone 111, redo the form, or ask someone else before deciding.",
+          "when": "once",
+          "records": "action + who"
+        },
+        {
+          "id": "ignore",
+          "label": "Ignore",
+          "detail": "Take no action.",
+          "when": "once",
+          "records": "action"
+        }
+      ],
+      "followups": [
+        {
+          "id": "reason_code",
+          "ask": "What was the main reason?",
+          "type": "choice",
+          "options": [
+            "trust",
+            "perceived_severity",
+            "access",
+            "wait_time",
+            "did_not_understand",
+            "past_experience",
+            "other"
+          ],
+          "why": "Codes the driver so reasons can be counted per arm and segment."
+        },
+        {
+          "id": "reason_text",
+          "ask": "Tell us why in your own words.",
+          "type": "text",
+          "why": "The quotable why."
+        },
+        {
+          "id": "decisive_part",
+          "ask": "Which sentence in the message mattered most to your decision? Quote it.",
+          "type": "text",
+          "why": "Attributes the action to a message component. Verified by deleting that component and re-running."
+        },
+        {
+          "id": "playback",
+          "ask": "In your own words, what were you told to do, and by when?",
+          "type": "text",
+          "why": "Comprehension check. Separates did-not-understand from chose-not-to."
+        },
+        {
+          "id": "when_act",
+          "ask": "When would you actually do it?",
+          "type": "choice",
+          "options": [
+            "Right now",
+            "Later today",
+            "In the next few days",
+            "Not at all"
+          ],
+          "why": "Proceeding late on an act-now case is still a failure."
+        },
+        {
+          "id": "perceived_urgency",
+          "ask": "How serious do you now think this is?",
+          "type": "scale_1_5",
+          "why": "Checks whether the message moved perceived severity toward the true level."
+        },
+        {
+          "id": "change_mind",
+          "ask": "What would have made you follow the advice? (Only asked if they did not proceed.)",
+          "type": "text",
+          "why": "Direct input for the next message variant."
+        }
+      ],
+      "type": "message"
+    }
+  ],
+  "miss_attribution": {
+    "note": "Computed by comparing the transcript with the hidden fact sheet. Not self-report. One tag per critical fact that the engine did not get.",
+    "tags": [
+      {
+        "id": "never_asked",
+        "label": "Never asked",
+        "definition": "No question in the transcript targets this fact.",
+        "fix": "Add or route to the question."
+      },
+      {
+        "id": "misunderstood",
+        "label": "Asked, misunderstood",
+        "definition": "A question targeted it, but the think-aloud shows the patient read it as something else.",
+        "fix": "Reword the question."
+      },
+      {
+        "id": "downplayed",
+        "label": "Asked, downplayed",
+        "definition": "The patient understood the question and gave an answer weaker than the fact sheet.",
+        "fix": "Anchor the scale or probe."
+      },
+      {
+        "id": "engine_missed",
+        "label": "Disclosed, engine missed",
+        "definition": "The fact is in the transcript and the engine still assigned too low a service.",
+        "fix": "Fix the engine rubric, not the channel."
+      }
+    ]
+  }
+}

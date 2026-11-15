@@ -1,0 +1,734 @@
+{
+  "note": "Question bank for the form arms. F0 is the baseline. F1, F2 and F3 each change one thing from F0. Text is authored for this experiment in the style of 111 online; it is not NHS Pathways content, which is licensed.",
+  "variant_rules": {
+    "F0": "Use F0 text everywhere.",
+    "F1": "Use F1 text everywhere (plain-language rewrite: lay synonyms, examples, explicit time frame). Same questions, same order, same answer options.",
+    "F2": "Use F0 text, except scale questions use their F2 version (severity anchored to what the patient can do).",
+    "F3": "Use F0 text, plus the module's describe_prompt before its questions and final_open at the end. Both are free text."
+  },
+  "universal_actions": [
+    "Not sure",
+    "Skip"
+  ],
+  "emergency_screen": {
+    "F0": "Do you have any of the following? Tick all that apply.",
+    "F1": "Is any of this happening right now, or has it happened today? Tick all that apply.",
+    "items": [
+      {
+        "id": "es_chest",
+        "concept": "crushing_chest_pain",
+        "F0": "Chest pain",
+        "F1": "Pain, tightness, pressure or a heavy feeling in your chest"
+      },
+      {
+        "id": "es_stroke",
+        "concept": "stroke_signs",
+        "F0": "Facial droop, arm weakness or speech difficulty",
+        "F1": "Your face dropping on one side, an arm going weak or heavy, or slurred or muddled speech, even if it has now passed"
+      },
+      {
+        "id": "es_breath",
+        "concept": "breathlessness",
+        "F0": "Severe difficulty breathing",
+        "F1": "Struggling to breathe, or too breathless to finish a sentence"
+      },
+      {
+        "id": "es_bleed",
+        "concept": "heavy_bleeding",
+        "F0": "Heavy bleeding that will not stop",
+        "F1": "Bleeding that is still pouring or spurting after pressing on it for 10 minutes"
+      },
+      {
+        "id": "es_conscious",
+        "concept": "drowsy_confused",
+        "F0": "Loss of consciousness, seizure or new confusion",
+        "F1": "Passing out, having a fit, being very hard to wake, or not making sense"
+      },
+      {
+        "id": "es_rash",
+        "concept": "non_blanching_rash",
+        "F0": "Rash that does not fade under pressure",
+        "F1": "Spots or bruise-like marks that stay visible when you press a clear glass firmly on them"
+      }
+    ]
+  },
+  "topic_question": {
+    "F0": "Select your main symptom.",
+    "F1": "What is the main thing bothering you today? Pick the closest."
+  },
+  "final_open": "Is there anything else you have noticed, even if it seems small or unrelated?",
+  "scales": {
+    "pain": {
+      "concept": "pain_severity",
+      "F0": {
+        "text": "How severe is the pain?",
+        "options": [
+          "Mild",
+          "Moderate",
+          "Severe"
+        ]
+      },
+      "F1": {
+        "text": "How bad is the pain or discomfort?",
+        "options": [
+          "Mild",
+          "Moderate",
+          "Severe"
+        ]
+      },
+      "F2": {
+        "text": "What is the pain or discomfort stopping you from doing?",
+        "options": [
+          "Nothing. I'm carrying on as normal",
+          "I've had to stop what I was doing",
+          "I can't sleep, walk about or concentrate",
+          "I can't do anything. It's the worst I have ever felt"
+        ]
+      }
+    },
+    "unwell": {
+      "concept": "how_unwell",
+      "F0": {
+        "text": "How unwell do you feel?",
+        "options": [
+          "Mildly",
+          "Moderately",
+          "Severely"
+        ]
+      },
+      "F1": {
+        "text": "How poorly do you (or they) feel overall?",
+        "options": [
+          "A little",
+          "Quite",
+          "Very"
+        ]
+      },
+      "F2": {
+        "text": "Which is closest to today?",
+        "options": [
+          "Carrying on as normal",
+          "Resting at home but up and about",
+          "Mostly in bed",
+          "Too unwell to get up, eat or drink"
+        ]
+      }
+    },
+    "breath": {
+      "concept": "breathlessness",
+      "F0": {
+        "text": "Are you short of breath?",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      },
+      "F1": {
+        "text": "Is it harder to breathe than normal, or are you getting out of breath doing things that are usually easy?",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      },
+      "F2": {
+        "text": "How is your breathing right now?",
+        "options": [
+          "Normal for me",
+          "Out of breath when I walk or climb stairs",
+          "Out of breath when I'm sitting still",
+          "I have to stop mid-sentence to breathe"
+        ]
+      }
+    }
+  },
+  "modules": [
+    {
+      "id": "chest",
+      "label": {
+        "F0": "Chest pain",
+        "F1": "Chest pain, tightness or discomfort, including heartburn"
+      },
+      "describe_prompt": "Describe what you are feeling in your chest in your own words. Where is it, what does it feel like, and does it go anywhere else?",
+      "questions": [
+        {
+          "id": "ch_radiation",
+          "concept": "pain_radiation",
+          "type": "yesno",
+          "F0": "Does the pain radiate to the arm, neck, jaw or back?",
+          "F1": "Does the pain, tightness or ache spread anywhere else, such as your arm, neck, jaw, back or tummy?"
+        },
+        {
+          "id": "ch_autonomic",
+          "concept": "sweating_nausea",
+          "type": "yesno",
+          "F0": "Is the pain associated with sweating, nausea or vomiting?",
+          "F1": "Since it started, have you felt sweaty, clammy, sick or light-headed?"
+        },
+        {
+          "id": "ch_severity",
+          "type": "scale",
+          "scale": "pain"
+        },
+        {
+          "id": "ch_breath",
+          "type": "scale",
+          "scale": "breath"
+        },
+        {
+          "id": "ch_onset",
+          "concept": "onset_sudden",
+          "type": "yesno",
+          "F0": "Was the onset sudden?",
+          "F1": "Did it start suddenly, over seconds or minutes, rather than building up over days?"
+        },
+        {
+          "id": "ch_calf",
+          "concept": "calf_swelling",
+          "type": "yesno",
+          "F0": "Do you have swelling or pain in one leg?",
+          "F1": "Is one of your legs, usually the calf, painful, swollen, red or warm?"
+        }
+      ]
+    },
+    {
+      "id": "breathing",
+      "label": {
+        "F0": "Breathing problems, cough or sore throat",
+        "F1": "Trouble breathing, a cough, a cold or a sore throat"
+      },
+      "describe_prompt": "Describe your breathing, cough or throat problem in your own words. When did it start and what makes it worse?",
+      "questions": [
+        {
+          "id": "br_breath",
+          "type": "scale",
+          "scale": "breath"
+        },
+        {
+          "id": "br_pleuritic",
+          "concept": "pleuritic_pain",
+          "type": "yesno",
+          "F0": "Do you have chest pain on inspiration?",
+          "F1": "Do you get a sharp pain in your chest or side when you take a deep breath or cough?"
+        },
+        {
+          "id": "br_calf",
+          "concept": "calf_swelling",
+          "type": "yesno",
+          "F0": "Do you have swelling or pain in one leg?",
+          "F1": "Is one of your legs, usually the calf, painful, swollen, red or warm?"
+        },
+        {
+          "id": "br_blood",
+          "concept": "coughing_blood",
+          "type": "yesno",
+          "F0": "Have you coughed up blood?",
+          "F1": "Have you coughed up any blood, or seen pink, red or rust-coloured streaks in what you cough up?"
+        },
+        {
+          "id": "br_duration",
+          "concept": "cough_duration",
+          "type": "choice",
+          "F0": {
+            "text": "Duration of cough?",
+            "options": [
+              "No cough",
+              "Under 3 weeks",
+              "3 weeks or more"
+            ]
+          },
+          "F1": {
+            "text": "How long have you been coughing?",
+            "options": [
+              "I don't have a cough",
+              "Less than 3 weeks",
+              "3 weeks or longer"
+            ]
+          }
+        },
+        {
+          "id": "br_swallow",
+          "concept": "cant_swallow",
+          "type": "yesno",
+          "F0": "Are you unable to swallow fluids or saliva?",
+          "F1": "Is swallowing so hard that you can't get drinks down, or you are dribbling because you can't swallow your spit?"
+        },
+        {
+          "id": "br_fever",
+          "concept": "fever",
+          "type": "yesno",
+          "F0": "Do you have a fever?",
+          "F1": "Have you felt hot and shivery, or had a temperature of 38°C or more?"
+        },
+        {
+          "id": "br_unwell",
+          "type": "scale",
+          "scale": "unwell"
+        }
+      ]
+    },
+    {
+      "id": "head_neuro",
+      "label": {
+        "F0": "Headache, dizziness or neurological symptoms",
+        "F1": "Headache, dizziness, a funny turn, weakness, numbness or speech problems"
+      },
+      "describe_prompt": "Describe what happened in your own words, including anything other people noticed about you.",
+      "questions": [
+        {
+          "id": "hn_stroke",
+          "concept": "stroke_signs",
+          "type": "yesno",
+          "F0": "Do you have facial droop, limb weakness or speech difficulty?",
+          "F1": "In the last few days, has your face dropped on one side, an arm or leg gone weak or numb, or your speech gone slurred or muddled, even if it is back to normal now?"
+        },
+        {
+          "id": "hn_thunder",
+          "concept": "thunderclap",
+          "type": "yesno",
+          "F0": "Was there a sudden-onset severe headache?",
+          "F1": "Did a headache come on suddenly, like being hit on the head, and reach its worst within a minute or so?"
+        },
+        {
+          "id": "hn_vision",
+          "concept": "vision_change",
+          "type": "yesno",
+          "F0": "Any visual disturbance?",
+          "F1": "Have you lost any of your sight, or started seeing double?"
+        },
+        {
+          "id": "hn_severity",
+          "type": "scale",
+          "scale": "pain"
+        }
+      ]
+    },
+    {
+      "id": "fever_rash",
+      "label": {
+        "F0": "Fever or rash",
+        "F1": "A high temperature, a rash, or feeling generally unwell (you or your child)"
+      },
+      "describe_prompt": "Describe how they are in your own words. What is different from how they normally are?",
+      "questions": [
+        {
+          "id": "fr_fever",
+          "concept": "fever",
+          "type": "yesno",
+          "F0": "Is there a fever?",
+          "F1": "Do they feel hot and shivery, or have a temperature of 38°C or more?"
+        },
+        {
+          "id": "fr_rash",
+          "concept": "non_blanching_rash",
+          "type": "yesno",
+          "F0": "Is there a non-blanching rash?",
+          "F1": "Is there a rash of spots or bruise-like marks that does NOT fade when you press a clear glass firmly against it?"
+        },
+        {
+          "id": "fr_drowsy",
+          "concept": "drowsy_confused",
+          "type": "yesno",
+          "F0": "Is the patient drowsy or confused?",
+          "F1": "Are they much sleepier than normal, hard to wake, floppy, or not making sense?"
+        },
+        {
+          "id": "fr_neck",
+          "concept": "neck_stiffness",
+          "type": "yesno",
+          "F0": "Is there neck stiffness or photophobia?",
+          "F1": "Does it hurt to bend their chin down to their chest, or do bright lights hurt their eyes?"
+        },
+        {
+          "id": "fr_cold",
+          "concept": "cold_extremities",
+          "type": "yesno",
+          "F0": "Are the extremities cold or mottled?",
+          "F1": "Are their hands and feet unusually cold, or is their skin pale, blotchy or bluish?"
+        },
+        {
+          "id": "fr_fluids",
+          "concept": "not_drinking",
+          "type": "yesno",
+          "F0": "Is there reduced fluid intake or urine output?",
+          "F1": "Are they drinking much less than normal, or have they not had a wee in the last 12 hours?"
+        },
+        {
+          "id": "fr_unwell",
+          "type": "scale",
+          "scale": "unwell"
+        }
+      ]
+    },
+    {
+      "id": "tummy_pelvic",
+      "label": {
+        "F0": "Abdominal or pelvic pain",
+        "F1": "Tummy pain, period pain or pregnancy problems"
+      },
+      "describe_prompt": "Describe the pain in your own words. Where exactly is it, and have you noticed anything else unusual anywhere in your body?",
+      "questions": [
+        {
+          "id": "tp_pregnant",
+          "concept": "possible_pregnancy",
+          "type": "yesno",
+          "F0": "Could you be pregnant?",
+          "F1": "Is there any chance you could be pregnant? For example a late or missed period, even if you use contraception."
+        },
+        {
+          "id": "tp_side",
+          "concept": "one_sided_pain",
+          "type": "yesno",
+          "F0": "Is the pain localised to one side?",
+          "F1": "Is the pain mainly low down on one side of your tummy?"
+        },
+        {
+          "id": "tp_shoulder",
+          "concept": "shoulder_tip_pain",
+          "type": "yesno",
+          "F0": "Do you have shoulder tip pain?",
+          "F1": "Do you have an unusual pain where your shoulder ends and your arm begins?"
+        },
+        {
+          "id": "tp_bleed",
+          "concept": "vaginal_bleeding",
+          "type": "yesno",
+          "F0": "Any abnormal vaginal bleeding?",
+          "F1": "Have you had bleeding from your vagina that is different from your normal period? For example lighter, darker, or at the wrong time."
+        },
+        {
+          "id": "tp_faint",
+          "concept": "faintness",
+          "type": "yesno",
+          "F0": "Have you felt faint or collapsed?",
+          "F1": "Have you felt dizzy, faint, or as if you might pass out?"
+        },
+        {
+          "id": "tp_severity",
+          "type": "scale",
+          "scale": "pain"
+        }
+      ]
+    },
+    {
+      "id": "urinary",
+      "label": {
+        "F0": "Urinary symptoms",
+        "F1": "Problems peeing, such as burning or going more often"
+      },
+      "describe_prompt": "Describe the problem in your own words, and how you have been feeling in yourself since it started.",
+      "questions": [
+        {
+          "id": "ur_dysuria",
+          "concept": "dysuria",
+          "type": "yesno",
+          "F0": "Is there pain on passing urine or increased frequency?",
+          "F1": "Does it burn or sting when you pee, or do you need to pee more often than normal?"
+        },
+        {
+          "id": "ur_fever",
+          "concept": "fever",
+          "type": "yesno",
+          "F0": "Do you have a fever?",
+          "F1": "Have you felt hot and shivery, or had a temperature of 38°C or more?"
+        },
+        {
+          "id": "ur_flank",
+          "concept": "flank_pain",
+          "type": "yesno",
+          "F0": "Do you have loin or flank pain?",
+          "F1": "Do you have pain in your side or in your back, just under your ribs?"
+        },
+        {
+          "id": "ur_vomit",
+          "concept": "vomiting",
+          "type": "yesno",
+          "F0": "Are you vomiting?",
+          "F1": "Have you been sick, or are you unable to keep drinks down?"
+        },
+        {
+          "id": "ur_pregnant",
+          "concept": "possible_pregnancy",
+          "type": "yesno",
+          "F0": "Could you be pregnant?",
+          "F1": "Is there any chance you could be pregnant? For example a late or missed period, even if you use contraception."
+        },
+        {
+          "id": "ur_blood",
+          "concept": "blood_in_urine",
+          "type": "yesno",
+          "F0": "Is there visible blood in the urine?",
+          "F1": "Is your pee pink, red or brown, or can you see blood in it?"
+        },
+        {
+          "id": "ur_unwell",
+          "type": "scale",
+          "scale": "unwell"
+        }
+      ]
+    },
+    {
+      "id": "skin_wound",
+      "label": {
+        "F0": "Wounds, bites or skin infection",
+        "F1": "Cuts, bites, or skin that is red, hot or sore"
+      },
+      "describe_prompt": "Describe what it looks like in your own words, and how it has changed since you first noticed it.",
+      "questions": [
+        {
+          "id": "sk_spread",
+          "concept": "spreading_redness",
+          "type": "yesno",
+          "F0": "Is the redness spreading?",
+          "F1": "Is the red area getting bigger? For example, has it grown past where it was yesterday?"
+        },
+        {
+          "id": "sk_fever",
+          "concept": "fever",
+          "type": "yesno",
+          "F0": "Do you have a fever?",
+          "F1": "Have you felt hot and shivery, or had a temperature of 38°C or more?"
+        },
+        {
+          "id": "sk_immune",
+          "concept": "immunocompromised",
+          "type": "yesno",
+          "F0": "Are you diabetic or immunosuppressed?",
+          "F1": "Do you have diabetes, or any condition or medicine that weakens your immune system, such as chemotherapy or steroid tablets?"
+        },
+        {
+          "id": "sk_gaping",
+          "concept": "wound_gaping",
+          "type": "yesno",
+          "F0": "Is the wound gaping or deeper than the skin surface?",
+          "F1": "Is it a cut whose edges don't stay together on their own, or can you see anything underneath the skin?"
+        },
+        {
+          "id": "sk_bleed",
+          "concept": "bleeding_controlled",
+          "type": "yesno",
+          "F0": "Is bleeding controlled with pressure?",
+          "F1": "If it is bleeding, does it stop when you press firmly on it?"
+        },
+        {
+          "id": "sk_numb",
+          "concept": "numbness_distal",
+          "type": "yesno",
+          "F0": "Is there loss of sensation or movement beyond the wound?",
+          "F1": "Is the area past the cut or sore patch numb, tingly or hard to move?"
+        },
+        {
+          "id": "sk_severity",
+          "type": "scale",
+          "scale": "pain"
+        }
+      ]
+    },
+    {
+      "id": "bowel",
+      "label": {
+        "F0": "Bowel symptoms or rectal bleeding",
+        "F1": "Problems with your poo, or bleeding from your bottom"
+      },
+      "describe_prompt": "Describe what has changed in your own words. Everything you tell us is confidential and we hear about this every day.",
+      "questions": [
+        {
+          "id": "bw_blood",
+          "concept": "rectal_bleeding",
+          "type": "yesno",
+          "F0": "Have you had rectal bleeding?",
+          "F1": "Have you seen blood when you poo? On the paper, in the toilet, or mixed in with the poo."
+        },
+        {
+          "id": "bw_duration",
+          "concept": "bleeding_duration",
+          "type": "choice",
+          "F0": {
+            "text": "Duration of symptoms?",
+            "options": [
+              "Under 3 weeks",
+              "3 weeks or more"
+            ]
+          },
+          "F1": {
+            "text": "How long has this been going on?",
+            "options": [
+              "Less than 3 weeks",
+              "3 weeks or longer"
+            ]
+          }
+        },
+        {
+          "id": "bw_habit",
+          "concept": "bowel_habit_change",
+          "type": "yesno",
+          "F0": "Has there been a change in bowel habit?",
+          "F1": "Have your toilet habits changed? For example going more often, looser poo, or constipation that is new for you."
+        },
+        {
+          "id": "bw_weight",
+          "concept": "weight_loss",
+          "type": "yesno",
+          "F0": "Any unintentional weight loss?",
+          "F1": "Have you lost weight without trying to?"
+        },
+        {
+          "id": "bw_heavy",
+          "concept": "heavy_bleeding",
+          "type": "yesno",
+          "F0": "Is the bleeding heavy, or are stools black and tarry?",
+          "F1": "Is there a lot of blood, more than a few streaks, or is your poo black and sticky like tar?"
+        },
+        {
+          "id": "bw_faint",
+          "concept": "faintness",
+          "type": "yesno",
+          "F0": "Have you felt faint or collapsed?",
+          "F1": "Have you felt dizzy, faint, or as if you might pass out?"
+        }
+      ]
+    },
+    {
+      "id": "back",
+      "label": {
+        "F0": "Back pain",
+        "F1": "Back pain"
+      },
+      "describe_prompt": "Describe the pain in your own words. Where is it, how did it start, and have you noticed anything unusual in your legs or when using the toilet?",
+      "questions": [
+        {
+          "id": "bk_saddle",
+          "concept": "saddle_numbness",
+          "type": "yesno",
+          "F0": "Is there numbness around the genitals or anus?",
+          "F1": "Is there any numbness or tingling around your bottom or genitals, the area that would touch a saddle?"
+        },
+        {
+          "id": "bk_bladder",
+          "concept": "bladder_bowel_loss",
+          "type": "yesno",
+          "F0": "Any new urinary retention or incontinence?",
+          "F1": "Since the pain started, have you had trouble peeing, or lost control of your pee or poo?"
+        },
+        {
+          "id": "bk_legs",
+          "concept": "leg_weakness",
+          "type": "yesno",
+          "F0": "Is there leg weakness or numbness?",
+          "F1": "Do either of your legs feel weak, numb, or like pins and needles?"
+        },
+        {
+          "id": "bk_trauma",
+          "concept": "significant_trauma",
+          "type": "yesno",
+          "F0": "Was there significant trauma?",
+          "F1": "Did it start after a serious accident, such as a car crash or a fall from a height?"
+        },
+        {
+          "id": "bk_fever",
+          "concept": "fever",
+          "type": "yesno",
+          "F0": "Do you have a fever?",
+          "F1": "Have you felt hot and shivery, or had a temperature of 38°C or more?"
+        },
+        {
+          "id": "bk_severity",
+          "type": "scale",
+          "scale": "pain"
+        }
+      ]
+    },
+    {
+      "id": "dental",
+      "label": {
+        "F0": "Dental problems",
+        "F1": "Toothache, or a swollen gum, face or jaw"
+      },
+      "describe_prompt": "Describe the problem with your teeth, mouth or face in your own words, and how it has changed since it started.",
+      "questions": [
+        {
+          "id": "dn_swelling",
+          "concept": "facial_swelling",
+          "type": "yesno",
+          "F0": "Is there facial or jaw swelling?",
+          "F1": "Is your face, cheek or jaw swollen?"
+        },
+        {
+          "id": "dn_airway",
+          "concept": "swelling_airway",
+          "type": "yesno",
+          "F0": "Is swelling affecting swallowing, breathing or eye opening?",
+          "F1": "Is the swelling making it hard to swallow, breathe or open your mouth, or is it closing your eye?"
+        },
+        {
+          "id": "dn_fever",
+          "concept": "fever",
+          "type": "yesno",
+          "F0": "Do you have a fever?",
+          "F1": "Have you felt hot and shivery, or had a temperature of 38°C or more?"
+        },
+        {
+          "id": "dn_bleed",
+          "concept": "dental_bleeding",
+          "type": "yesno",
+          "F0": "Is there uncontrolled oral bleeding?",
+          "F1": "Is your mouth bleeding, and it won't stop after biting on a clean cloth for 20 minutes?"
+        },
+        {
+          "id": "dn_trauma",
+          "concept": "dental_trauma",
+          "type": "yesno",
+          "F0": "Was there facial trauma or an avulsed tooth?",
+          "F1": "Have you had a knock to the face, or has an adult tooth been knocked out?"
+        },
+        {
+          "id": "dn_severity",
+          "type": "scale",
+          "scale": "pain"
+        }
+      ]
+    },
+    {
+      "id": "mental_health",
+      "label": {
+        "F0": "Mental health",
+        "F1": "Feeling very low, anxious, panicky or unable to cope"
+      },
+      "describe_prompt": "Tell us how you have been feeling, in your own words. Everything you say is confidential and we ask everyone the same questions.",
+      "questions": [
+        {
+          "id": "mh_thoughts",
+          "concept": "self_harm_thoughts",
+          "type": "yesno",
+          "F0": "Are you having thoughts of self-harm or suicide?",
+          "F1": "Have you had thoughts of hurting yourself, or that you would be better off not being here?"
+        },
+        {
+          "id": "mh_plan",
+          "concept": "self_harm_plan",
+          "type": "yesno",
+          "F0": "Do you have a plan or intent to act?",
+          "F1": "Have you thought about how you would do it, or do you feel you might act on these thoughts today?"
+        },
+        {
+          "id": "mh_act",
+          "concept": "self_harm_act",
+          "type": "yesno",
+          "F0": "Have you self-harmed or taken an overdose?",
+          "F1": "Have you hurt yourself today, or taken more of any medicine than you should?"
+        },
+        {
+          "id": "mh_alone",
+          "concept": "alone_now",
+          "type": "yesno",
+          "F0": "Are you alone?",
+          "F1": "Are you on your own right now?"
+        },
+        {
+          "id": "mh_unwell",
+          "type": "scale",
+          "scale": "unwell"
+        }
+      ]
+    }
+  ]
+}

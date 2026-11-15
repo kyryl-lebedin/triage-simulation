@@ -1,0 +1,187 @@
+NHS 111 ONLINE CHECK
+
+You can answer "Not sure" to any question, or skip it.
+
+1. EMERGENCY CHECK
+Do you have any of the following? Tick all that apply.
+[ ] Chest pain
+[ ] Facial droop, arm weakness or speech difficulty
+[ ] Severe difficulty breathing
+[ ] Heavy bleeding that will not stop
+[ ] Loss of consciousness, seizure or new confusion
+[ ] Rash that does not fade under pressure
+
+2. MAIN SYMPTOM
+Select your main symptom.
+( ) Chest pain
+( ) Breathing problems, cough or sore throat
+( ) Headache, dizziness or neurological symptoms
+( ) Fever or rash
+( ) Abdominal or pelvic pain
+( ) Urinary symptoms
+( ) Wounds, bites or skin infection
+( ) Bowel symptoms or rectal bleeding
+( ) Back pain
+( ) Dental problems
+( ) Mental health
+
+3. QUESTIONS
+Only the section for the chosen symptom is shown.
+
+--- Chest pain ---
+Q1. Does the pain radiate to the arm, neck, jaw or back?
+    ( ) Yes   ( ) No
+Q2. Is the pain associated with sweating, nausea or vomiting?
+    ( ) Yes   ( ) No
+Q3. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+Q4. Are you short of breath?
+    ( ) Yes   ( ) No
+Q5. Was the onset sudden?
+    ( ) Yes   ( ) No
+Q6. Do you have swelling or pain in one leg?
+    ( ) Yes   ( ) No
+
+--- Breathing problems, cough or sore throat ---
+Q1. Are you short of breath?
+    ( ) Yes   ( ) No
+Q2. Do you have chest pain on inspiration?
+    ( ) Yes   ( ) No
+Q3. Do you have swelling or pain in one leg?
+    ( ) Yes   ( ) No
+Q4. Have you coughed up blood?
+    ( ) Yes   ( ) No
+Q5. Duration of cough?
+    ( ) No cough   ( ) Under 3 weeks   ( ) 3 weeks or more
+Q6. Are you unable to swallow fluids or saliva?
+    ( ) Yes   ( ) No
+Q7. Do you have a fever?
+    ( ) Yes   ( ) No
+Q8. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+--- Headache, dizziness or neurological symptoms ---
+Q1. Do you have facial droop, limb weakness or speech difficulty?
+    ( ) Yes   ( ) No
+Q2. Was there a sudden-onset severe headache?
+    ( ) Yes   ( ) No
+Q3. Any visual disturbance?
+    ( ) Yes   ( ) No
+Q4. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Fever or rash ---
+Q1. Is there a fever?
+    ( ) Yes   ( ) No
+Q2. Is there a non-blanching rash?
+    ( ) Yes   ( ) No
+Q3. Is the patient drowsy or confused?
+    ( ) Yes   ( ) No
+Q4. Is there neck stiffness or photophobia?
+    ( ) Yes   ( ) No
+Q5. Are the extremities cold or mottled?
+    ( ) Yes   ( ) No
+Q6. Is there reduced fluid intake or urine output?
+    ( ) Yes   ( ) No
+Q7. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+--- Abdominal or pelvic pain ---
+Q1. Could you be pregnant?
+    ( ) Yes   ( ) No
+Q2. Is the pain localised to one side?
+    ( ) Yes   ( ) No
+Q3. Do you have shoulder tip pain?
+    ( ) Yes   ( ) No
+Q4. Any abnormal vaginal bleeding?
+    ( ) Yes   ( ) No
+Q5. Have you felt faint or collapsed?
+    ( ) Yes   ( ) No
+Q6. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Urinary symptoms ---
+Q1. Is there pain on passing urine or increased frequency?
+    ( ) Yes   ( ) No
+Q2. Do you have a fever?
+    ( ) Yes   ( ) No
+Q3. Do you have loin or flank pain?
+    ( ) Yes   ( ) No
+Q4. Are you vomiting?
+    ( ) Yes   ( ) No
+Q5. Could you be pregnant?
+    ( ) Yes   ( ) No
+Q6. Is there visible blood in the urine?
+    ( ) Yes   ( ) No
+Q7. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
+
+--- Wounds, bites or skin infection ---
+Q1. Is the redness spreading?
+    ( ) Yes   ( ) No
+Q2. Do you have a fever?
+    ( ) Yes   ( ) No
+Q3. Are you diabetic or immunosuppressed?
+    ( ) Yes   ( ) No
+Q4. Is the wound gaping or deeper than the skin surface?
+    ( ) Yes   ( ) No
+Q5. Is bleeding controlled with pressure?
+    ( ) Yes   ( ) No
+Q6. Is there loss of sensation or movement beyond the wound?
+    ( ) Yes   ( ) No
+Q7. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Bowel symptoms or rectal bleeding ---
+Q1. Have you had rectal bleeding?
+    ( ) Yes   ( ) No
+Q2. Duration of symptoms?
+    ( ) Under 3 weeks   ( ) 3 weeks or more
+Q3. Has there been a change in bowel habit?
+    ( ) Yes   ( ) No
+Q4. Any unintentional weight loss?
+    ( ) Yes   ( ) No
+Q5. Is the bleeding heavy, or are stools black and tarry?
+    ( ) Yes   ( ) No
+Q6. Have you felt faint or collapsed?
+    ( ) Yes   ( ) No
+
+--- Back pain ---
+Q1. Is there numbness around the genitals or anus?
+    ( ) Yes   ( ) No
+Q2. Any new urinary retention or incontinence?
+    ( ) Yes   ( ) No
+Q3. Is there leg weakness or numbness?
+    ( ) Yes   ( ) No
+Q4. Was there significant trauma?
+    ( ) Yes   ( ) No
+Q5. Do you have a fever?
+    ( ) Yes   ( ) No
+Q6. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Dental problems ---
+Q1. Is there facial or jaw swelling?
+    ( ) Yes   ( ) No
+Q2. Is swelling affecting swallowing, breathing or eye opening?
+    ( ) Yes   ( ) No
+Q3. Do you have a fever?
+    ( ) Yes   ( ) No
+Q4. Is there uncontrolled oral bleeding?
+    ( ) Yes   ( ) No
+Q5. Was there facial trauma or an avulsed tooth?
+    ( ) Yes   ( ) No
+Q6. How severe is the pain?
+    ( ) Mild   ( ) Moderate   ( ) Severe
+
+--- Mental health ---
+Q1. Are you having thoughts of self-harm or suicide?
+    ( ) Yes   ( ) No
+Q2. Do you have a plan or intent to act?
+    ( ) Yes   ( ) No
+Q3. Have you self-harmed or taken an overdose?
+    ( ) Yes   ( ) No
+Q4. Are you alone?
+    ( ) Yes   ( ) No
+Q5. How unwell do you feel?
+    ( ) Mildly   ( ) Moderately   ( ) Severely
