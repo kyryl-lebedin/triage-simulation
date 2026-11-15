@@ -1,144 +1,160 @@
 <!doctype html>
-<!-- A researcher's visualisation for a chat treatment, in the style of an NHS service: the prompt goes into an
-     agent, and the agent's first turns with a patient play out in a chat window. The turns are illustrative,
-     written for this visual to show what each block of the prompt makes the agent do. They are not model output.
-     It carries a prototype banner and no NHS logo: it is a picture of a treatment, not a live service.
+<!-- A researcher's visualisation for a chat treatment, built from NHS design system parts: the prompt on the left,
+     and on the right the service page a patient would get, one question per page, with their answers so far
+     listed underneath. A tag on every question names the block of the prompt that made the assistant ask it.
+     The turns are illustrative, written for this visual. They are not model output.
+     It carries a prototype tag and no NHS logo: it is a picture of a treatment, not a live service.
      Stand-in sends the selected version as { standin: { name, type, text } }. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prompt into agent</title>
+<title>Chat treatment</title>
 <style>
-  :root { --blue: #005eb8; --dark: #003087; --text: #212b32; --grey1: #4c6272; --grey4: #d8dde0; --grey5: #f0f4f5; --green: #007f3b; --yellow: #ffeb3b; --aqua: #00a499; --purple: #330072; --warm: #ed8b00; }
+  :root { --blue: #005eb8; --dark: #003087; --text: #212b32; --grey1: #4c6272; --grey3: #aeb7bd; --grey4: #d8dde0; --grey5: #f0f4f5; --green: #007f3b; --green-d: #00401e; --yellow: #ffeb3b; --pale: #fff9c4; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--grey5); color: var(--text); font: 400 16px/1.45 "Frutiger W01", "Frutiger", Arial, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
-  .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 132px minmax(0, 1.05fr); align-items: stretch; padding: 24px; min-height: 540px; }
-  h2 { margin: 0 0 12px; font-size: 19px; font-weight: 600; }
-  h2 small { display: block; font-size: 14px; font-weight: 400; color: var(--grey1); }
-  /* the prompt, block by block: NHS inset text, one colour per block */
-  .prompt { min-width: 0; }
-  .block { margin-bottom: 12px; padding: 12px 16px; border-left: 8px solid var(--c); background: #fff; opacity: .3; transition: opacity 300ms, box-shadow 200ms; }
-  .block.in { opacity: 1; }
-  .block.hot { box-shadow: 0 0 0 4px var(--yellow), 0 0 0 6px var(--text); }
-  .block b { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--c); }
-  .block p { margin: 0; font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
-  /* the agent */
-  .mid { display: grid; place-items: center; position: relative; }
-  .mid::before, .mid::after { content: ""; position: absolute; top: 50%; height: 4px; margin-top: -2px; background: var(--blue); width: 26px; }
-  .mid::before { left: 4px; } .mid::after { right: 4px; }
-  .agent { display: grid; place-items: center; align-content: center; gap: 2px; width: 84px; height: 84px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 4px 0 var(--dark); }
-  .agent svg { width: 30px; height: 30px; }
-  .agent.think { animation: pulse 700ms ease-in-out infinite; }
-  @keyframes pulse { 50% { transform: scale(1.08); background: var(--dark); } }
-  .flow { position: absolute; left: 4px; top: calc(50% - 6px); width: 12px; height: 12px; border-radius: 50%; background: var(--yellow); border: 2px solid var(--text); opacity: 0; }
-  .flow.go { animation: flow 600ms ease-in forwards; }
-  @keyframes flow { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(26px); } }
-  /* the conversation: an NHS service page */
-  .chat { display: flex; flex-direction: column; min-width: 0; background: #fff; border: 1px solid var(--grey4); border-bottom-width: 4px; }
-  .chat header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--blue); color: #fff; font-size: 19px; font-weight: 600; }
-  .chat header span { margin-left: auto; padding: 2px 7px; background: #fff; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
-  .sub { margin: 0; padding: 8px 16px; border-bottom: 1px solid var(--grey4); font-size: 14px; color: var(--grey1); }
-  .turns { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 16px; overflow-y: auto; max-height: 460px; background: var(--grey5); }
-  .turn { max-width: 84%; animation: rise 260ms ease-out; }
-  @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
-  .turn p { margin: 0; padding: 10px 14px; font-size: 16px; line-height: 1.4; }
-  .turn.a p { background: #fff; border-left: 4px solid var(--c, var(--blue)); box-shadow: 0 1px 0 var(--grey4); }
-  .turn.p { align-self: flex-end; } .turn.p p { background: var(--blue); color: #fff; border-radius: 4px 4px 0 4px; }
-  .turn small { display: block; margin: 4px 2px 0; font-size: 12px; font-weight: 700; color: var(--c, var(--grey1)); }
-  .turn.p small { text-align: right; color: var(--grey1); font-weight: 400; }
-  .dots p { display: inline-flex; gap: 5px; align-items: center; min-height: 20px; } .dots i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: dot 900ms infinite; } .dots i:nth-child(2) { animation-delay: 150ms; } .dots i:nth-child(3) { animation-delay: 300ms; }
-  @keyframes dot { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
-  .end { align-self: stretch; padding: 10px 14px; border-left: 8px solid var(--green); background: #fff; font-size: 14px; }
-  .end b { display: block; }
-  .reply { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--grey4); }
-  .reply i { flex: 1; height: 40px; border: 2px solid var(--grey1); background: #fff; }
-  .reply b { display: grid; place-items: center; padding: 0 16px; border-radius: 4px; background: var(--green); color: #fff; font-size: 16px; box-shadow: 0 4px 0 #00401e; }
-  footer { display: flex; align-items: center; gap: 10px; padding: 8px 16px 12px; font-size: 14px; color: var(--grey1); }
-  footer button { margin-left: auto; padding: 6px 12px; border: 0; border-radius: 4px; background: var(--grey1); color: #fff; font: inherit; font-weight: 600; font-size: 14px; box-shadow: 0 3px 0 #263139; cursor: pointer; }
-  @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; gap: 16px; } .mid::before, .mid::after, .flow { display: none; } }
-  @media (prefers-reduced-motion: reduce) { .turn, .agent.think, .flow.go { animation: none; } }
+  html, body { margin: 0; background: var(--grey5); color: var(--text); font: 400 16px/1.5 "Frutiger W01", "Frutiger", Arial, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { display: grid; grid-template-columns: minmax(0, .88fr) 72px minmax(0, 1.12fr); align-items: start; padding: 24px; }
+  p { margin: 0; }
+  /* NHS tag, one colour per block of the prompt */
+  .tag { display: inline-block; padding: 2px 8px; border: 1px solid var(--tc); background: var(--tb); color: var(--tc); font-size: 14px; line-height: 1.4; font-weight: 600; white-space: nowrap; }
+  .t0 { --tb: #ccdff1; --tc: #004281; } .t1 { --tb: #d6cce3; --tc: #240050; } .t2 { --tb: #cceceb; --tc: #00524d; } .t3 { --tb: #fbe8cc; --tc: #6b3f00; } .t4 { --tb: #efd3e3; --tc: #5d133d; }
+  /* left: the prompt as an NHS card, each block a section */
+  .card { background: #fff; border: 1px solid var(--grey4); border-bottom-width: 4px; }
+  .card > h2 { margin: 0; padding: 20px 24px 4px; font-size: 24px; line-height: 1.25; font-weight: 600; }
+  .card > .hint { padding: 0 24px 16px; }
+  .hint { color: var(--grey1); font-size: 16px; }
+  .block { padding: 14px 24px 16px; border-top: 1px solid var(--grey4); transition: background 200ms; }
+  .block.hot { background: var(--pale); box-shadow: inset 8px 0 0 var(--yellow); }
+  .block .tag { margin-bottom: 8px; }
+  .block p { font-size: 16px; }
+  .block ul { margin: 0; padding-left: 20px; font-size: 16px; }
+  .block li { margin-bottom: 6px; } .block li:last-child { margin-bottom: 0; }
+  /* between the two: the NHS action-link arrow */
+  .mid { display: grid; justify-items: center; gap: 6px; padding-top: 96px; color: var(--grey1); font-size: 14px; }
+  .mid span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--green); }
+  .mid svg { width: 18px; height: 18px; }
+  /* right: the service page a patient gets */
+  .page { min-width: 0; background: #fff; border: 1px solid var(--grey4); }
+  .head { display: flex; align-items: center; gap: 12px; padding: 14px 24px; background: var(--blue); color: #fff; }
+  .head strong { font-size: 22px; font-weight: 600; }
+  .head span { margin-left: auto; padding: 2px 8px; background: #fff; color: var(--blue); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .main { padding: 16px 24px 32px; }
+  .back { display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px; color: var(--blue); font-size: 16px; text-decoration: underline; }
+  .back svg { width: 20px; height: 20px; fill: currentColor; }
+  .warn { margin: 16px 0 32px; padding: 0 24px 20px; border: 1px solid var(--yellow); background: var(--pale); }
+  .warn b { display: inline-block; position: relative; top: -8px; margin: 0 0 4px -25px; padding: 6px 24px; background: var(--yellow); font-size: 19px; font-weight: 600; }
+  .cap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--grey1); font-size: 16px; }
+  .inset { margin: 0 0 20px; padding: 12px 16px; border-left: 8px solid var(--blue); font-size: 19px; line-height: 1.45; }
+  .lab { display: block; margin-bottom: 4px; font-size: 26px; line-height: 1.25; font-weight: 600; }
+  #q .hint { margin-bottom: 12px; }
+  textarea { display: block; width: 100%; min-height: 84px; margin-bottom: 24px; padding: 6px 8px; border: 2px solid var(--grey1); border-radius: 4px; background: #fff; color: var(--text); font: inherit; font-size: 19px; line-height: 1.45; resize: none; overflow: hidden; }
+  textarea.focus, textarea:focus { border-color: var(--text); outline: 4px solid var(--yellow); outline-offset: 0; box-shadow: inset 0 0 0 2px var(--text); }
+  .btn { position: relative; padding: 12px 16px; border: 0; border-radius: 4px; background: var(--green); color: #fff; font: inherit; font-size: 19px; line-height: 1.2; font-weight: 600; box-shadow: 0 4px 0 var(--green-d); }
+  .btn.down { top: 4px; box-shadow: none; background: #00662f; }
+  .panel { margin: 0 0 24px; padding: 28px 24px; background: var(--green); color: #fff; text-align: center; }
+  .panel h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.2; font-weight: 600; }
+  .panel p { font-size: 19px; }
+  /* NHS summary list: the answers so far */
+  #sofar { margin-top: 40px; }
+  #sofar h2 { margin: 0 0 8px; font-size: 22px; font-weight: 600; }
+  .sum { margin: 0; border-top: 1px solid var(--grey4); }
+  .sum div { display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr) auto; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--grey4); font-size: 16px; animation: in 260ms ease-out; }
+  @keyframes in { from { background: var(--pale); } }
+  .sum dt { font-weight: 600; } .sum dt .tag { display: table; margin-top: 6px; }
+  .sum dd { margin: 0; }
+  .sum a { color: var(--blue); text-decoration: underline; }
+  .foot { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-top: 4px solid var(--blue); background: var(--grey4); color: var(--grey1); font-size: 14px; }
+  .foot strong { color: var(--text); }
+  .foot button { margin-left: auto; flex: none; padding: 8px 14px; border: 0; border-radius: 4px; background: var(--grey1); color: #fff; font: inherit; font-size: 16px; font-weight: 600; box-shadow: 0 4px 0 #263139; cursor: pointer; }
+  .foot button:active { transform: translateY(4px); box-shadow: none; }
+  .foot button:focus-visible { outline: 4px solid transparent; background: var(--yellow); color: var(--text); box-shadow: 0 4px 0 var(--text); }
+  @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; gap: 16px; } .mid { padding: 0; } .mid span { transform: rotate(90deg); } }
+  @media (prefers-reduced-motion: reduce) { .sum div { animation: none; } .block { transition: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <section class="prompt"><h2>Instructions given to the agent<small>Each block is a part of the prompt under test</small></h2><div id="blocks"></div></section>
-  <div class="mid"><span class="flow" id="flow"></span>
-    <div class="agent" id="agent"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><rect x="6" y="11" width="22" height="16" rx="4"/><path d="M17 11V6M13 19v2M21 19v2M3 18v4M31 18v4"/><circle cx="17" cy="5" r="1.6" fill="currentColor"/></svg>Agent</div></div>
-  <section class="chat">
-    <header><strong>111 online chat</strong><span>Prototype</span></header>
-    <p class="sub"><strong id="vname"></strong> · what a patient would see</p>
-    <div class="turns" id="turns"></div>
-    <div class="reply" aria-hidden="true"><i></i><b>Send</b></div>
-    <footer>Illustrative turns written for this visual, not model output. Not a live NHS service.<button id="again">Replay</button></footer>
+  <section class="card"><h2>Instructions given to the assistant</h2><p class="hint">Each block is a part of the prompt under test.</p><div id="blocks"></div></section>
+  <div class="mid" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>runs as</div>
+  <section class="page">
+    <header class="head"><strong>111 online</strong><span>Prototype</span></header>
+    <div class="main">
+      <span class="back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.500 12l5.800-5.800 1.400 1.400L11.300 12l4.400 4.400-1.400 1.400z"/></svg>Back</span>
+      <div class="warn"><b>Important</b><p>This is a picture of a chat under test, not a live NHS service. The questions and answers were written for this picture: no model produced them.</p></div>
+      <div id="q"></div>
+      <div id="sofar" hidden><h2>Your answers so far</h2><dl class="sum" id="sum"></dl></div>
+    </div>
+    <footer class="foot"><span><strong id="vname"></strong> · what a patient would see</span><button id="again" type="button">Replay</button></footer>
   </section>
 </div>
 <script>
 const $ = id => document.getElementById(id), esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-const COL = ['#005eb8', '#330072', '#00a499', '#ed8b00', '#ae2573'];
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let run = 0;
 
 /* split the prompt at its headed blocks ("Rules:", "Probing:", ...); what comes before the first heading is the role */
 function blocks(text) {
   const out = [{ name: 'Role', lines: [] }];
   text.split('\n').forEach(l => { const m = /^([A-Z][^:\n]{2,40}):\s*$/.exec(l.trim()); if (m) out.push({ name: m[1], lines: [] }); else if (l.trim() || out[out.length - 1].lines.length) out[out.length - 1].lines.push(l); });
-  return out.map((b, i) => ({ name: b.name, text: b.lines.join('\n').trim(), c: COL[i % COL.length] })).filter(b => b.text);
+  return out.map(b => ({ name: b.name, text: b.lines.join('\n').trim() })).filter(b => b.text).map((b, i) => ({ ...b, i: i % 5 }));
 }
-/* which block makes the agent say a line: the turns follow from what the prompt tells it to do */
+/* a block's text as NHS body copy: "- " lines become a bulleted list */
+function body(text) {
+  const out = []; let ul = null;
+  text.split('\n').forEach(l => { const m = /^\s*-\s+(.*)$/.exec(l); if (m) { if (!ul) out.push(ul = []); ul.push(m[1]); } else if (l.trim()) { ul = null; out.push(l.trim()); } });
+  return out.map(x => Array.isArray(x) ? `<ul>${x.map(li => `<li>${esc(li)}</li>`).join('')}</ul>` : `<p>${esc(x)}</p>`).join('');
+}
+/* which block makes the assistant ask a question: the turns follow from what the prompt tells it to do */
 function script(text, bs) {
   const has = rx => rx.test(text), of = rx => bs.find(b => rx.test(b.text)) || bs[bs.length - 1];
   const probing = has(/vague|hedged|pins it down|do not accept/i), easy = has(/too small|embarrass|wasting anyone|play their symptoms down/i), rules = of(/one question at a time|plain sentences/i);
   const t = [];
-  if (easy) t.push(['a', "Nothing is too small or too embarrassing to mention here, and you are not wasting anyone's time. What has brought you here today?", of(/too small|embarrass/i)]);
-  else t.push(['a', 'What has brought you here today?', rules]);
-  t.push(['p', "I've had a tight feeling in my chest for a while. It's probably just indigestion."]);
+  if (easy) t.push(["Nothing is too small or too embarrassing to mention here, and you are not wasting anyone's time. What has brought you here today?", of(/too small|embarrass/i), "I've had a tight feeling in my chest for a while. It's probably just indigestion."]);
+  else t.push(['What has brought you here today?', rules, "I've had a tight feeling in my chest for a while. It's probably just indigestion."]);
   if (probing) {
-    t.push(['a', "Let's leave the cause to one side. What are you actually feeling, and where exactly?", of(/do not accept|name a cause/i)]);
-    t.push(['p', "It's like a band round my chest. There's a dull ache down my left arm as well."]);
-    if (easy) { t.push(['a', 'You said a band round your chest. Many people play this down. How bad is the band, really?', of(/own words|play their symptoms down/i)]); t.push(['p', 'Honestly, it frightened me. I had to sit down.']); }
-    else { t.push(['a', 'How bad is it? What is it stopping you from doing?', of(/pins it down|vague/i)]); t.push(['p', 'A bit. I had to stop carrying the shopping.']); t.push(['a', 'You said "a bit". Could you carry on if you had to?', of(/pins it down|vague/i)]); t.push(['p', 'No. I had to sit down.']); }
-    t.push(['a', 'Have you noticed anything else, even if it seems unrelated?', of(/anything else|unrelated/i)]);
-    t.push(['p', "I've gone a bit clammy, now you mention it."]);
+    t.push(["Let's leave the cause to one side. What are you actually feeling, and where exactly?", of(/do not accept|name a cause/i), "It's like a band round my chest. There's a dull ache down my left arm as well."]);
+    if (easy) t.push(['You said a band round your chest. Many people play this down. How bad is the band, really?', of(/own words|play their symptoms down/i), 'Honestly, it frightened me. I had to sit down.']);
+    else { t.push(['How bad is it, and what is it stopping you from doing?', of(/pins it down|vague/i), 'A bit. I had to stop carrying the shopping.']); t.push(['You said "a bit". Could you carry on if you had to?', of(/pins it down|vague/i), 'No. I had to sit down.']); }
+    t.push(['Have you noticed anything else, even if it seems unrelated?', of(/anything else|unrelated/i), "I've gone a bit clammy, now you mention it."]);
   } else {
-    t.push(['a', 'Do you have chest pain?', rules]);
-    t.push(['p', "Not really pain. More of a tightness. It's probably nothing."]);
-    t.push(['a', 'Are you short of breath?', rules]);
-    t.push(['p', 'A bit.']);
-    t.push(['a', 'Do you feel sick or sweaty?', rules]);
-    t.push(['p', 'Not really.']);
+    t.push(['Do you have chest pain?', rules, "Not really pain. More of a tightness. It's probably nothing."]);
+    t.push(['Are you short of breath?', rules, 'A bit.']);
+    t.push(['Do you feel sick or sweaty?', rules, 'Not really.']);
   }
-  t.push(['end', '', of(/\[END\]/)]);
   return t;
 }
-const wait = ms => new Promise(r => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : ms));
+const wait = ms => new Promise(r => setTimeout(r, ms));
 async function draw(d) {
-  const me = ++run, bs = blocks(d.text || ''), turns = script(d.text || '', bs);
+  const me = ++run, bs = blocks(d.text || ''), turns = script(d.text || '', bs), kids = () => [...$('blocks').children];
+  const tag = b => `<strong class="tag t${b.i}">${esc(b.name)}</strong>`;
   $('vname').textContent = d.name || 'Chat';
-  $('blocks').innerHTML = bs.map(b => `<div class="block" style="--c:${b.c}"><b>${esc(b.name)}</b><p>${esc(b.text)}</p></div>`).join('');
-  $('turns').innerHTML = ''; size();
-  for (const el of $('blocks').children) {   /* the prompt goes in, one block at a time */
-    if (me !== run) return; el.classList.add('in'); $('flow').classList.remove('go'); void $('flow').offsetWidth; $('flow').classList.add('go'); await wait(380);
+  $('blocks').innerHTML = bs.map(b => `<div class="block">${tag(b)}${body(b.text)}</div>`).join('');
+  $('sum').innerHTML = ''; $('sofar').hidden = true; $('q').innerHTML = ''; size();
+  for (let n = 0; n < turns.length; n++) {
+    const [text, b, answer] = turns[n];
+    /* a remark before the question goes in NHS inset text; the question itself is the page's label */
+    const m = /^([\s\S]*[.!"”])\s+([^.!?]+\?)$/.exec(text), lead = m ? m[1] : '', ask = m ? m[2] : text;
+    kids().forEach((x, i) => x.classList.toggle('hot', bs[i] === b));
+    $('q').innerHTML = `<p class="cap">Question ${n + 1}<span>· asked because of</span>${tag(b)}</p>${lead ? `<div class="inset"><p>${esc(lead)}</p></div>` : ''}<label class="lab" for="ans">${esc(ask)}</label><p class="hint">Answer in your own words.</p><textarea id="ans" rows="2" readonly></textarea><button class="btn" id="cont" type="button">Continue</button>`;
+    size(); await wait(900); if (me !== run) return;
+    const box = $('ans'); box.classList.add('focus');
+    if (calm) box.value = answer; else for (let i = 1; i <= answer.length; i++) { box.value = answer.slice(0, i); await wait(18); if (me !== run) return; }
+    box.style.height = box.scrollHeight + 4 + 'px'; size(); await wait(calm ? 1100 : 600); if (me !== run) return;
+    box.classList.remove('focus'); $('cont').classList.add('down'); await wait(220); if (me !== run) return;
+    $('sum').insertAdjacentHTML('beforeend', `<div><dt>${esc(ask)}${tag(b)}</dt><dd>${esc(answer)}</dd><dd><a>Change</a></dd></div>`); $('sofar').hidden = false;
   }
-  for (const [who, text, b] of turns) {
-    if (me !== run) return;
-    const hot = b && $('blocks').children[bs.indexOf(b)];
-    if (who !== 'p') { [...$('blocks').children].forEach(x => x.classList.toggle('hot', x === hot)); $('agent').classList.add('think'); }
-    const dots = Object.assign(document.createElement('div'), { className: `turn dots ${who === 'p' ? 'p' : 'a'}`, innerHTML: '<p><i></i><i></i><i></i></p>' });
-    $('turns').append(dots); $('turns').scrollTop = 1e6; await wait(who === 'p' ? 650 : 900); dots.remove(); $('agent').classList.remove('think');
-    if (me !== run) return;
-    const el = document.createElement('div');
-    if (who === 'end') { el.className = 'end'; el.innerHTML = '<b>The agent ends the chat</b>What the patient said goes to a separate system, which decides the service.'; }
-    else { el.className = 'turn ' + who; if (b) el.style.setProperty('--c', b.c); el.innerHTML = `<p>${esc(text)}</p><small>${who === 'p' ? 'Patient' : 'Because of: ' + esc(b.name)}</small>`; }
-    $('turns').append(el); $('turns').scrollTop = 1e6; size(); await wait(who === 'p' ? 500 : 350);
-  }
-  [...$('blocks').children].forEach(x => x.classList.remove('hot'));
+  const end = bs.find(b => /\[END\]/.test(b.text));
+  kids().forEach((x, i) => x.classList.toggle('hot', bs[i] === end));
+  $('q').innerHTML = `<div class="panel"><h1>Questions complete</h1><p>The assistant ends the chat here.</p></div><div class="inset"><p>What the patient said goes to a separate system, which decides the service.</p></div>`;
+  size(); await wait(1600); if (me === run) kids().forEach(x => x.classList.remove('hot'));
 }
 function size() { if (parent !== window) parent.postMessage({ standinHeight: document.documentElement.scrollHeight }, '*'); }
 let cur = null;
 $('again').onclick = () => cur && draw(cur);
 addEventListener('message', e => { if (e.data && e.data.standin) { cur = e.data.standin; draw(cur); } });
 if (parent !== window) parent.postMessage({ standinReady: true }, '*');
-else { cur = { name: 'Sample', text: 'You are an online triage assistant.\n\nRules:\n- Ask one question at a time.\n- When done reply with exactly: [END]' }; draw(cur); }
+else { cur = { name: 'Sample', text: 'You are an online triage assistant.\n\nRules:\n- Ask one question at a time.\n- When done reply with exactly: [END]\n\nProbing:\n- When an answer is vague, ask one follow-up that pins it down.' }; draw(cur); }
 </script>
 </body>
 </html>

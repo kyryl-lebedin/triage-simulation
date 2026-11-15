@@ -1741,7 +1741,7 @@ function watchReal(run) {
   }, 300);
 }
 
-const RUN_MS = 7000; /* how long a made-up run takes */
+const RUN_MS = 2000; /* how long a made-up run takes */
 /* shows the progress of the open run; the run itself keeps going in the background (see the ticker below) */
 function startRun() {
   if (curRun() && curRun().real) return watchReal(curRun());
